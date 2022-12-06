@@ -56,7 +56,7 @@ watch(views, async () => {
     <a-layout-sider theme="light">
       <LazyDashboardTreeView />
     </a-layout-sider>
-    <a-layout-content>
+    <a-layout-content v-if="activeQuickImportTab">
       <div class="nc-container flex flex-col h-full mt-1.5 px-12">
         <div class="flex flex-col h-full flex-1 min-w-0">
           <LazyQuickImportTabs />
