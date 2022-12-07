@@ -30,7 +30,7 @@ import {
 } from '#imports'
 import { TabType } from '~/lib'
 
-const { quickImportType, projectTemplate, importData, importColumns, importDataOnly, maxRowsToParse, baseId } =
+const { quickImportType, projectTemplate, importData, importColumns, importToExistingTable, maxRowsToParse, baseId } =
   defineProps<Props>()
 
 const emit = defineEmits(['import'])
@@ -44,7 +44,7 @@ interface Props {
   projectTemplate: Record<string, any>
   importData: Record<string, any>
   importColumns: any[]
-  importDataOnly: boolean
+  importToExistingTable: boolean
   maxRowsToParse: number
   baseId: string
 }
@@ -128,13 +128,13 @@ const validators = computed(() =>
 
 const { validate, validateInfos } = useForm(data, validators)
 
-const isValid = ref(!importDataOnly)
+const isValid = ref(!importToExistingTable)
 
 watch(
   () => srcDestMapping.value,
   () => {
     let res = true
-    if (importDataOnly) {
+    if (importToExistingTable) {
       for (const tn of Object.keys(srcDestMapping.value)) {
         if (!atLeastOneEnabledValidation(tn)) {
           res = false
@@ -169,7 +169,7 @@ onMounted(() => {
   // and updating the key in importData
   prevEditableTn.value = data.tables.map((t) => t.table_name)
 
-  if (importDataOnly) {
+  if (importToExistingTable) {
     mapDefaultColumns()
   }
 
@@ -387,7 +387,7 @@ function updateImportTips(projectName: string, tableName: string, progress: numb
 }
 
 async function importTemplate() {
-  if (importDataOnly) {
+  if (importToExistingTable) {
     for (const table of data.tables) {
       // validate required columns
       if (!missingRequiredColumnsValidation(table.table_name)) return
@@ -612,7 +612,7 @@ function isSelectDisabled(uidt: string, disableSelect = false) {
         {{ importingTip }}
       </p>
     </template>
-    <a-card v-if="importDataOnly">
+    <a-card v-if="importToExistingTable">
       <a-form :model="data" name="import-only">
         <p v-if="data.tables && quickImportType === 'excel'" class="text-center">
           {{ data.tables.length }} sheet{{ data.tables.length > 1 ? 's' : '' }}

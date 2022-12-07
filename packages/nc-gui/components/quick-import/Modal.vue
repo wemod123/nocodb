@@ -29,15 +29,15 @@ import type { importFileList, streamImportFileList } from '~/lib'
 interface Props {
   modelValue: boolean
   importType: 'csv' | 'json' | 'excel'
-  importDataOnly?: boolean
+  importToExistingTable?: boolean
   baseId: string
 }
 
-const { importType, importDataOnly = false, baseId, ...rest } = defineProps<Props>()
+const { importType, importToExistingTable = false, baseId, ...rest } = defineProps<Props>()
 
 const emit = defineEmits(['update:modelValue'])
 
-useProvideQuickImportStore(importType, importDataOnly, baseId)
+useProvideQuickImportStore(importType, importToExistingTable, baseId)
 
 const { source, parserConfig, isImportTypeJson, isImportTypeCsv, IsImportTypeExcel, createTempTable, importTempTable } =
   useQuickImportStoreOrThrow()!
@@ -194,7 +194,7 @@ async function parseAndExtractData() {
 
     const data = templateGenerator!.getData()
 
-    if (importDataOnly) importColumns.value = templateGenerator!.getColumns()
+    if (importToExistingTable) importColumns.value = templateGenerator!.getColumns()
     else {
       // ensure the target table name not exist in current table list
       templateData.value.tables = templateData.value.tables.map((table: Record<string, any>) => {

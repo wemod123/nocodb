@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { t } = useI18n()
-const { isImportTypeCsv, IsImportTypeExcel, isImportTypeJson, importDataOnly, parserConfig } = useQuickImportStoreOrThrow()!
+const { isImportTypeCsv, IsImportTypeExcel, isImportTypeJson, importToExistingTable, parserConfig } =
+  useQuickImportStoreOrThrow()!
 </script>
 
 <template>
@@ -14,7 +15,7 @@ const { isImportTypeCsv, IsImportTypeExcel, isImportTypeJson, importDataOnly, pa
       <a-input-number v-model:value="parserConfig.maxRowsToParse" :min="1" :max="50000" />
     </a-form-item>
 
-    <a-form-item v-if="!importDataOnly" class="!my-2">
+    <a-form-item v-if="!importToExistingTable" class="!my-2">
       <a-checkbox v-model:checked="parserConfig.autoSelectFieldTypes">
         <span class="caption">Auto-Select Field Types</span>
       </a-checkbox>
@@ -34,7 +35,7 @@ const { isImportTypeCsv, IsImportTypeExcel, isImportTypeJson, importDataOnly, pa
     </a-form-item>
 
     <!-- Import Data -->
-    <a-form-item v-if="!importDataOnly" class="!my-2">
+    <a-form-item v-if="!importToExistingTable" class="!my-2">
       <a-checkbox v-model:checked="parserConfig.shouldImportData">{{ $t('labels.importData') }}</a-checkbox>
     </a-form-item>
   </div>

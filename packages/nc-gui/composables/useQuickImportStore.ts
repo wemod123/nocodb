@@ -3,7 +3,7 @@ import { useInjectionState } from '#imports'
 import type { TabItem, TabType } from '~/lib'
 
 const [useProvideQuickImportStore, useQuickImportStore] = useInjectionState(
-  (importType: 'csv' | 'json' | 'excel', importDataOnly = false, baseId: string) => {
+  (importType: 'csv' | 'json' | 'excel', importToExistingTable = false, baseId: string) => {
     enum IMPORT_STEPS {
       STEP_1_UPLOAD_DATA = 0,
       STEP_2_REVIEW_DATA = 1,
@@ -126,7 +126,7 @@ const [useProvideQuickImportStore, useQuickImportStore] = useInjectionState(
       IMPORT_STEPS,
       source,
       importType,
-      importDataOnly,
+      importToExistingTable,
       importStepper,
       importedTables,
       isImportTypeJson,
