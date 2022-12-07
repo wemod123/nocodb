@@ -43,7 +43,7 @@ function overwrite() {
   <a-row class="p-[20px]">
     <a-col :span="24">
       <a-list item-layout="horizontal" :data-source="importedTables">
-        <template #renderItem="{ item, index }">
+        <template #renderItem="{ item }">
           <a-list-item class="cursor-pointer">
             <a-list-item-meta>
               <template #title>
