@@ -24,7 +24,6 @@ import { sanitize } from '../db/sql-data-mapper/lib/sql/helpers/sanitize';
 
 export default class Model implements TableType {
   copy_enabled: boolean;
-  created_at: Date | number | string;
   base_id: 'db' | string;
   deleted: boolean;
   enabled: boolean;
@@ -39,7 +38,6 @@ export default class Model implements TableType {
   show_all_fields: boolean;
   tags: string;
   type: ModelTypes;
-  updated_at: Date | number | string;
   meta?: string | object;
 
   table_name: string;
@@ -178,7 +176,11 @@ export default class Model implements TableType {
       );
 
       if (base_id) {
-        await NocoCache.setList(CacheScope.MODEL, [project_id, base_id], modelList);
+        await NocoCache.setList(
+          CacheScope.MODEL,
+          [project_id, base_id],
+          modelList
+        );
       } else {
         await NocoCache.setList(CacheScope.MODEL, [project_id], modelList);
       }
