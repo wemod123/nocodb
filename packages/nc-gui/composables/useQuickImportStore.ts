@@ -9,7 +9,7 @@ const [useProvideQuickImportStore, useQuickImportStore] = useInjectionState(
       STEP_2_REVIEW_DATA = 1,
       STEP_3_LOAD_TO_DATABASE = 2,
     }
-    const { project } = useProject()
+    const { tables, project } = useProject()
 
     const { $api } = useNuxtApp()
 
@@ -20,6 +20,20 @@ const [useProvideQuickImportStore, useQuickImportStore] = useInjectionState(
     const activeTabIndex = ref<number>(0)
 
     const activeQuickImportTab = computed(() => quickImportTabs.value?.[activeTabIndex.value])
+
+    const importedTables = computed(() =>
+      tables.value
+        ?.filter((table) => {
+          if (table?.meta) {
+            const o = typeof table.meta === 'string' ? JSON.parse(table.meta) : table.meta
+            if (o?.IMPORT_STATUS === 'IN_PROGRESS') {
+              return true
+            }
+          }
+          return false
+        })
+        .sort((x, y) => new Date(y.updated_at!).valueOf() - new Date(x.updated_at!).valueOf()),
+    )
 
     const getPredicate = (key: Partial<TabItem>) => {
       return (tab: TabItem) =>
@@ -114,6 +128,7 @@ const [useProvideQuickImportStore, useQuickImportStore] = useInjectionState(
       importType,
       importDataOnly,
       importStepper,
+      importedTables,
       isImportTypeJson,
       isImportTypeCsv,
       IsImportTypeExcel,
