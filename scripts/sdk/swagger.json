@@ -7424,7 +7424,9 @@
                 }
               }
             ],
-            "columnByIds": {}
+            "columnByIds": {},
+            "updated_at": "string",
+            "created_at": "string"
           }
         ],
         "properties": {
@@ -7490,6 +7492,12 @@
               "string",
               "object"
             ]
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
           }
         },
         "required": [

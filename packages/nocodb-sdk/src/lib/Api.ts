@@ -125,6 +125,8 @@ export interface TableType {
   slug?: string;
   mm?: boolean | number;
   meta?: string | object;
+  updated_at?: string;
+  created_at?: string;
 }
 
 export interface ViewType {
