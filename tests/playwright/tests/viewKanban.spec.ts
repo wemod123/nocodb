@@ -237,6 +237,11 @@ test.describe('View', () => {
         order: order2[i - 1],
       });
 
+    await dashboard.viewSidebar.changeViewIcon({
+      title: 'Kanban-1',
+      icon: 'american-football',
+    });
+
     await dashboard.viewSidebar.deleteView({ title: 'Kanban-1' });
     ///////////////////////////////////////////////
 
