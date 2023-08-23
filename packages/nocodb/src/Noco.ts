@@ -116,6 +116,7 @@ export default class Noco {
     await nestApp.init();
 
     const dashboardPath = process.env.NC_DASHBOARD_URL || '/dashboard';
+    server.set('trust proxy', true);
     server.use(NcToolGui.expressMiddleware(dashboardPath));
     server.use(express.static(path.join(__dirname, 'public')));
     server.get('/', (_req, res) => res.redirect(dashboardPath));

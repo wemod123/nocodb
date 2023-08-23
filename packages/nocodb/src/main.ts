@@ -2,9 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import cors from 'cors';
 import express from 'express';
 import { AppModule } from './app.module';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.set('trust proxy', true);
   if (process.env.NC_WORKER_CONTAINER !== 'true') {
     app.use(
       express.json({ limit: process.env.NC_REQUEST_BODY_SIZE || '50mb' }),
