@@ -26,7 +26,7 @@ export class OrgUsersService {
   constructor(
     private readonly baseUsersService: BaseUsersService,
     private readonly appHooksService: AppHooksService,
-  ) {}
+  ) { }
 
   async userList(param: {
     // todo: add better typing
@@ -140,6 +140,11 @@ export class OrgUsersService {
             email,
             roles: param.user.roles || OrgUserRoles.VIEWER,
             token_version: randomTokenString(),
+            tid: param.user.tid,
+            uid: param.user.uid,
+            display_name: param.user.display_name,
+            user_name: param.user.user_name,
+            avatar: param.user.avatar
           });
 
           const count = await User.count();
@@ -267,7 +272,7 @@ export class OrgUsersService {
     let settings = {};
     try {
       settings = JSON.parse((await Store.get(NC_APP_SETTINGS))?.value);
-    } catch {}
+    } catch { }
     return settings;
   }
 

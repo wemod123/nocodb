@@ -1,0 +1,92 @@
+on:
+  push:
+    branches:
+      - build/test-tries
+
+# Common Variables
+env:
+  APP_NAME: nocobuild
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./packages/nocodb
+    steps:
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Checkout
+        uses: actions/checkout@v3    
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.14.0
+
+      - name: Build Common SDK
+        working-directory: packages/nocodb-sdk
+        run: |
+          export NODE_OPTIONS="--max_old_space_size=16384"
+          pnpm install --ignore-scripts --no-frozen-lockfile --ignore-workspace 
+          pnpm run build
+
+      - name: Build GUI
+        working-directory: packages/nc-gui
+        run: |
+          export NODE_OPTIONS="--max_old_space_size=16384"
+          pnpm install --ignore-scripts --no-frozen-lockfile
+          pnpm run build:copy
+
+      - name: Build nocodb and docker files
+        run: |
+          pnpm install --ignore-scripts --no-frozen-lockfile
+          pnpm run docker:build
+        working-directory: ${{ env.working-directory }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2.1.0
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2.2.1
+      
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+            # Connect to registry
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build Image
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: ${{ env.working-directory }}
+          build-args: NC_VERSION=${{ steps.get-docker-repository.outputs.DOCKER_BUILD_TAG }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          push: false
+          tags: |
+            ${{ env.APP_NAME }}:${{ github.sha }}
+
+      - name: Push Image
+        run: |
+          docker push ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+

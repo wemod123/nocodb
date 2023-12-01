@@ -1795,6 +1795,8 @@ export interface OrgUserReqType {
   email?: string;
   /** Roles for the base user */
   roles?: 'org-level-creator' | 'org-level-viewer';
+  tid?: string;
+  uid?: string;
 }
 
 /**
@@ -2409,6 +2411,8 @@ export interface UserType {
   updated_at?: string;
   display_name?: string;
   user_name?: string;
+  tid?: string;
+  uid?: string;
   bio?: string;
   location?: string;
   website?: string;

@@ -10,6 +10,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import get from 'lodash/get';
 import { Request } from 'express';
 import { ProjectUserReqType } from 'nocodb-sdk';
 import { GlobalGuard } from '~/guards/global/global.guard';
@@ -21,7 +22,7 @@ import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
 @UseGuards(MetaApiLimiterGuard, GlobalGuard)
 @Controller()
 export class BaseUsersController {
-  constructor(protected readonly baseUsersService: BaseUsersService) {}
+  constructor(protected readonly baseUsersService: BaseUsersService) { }
 
   @Get([
     '/api/v1/db/meta/projects/:baseId/users',
@@ -33,6 +34,7 @@ export class BaseUsersController {
       users: await this.baseUsersService.userList({
         baseId,
         query: req.query,
+        tid: get(req.user.roles, ['super']) === true ? undefined : req.user.tid
       }),
     };
   }

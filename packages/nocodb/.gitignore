@@ -47,3 +47,4 @@ test_sakila_?.db
 /docker/nc-gui/
 
 /tests/unit/.env
+.env

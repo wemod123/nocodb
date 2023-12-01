@@ -225,6 +225,7 @@ const rolePermissions:
   [ProjectRoles.CREATOR]: {
     exclude: {
       baseDelete: true,
+      baseUpdate: true
     },
   },
   [ProjectRoles.OWNER]: {

@@ -80,11 +80,13 @@ export default class BaseUser {
       limit = 25,
       offset = 0,
       query,
+      tid
     }: {
       base_id: string;
       limit: number;
       offset: number;
       query?: string;
+      tid?: string;
     },
     ncMeta = Noco.ncMeta,
   ): Promise<(Partial<User> & BaseUser)[]> {
@@ -101,6 +103,10 @@ export default class BaseUser {
       )
       .offset(offset)
       .limit(limit);
+
+    if (tid) {
+      queryBuilder.where('tid', tid);
+    }
 
     if (query) {
       queryBuilder.where('email', 'like', `%${query.toLowerCase?.()}%`);

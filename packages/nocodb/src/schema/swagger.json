@@ -15029,9 +15029,9 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "type":"object",
-                "properties":{
-                  "files":{
+                "type": "object",
+                "properties": {
+                  "files": {
                     "type": "array",
                     "required": true,
                     "items": {
@@ -15046,9 +15046,9 @@
                     "files": [
                       {
                         "mimetype": "image/jpeg",
-                        "fieldname":"files",
+                        "fieldname": "files",
                         "originalname": "22bc-kavypmq4869759 (1).jpg",
-                        "encoding":"7bit",
+                        "encoding": "7bit",
                         "size": 13052,
                         "buffer": "<Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 03 20 00 00 02 58 08 02 00 00 00 15 14 15 27 00 00 00 09 70 48 59 73 00 00 0b 13 00 00 0b 13 01 >"
                       }
@@ -16584,7 +16584,7 @@
             "type": "string",
             "description": "Attachment URL to be uploaded via upload-by-url"
           },
-          "fileName":{
+          "fileName": {
             "type": "string",
             "description": "The name of the attachment file name"
           }
@@ -16599,9 +16599,9 @@
         "x-examples": {
           "Example 1": {
             "mimetype": "image/jpeg",
-            "fieldname":"files",
+            "fieldname": "files",
             "originalname": "22bc-kavypmq4869759 (1).jpg",
-            "encoding":"7bit",
+            "encoding": "7bit",
             "size": 13052,
             "buffer": "<Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 03 20 00 00 02 58 08 02 00 00 00 15 14 15 27 00 00 00 09 70 48 59 73 00 00 0b 13 00 00 0b 13 01 >"
           }
@@ -20606,6 +20606,12 @@
             ],
             "type": "string",
             "description": "Roles for the base user"
+          },
+          "tid": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string"
           }
         },
         "title": "Organisation User Request Model",
@@ -22762,6 +22768,12 @@
           "user_name": {
             "type": "string"
           },
+          "tid": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string"
+          },
           "bio": {
             "type": "string"
           },
@@ -23815,8 +23827,7 @@
           {
             "list": [
               {
-                "body": {
-                },
+                "body": {},
                 "type": "invite",
                 "is_read": false,
                 "is_deleted": false,

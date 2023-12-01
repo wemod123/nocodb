@@ -27,13 +27,14 @@ import { getProjectRolePower } from '~/utils/roleHelper';
 
 @Injectable()
 export class BaseUsersService {
-  constructor(protected appHooksService: AppHooksService) {}
+  constructor(protected appHooksService: AppHooksService) { }
 
-  async userList(param: { baseId: string; query: any }) {
+  async userList(param: { baseId: string; query: any, tid?: string }) {
     return new PagedResponseImpl(
       await BaseUser.getUsersList({
         ...param.query,
         base_id: param.baseId,
+        tid: param.tid
       }),
       {
         ...param.query,
@@ -378,9 +379,8 @@ export class BaseUsersService {
           to: email,
           subject: 'Verify email',
           html: ejs.render(template, {
-            signupLink: `${req.ncSiteUrl}${
-              Noco.getConfig()?.dashboardPath
-            }#/signup/${token}`,
+            signupLink: `${req.ncSiteUrl}${Noco.getConfig()?.dashboardPath
+              }#/signup/${token}`,
             baseName: req.body?.baseName,
             roles: (req.body?.roles || '')
               .split(',')

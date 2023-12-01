@@ -25,8 +25,12 @@ export default class User implements UserType {
   roles?: string;
   token_version?: string;
 
+  user_name?: string;
   display_name?: string;
   avatar?: string;
+
+  tid?: string;
+  uid?: string;
 
   constructor(data: User) {
     Object.assign(this, data);
@@ -51,6 +55,11 @@ export default class User implements UserType {
       'email_verified',
       'roles',
       'token_version',
+      'display_name',
+      'user_name',
+      'avatar',
+      'tid',
+      'uid'
     ]);
 
     if (insertObj.email) {
@@ -84,7 +93,10 @@ export default class User implements UserType {
       'roles',
       'token_version',
       'display_name',
+      'user_name',
       'avatar',
+      'tid',
+      'uid'
     ]);
 
     if (updateObj.email) {
@@ -215,6 +227,10 @@ export default class User implements UserType {
         `${MetaTable.USERS}.created_at`,
         `${MetaTable.USERS}.updated_at`,
         `${MetaTable.USERS}.roles`,
+        `${MetaTable.USERS}.avatar`,
+        `${MetaTable.USERS}.tid`,
+        `${MetaTable.USERS}.uid`,
+        `${MetaTable.USERS}.display_name`
       )
       .select(
         ncMeta

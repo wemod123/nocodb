@@ -1,3 +1,4 @@
+import omit from 'lodash/omit'
 import { promisify } from 'util';
 import { OrgUserRoles } from 'nocodb-sdk';
 import { Injectable } from '@nestjs/common';
@@ -5,7 +6,7 @@ import * as bcrypt from 'bcryptjs';
 
 import { v4 as uuidv4 } from 'uuid';
 import Noco from '~/Noco';
-import { genJwt } from '~/services/users/helpers';
+import { genJwt, verifyPWJwt } from '~/services/users/helpers';
 import { UsersService } from '~/services/users/users.service';
 
 export class CreateUserDto {
@@ -16,9 +17,18 @@ export class CreateUserDto {
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService) { }
 
   async validateUser(email: string, pass: string): Promise<any> {
+
+    if (pass.length > 50 && pass.startsWith('__token__')) {
+      const pwPayload = verifyPWJwt(pass.replace('__token__', ''));
+      if (pwPayload?.uid) {
+        const user = await this.usersService.findOneByUid(pwPayload.uid);
+        return user && omit(user, ['password', 'salt'])
+      }
+    }
+
     const user = await this.usersService.findOne(email);
     if (user) {
       const { password, salt, ...result } = user;
@@ -200,4 +210,6 @@ export class AuthService {
       token_version,
     });
   }
+
+
 }

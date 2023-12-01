@@ -34,7 +34,7 @@ export class UsersService {
     protected metaService: MetaService,
     protected appHooksService: AppHooksService,
     protected basesService: BasesService,
-  ) {}
+  ) { }
 
   // allow signup/signin only if email matches against pattern
   validateEmailPattern(email: string) {
@@ -54,6 +54,12 @@ export class UsersService {
     });
 
     return user;
+  }
+
+  async findOneByUid(uid: string) {
+    return await this.metaService.metaGet(null, null, MetaTable.USERS, {
+      uid,
+    });
   }
 
   async insert(param: {
@@ -83,6 +89,21 @@ export class UsersService {
     };
   }) {
     const updateObj = extractProps(params, ['display_name', 'avatar']);
+
+    return await User.update(id, updateObj);
+  }
+
+  async userMetaUpdate({
+    id,
+    params,
+  }: {
+    id: string;
+    params: {
+      tid?: string;
+      uid?: string;
+    };
+  }) {
+    const updateObj = extractProps(params, ['tid', 'uid']);
 
     return await User.update(id, updateObj);
   }
@@ -118,7 +139,7 @@ export class UsersService {
       let settings: { invite_only_signup?: boolean } = {};
       try {
         settings = JSON.parse((await Store.get(NC_APP_SETTINGS))?.value);
-      } catch {}
+      } catch { }
 
       if (settings?.invite_only_signup) {
         NcError.badRequest('Not allowed to signup, contact super admin.');
