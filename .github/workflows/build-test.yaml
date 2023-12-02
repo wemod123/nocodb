@@ -41,7 +41,7 @@ jobs:
       - name: Build nocodb
         working-directory: packages/nocodb
         run: |
-          pnpm install --prod --shamefully-hoist --no-frozen-lockfile
+          pnpm install --no-frozen-lockfile
           pnpm run build:sync
           pnpm add nocodb-sdk@'file:./nocodb-sdk' nc-lib-gui@'file:./nc-lib-gui'
           pnpm run docker:build
