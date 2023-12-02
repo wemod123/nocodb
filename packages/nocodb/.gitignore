@@ -48,3 +48,6 @@ test_sakila_?.db
 
 /tests/unit/.env
 .env
+
+nocodb-sdk
+nc-lib-gui

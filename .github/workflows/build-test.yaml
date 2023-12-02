@@ -19,7 +19,7 @@ jobs:
           version: 8
 
       - name: Checkout
-        uses: actions/checkout@v3    
+        uses: actions/checkout@v3
 
       - name: Setup NodeJS
         uses: actions/setup-node@v3
@@ -40,11 +40,12 @@ jobs:
           pnpm install --ignore-scripts --no-frozen-lockfile
           pnpm run build:copy
 
-      - name: Build nocodb and docker files
-        run: |
-          pnpm install --ignore-scripts --no-frozen-lockfile
-          pnpm run docker:build
+      - name: Build nocodb
         working-directory: ${{ env.working-directory }}
+        run: |
+          pnpm run build:sync
+          pnpm install --prod --shamefully-hoist
+          pnpm run docker:build
 
       - uses: azure/docker-login@v1
         with:
@@ -53,7 +54,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Build Image
-        working-directory: packages/nocodb
+        working-directory: ${{ env.working-directory }}
         run: |
-          docker build . -t ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}
+          docker build -f Dockerfile.lift . -t ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}
           docker push ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}
