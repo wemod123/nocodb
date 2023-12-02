@@ -27,7 +27,6 @@ jobs:
       - name: Initalize
         working-directory: packages/nocodb
         run: |
-          pnpm install --prod --shamefully-hoist
           pnpm run build:sync
 
       - name: Build Common SDK
