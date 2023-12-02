@@ -10,8 +10,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./packages/nocodb
     steps:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -25,6 +23,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.14.0
+
+      - name: Initalize
+        working-directory: packages/nocodb
+        run: |
+          pnpm run build:sync
 
       - name: Build Common SDK
         working-directory: packages/nocodb-sdk
@@ -41,7 +44,7 @@ jobs:
           pnpm run build:copy
 
       - name: Build nocodb
-        working-directory: ${{ env.working-directory }}
+        working-directory: packages/nocodb
         run: |
           pnpm run build:sync
           pnpm install --prod --shamefully-hoist
@@ -54,7 +57,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Build Image
-        working-directory: ${{ env.working-directory }}
+        working-directory: packages/nocodb
         run: |
           docker build -f Dockerfile.lift . -t ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}
           docker push ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}
