@@ -27,6 +27,7 @@ jobs:
       - name: Initalize
         working-directory: packages/nocodb
         run: |
+          pnpm install --prod --shamefully-hoist
           pnpm run build:sync
 
       - name: Build Common SDK
@@ -47,7 +48,7 @@ jobs:
         working-directory: packages/nocodb
         run: |
           pnpm run build:sync
-          pnpm install --prod --shamefully-hoist
+          pnpm install --prod --shamefully-hoist --no-lockfile
           pnpm run docker:build
 
       - uses: azure/docker-login@v1
