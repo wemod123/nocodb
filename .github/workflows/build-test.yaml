@@ -24,11 +24,6 @@ jobs:
         with:
           node-version: 18.14.0
 
-      - name: Initalize
-        working-directory: packages/nocodb
-        run: |
-          pnpm run build:sync
-
       - name: Build Common SDK
         working-directory: packages/nocodb-sdk
         run: |
@@ -48,6 +43,7 @@ jobs:
         run: |
           pnpm run build:sync
           pnpm install --prod --shamefully-hoist --no-lockfile
+          pnpm add nocodb-sdk@'file:./nocodb-sdk' nc-lib-gui@'file:./nc-lib-gui'
           pnpm run docker:build
 
       - uses: azure/docker-login@v1
