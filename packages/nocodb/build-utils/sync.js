@@ -14,8 +14,8 @@ const sdkDestDir = path.join(__dirname, '../nocodb-sdk');
 
 async function copyAndRemoveDirs(srcDir, destDir) {
   try {
-    await removeDir(destDir, { recursive: true });
     await mkdir(destDir, { recursive: true });
+    await removeDir(destDir, { recursive: true });
 
     const files = await fs.promises.readdir(srcDir);
 
