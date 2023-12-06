@@ -1,68 +1,68 @@
 <script setup lang="ts">
-import {
-  ActiveViewInj,
-  FieldsInj,
-  IsPublicInj,
-  MetaInj,
-  ReadonlyInj,
-  ReloadViewDataHookInj,
-  createEventHook,
-  extractSdkResponseErrorMsg,
-  message,
-  provide,
-  ref,
-  useBase,
-  useGlobal,
-  useProvideSmartsheetStore,
-  useSharedView,
-} from '#imports'
+  import {
+    ActiveViewInj,
+    FieldsInj,
+    IsPublicInj,
+    MetaInj,
+    ReadonlyInj,
+    ReloadViewDataHookInj,
+    createEventHook,
+    extractSdkResponseErrorMsg,
+    message,
+    provide,
+    ref,
+    useBase,
+    useGlobal,
+    useProvideSmartsheetStore,
+    useSharedView,
+  } from '#imports'
 
-const { sharedView, meta, nestedFilters } = useSharedView()
+  const { sharedView, meta, nestedFilters } = useSharedView()
 
-const { signedIn } = useGlobal()
+  const { signedIn } = useGlobal()
 
-const { loadProject } = useBase()
+  const { loadProject } = useBase()
 
-const { isLocked } = useProvideSmartsheetStore(sharedView, meta, true, ref([]), nestedFilters)
+  const { isLocked } = useProvideSmartsheetStore(sharedView, meta, true, ref([]), nestedFilters)
 
-useProvideKanbanViewStore(meta, sharedView)
+  useProvideKanbanViewStore(meta, sharedView)
 
-const reloadEventHook = createEventHook()
+  const reloadEventHook = createEventHook()
 
-const columns = ref(meta.value?.columns || [])
+  const columns = ref(meta.value?.columns || [])
 
-provide(ReloadViewDataHookInj, reloadEventHook)
-provide(ReadonlyInj, ref(true))
-provide(MetaInj, meta)
-provide(ActiveViewInj, sharedView)
-provide(FieldsInj, columns)
-provide(IsPublicInj, ref(true))
-provide(IsLockedInj, isLocked)
+  provide(ReloadViewDataHookInj, reloadEventHook)
+  provide(ReadonlyInj, ref(true))
+  provide(MetaInj, meta)
+  provide(ActiveViewInj, sharedView)
+  provide(FieldsInj, columns)
+  provide(IsPublicInj, ref(true))
+  provide(IsLockedInj, isLocked)
 
-useProvideViewColumns(sharedView, meta, () => reloadEventHook?.trigger(), true)
+  useProvideViewColumns(sharedView, meta, () => reloadEventHook?.trigger(), true)
 
-if (signedIn.value) {
-  try {
-    await loadProject()
-  } catch (e: any) {
-    console.error(e)
-    message.error(await extractSdkResponseErrorMsg(e))
+  if (signedIn.value) {
+    try {
+      await loadProject()
+    } catch (e: any) {
+      console.error(e)
+      message.error(await extractSdkResponseErrorMsg(e))
+    }
   }
-}
 
-watch(
-  () => meta.value?.columns,
-  () => (columns.value = meta.value?.columns || []),
-  {
-    immediate: true,
-  },
-)
+  watch(
+    () => meta.value?.columns,
+    () => (columns.value = meta.value?.columns || []),
+    {
+      immediate: true,
+    },
+  )
 </script>
 
 <template>
-  <div class="nc-container flex flex-col h-full mt-1.5 px-12">
-    <LazySmartsheetToolbar />
-    <LazySmartsheetGrid />
+  <div class="nc-container flex flex-col h-full px-4 lg:px-8 xl:px-12 !pb-5 bg-slate-200 rounded-lg">
+    <LazySmartsheetToolbar class="!px-0 xs:hidden flex" />
+    <LazySmartsheetGrid class="rounded overflow-hidden" />
   </div>
 </template>
 

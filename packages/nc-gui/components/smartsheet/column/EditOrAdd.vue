@@ -246,7 +246,7 @@ if (props.fromTableExplorer) {
         </a-form-item>
         <a-form-item
           v-if="!props.hideTitle && !isFieldsTab"
-          :label="`${columnLabel} ${$t('general.name')}`"
+          :label="`${columnLabel}${$t('general._langSpace')}${$t('general.name')}`"
           v-bind="validateInfos.title"
           :required="false"
         >
@@ -263,7 +263,7 @@ if (props.fromTableExplorer) {
           <a-form-item
             v-if="!props.hideType && !(isEdit && !!onlyNameUpdateOnEditColumns.find((col) => col === formState.uidt))"
             class="flex-1"
-            :label="`${columnLabel} ${$t('general.type')}`"
+            :label="`${columnLabel}${$t('general._langSpace')}${$t('general.type')}`"
           >
             <div class="h-1 w-full"></div>
             <a-select

@@ -127,7 +127,7 @@ const handleChange = () => {
       </a-button>
     </div>
     <template #overlay>
-      <div v-if="open" class="p-6 w-90 bg-white shadow-lg nc-table-toolbar-menu !border-1 border-gray-50 rounded-2xl" @click.stop>
+      <div v-if="open" class="p-6 w-90 bg-white shadow-lg nc-table-toolbar-menu !border-1 border-gray-50" @click.stop>
         <div>Select a field to stack records by</div>
         <div class="nc-fields-list py-2">
           <div class="grouping-field">

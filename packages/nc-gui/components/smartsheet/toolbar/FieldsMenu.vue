@@ -336,7 +336,7 @@
     </div>
 
     <template #overlay>
-      <div class="p-4 pr-0 bg-white w-90 rounded-2xl nc-table-toolbar-menu"
+      <div class="p-4 pr-0 bg-white w-90 rounded nc-table-toolbar-menu"
            data-testid="nc-fields-menu"
            @click.stop>
         <div v-if="!filterQuery && !isPublic && (activeView?.type === ViewTypes.GALLERY || activeView?.type === ViewTypes.KANBAN)"

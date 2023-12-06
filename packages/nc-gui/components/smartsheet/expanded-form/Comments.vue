@@ -8,6 +8,8 @@ const props = defineProps<{
   loading: boolean
 }>()
 
+const { locale } = useI18n()
+
 const { loadCommentsAndLogs, commentsAndLogs, saveComment: _saveComment, comment, updateComment } = useExpandedFormStoreOrThrow()
 
 const { isExpandedFormCommentMode } = storeToRefs(useConfigStore())
@@ -208,14 +210,13 @@ watch(commentInputDomRef, () => {
               <div class="flex flex-col p-4 gap-3">
                 <div class="flex justify-between">
                   <div class="flex items-center gap-2">
-                    <GeneralUserIcon size="base" :name="log.display_name ?? log.user" :email="log.user" />
-
+                    <GeneralUserIcon size="base" :email="log.user" />
                     <div class="flex flex-col">
                       <span class="truncate font-bold max-w-42">
                         {{ log.display_name ?? log.user.split('@')[0] ?? 'Shared source' }}
                       </span>
                       <div v-if="log.id !== editLog?.id" class="text-xs font-medium text-gray-500">
-                        {{ log.created_at !== log.updated_at ? `Edited ${timeAgo(log.updated_at)}` : timeAgo(log.created_at) }}
+                        {{ log.created_at !== log.updated_at ? `Edited ${timeAgo(log.updated_at, locale?.startsWith('zh') ? 'zh-cn' : 'en')}` : timeAgo(log.created_at, locale?.startsWith('zh') ? 'zh-cn' : 'en') }}
                       </div>
                     </div>
                   </div>
@@ -243,7 +244,7 @@ watch(commentInputDomRef, () => {
                 </div>
                 <div v-if="log.id === editLog?.id" class="flex justify-end gap-1">
                   <NcButton type="secondary" size="sm" @click="onCancel"> Cancel </NcButton>
-                  <NcButton v-e="['a:row-expand:comment:save']" size="sm" @click="onEditComment"> Save </NcButton>
+                  <NcButton v-e="['a:row-expand:comment:save']" size="sm" @click="onEditComment"> {{$t("general.save")}} </NcButton>
                 </div>
               </div>
             </div>
@@ -251,7 +252,7 @@ watch(commentInputDomRef, () => {
         </div>
         <div v-if="hasEditPermission" class="p-2 bg-gray-50 gap-2 flex">
           <div class="h-14 flex flex-row w-full bg-white py-2.75 px-1.5 items-center rounded-xl border-1 border-gray-200">
-            <GeneralUserIcon size="base" class="!w-10" :email="user?.email" :name="user?.display_name" />
+            <GeneralUserIcon size="base" class="!w-10" :email="user?.email" />
             <a-input
               ref="commentInputDomRef"
               v-model:value="comment"
@@ -296,8 +297,8 @@ watch(commentInputDomRef, () => {
                   <span class="truncate font-bold max-w-50">
                     {{ log.display_name ?? log.user.split('@')[0].slice(0, 2) ?? 'Shared source' }}
                   </span>
-                  <div v-if="log.id !== editLog?.id" class="text-xs font-medium text-gray-500">
-                    {{ timeAgo(log.created_at) }}
+                  <div v-if="log.id !== editLog?.id" class="text-xs font-normal text-gray-500">
+                    {{ timeAgo(log.created_at, locale?.startsWith('zh') ? 'zh-cn' : 'en') }}
                   </div>
                 </div>
               </div>

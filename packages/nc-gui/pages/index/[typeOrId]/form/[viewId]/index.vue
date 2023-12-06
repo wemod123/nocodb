@@ -38,11 +38,11 @@ router.afterEach((to) => shouldRedirect(to.name as string))
 
 <template>
   <div
-    class="scrollbar-thin-dull overflow-y-auto overflow-x-hidden flex flex-col color-transition nc-form-view relative bg-primary bg-opacity-10 dark:(bg-slate-900) h-[100vh] min-h-[600px] py-4"
+    class="bg-slate-100 nc-scrollbar-md overflow-y-auto overflow-x-hidden flex flex-col justify-center items-center color-transition nc-form-view relative h-[100vh] py-4"
   >
     <NuxtPage />
 
-    <div
+    <!-- <div
       class="color-transition flex items-center justify-center cursor-pointer absolute top-4 md:top-15 right-4 md:right-15 rounded-full p-2 bg-white dark:(bg-slate-600) shadow hover:(ring-1 ring-accent ring-opacity-100)"
       @click="onClick"
     >
@@ -50,7 +50,7 @@ router.afterEach((to) => shouldRedirect(to.name as string))
         <MaterialSymbolsDarkModeOutline v-if="isDark" />
         <MaterialSymbolsLightModeOutline v-else />
       </Transition>
-    </div>
+    </div> -->
   </div>
 </template>
 

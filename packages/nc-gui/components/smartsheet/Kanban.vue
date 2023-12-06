@@ -390,11 +390,14 @@ const getRowId = (row: RowType) => {
   const pk = extractPkFromRow(row.row, meta.value!.columns!)
   return pk ? `row-${pk}` : ''
 }
+
+const isKanbanView = computed(() => route.value.fullPath.includes('/nc/kanban'))
 </script>
 
 <template>
   <div
     class="flex flex-col w-full bg-white"
+    :class="{'bg-slate-200': isKanbanView}"
     data-testid="nc-kanban-wrapper"
     :style="{
       minHeight: 'calc(100vh - var(--topbar-height))',
@@ -402,10 +405,11 @@ const getRowId = (row: RowType) => {
   >
     <div
       ref="kanbanContainerRef"
-      class="nc-kanban-container flex mt-4 pb-4 px-4 overflow-y-hidden w-full nc-scrollbar-x-md"
+      :class="{'!px-6 bg-slate-200 !mt-2': isKanbanView}"
+      class="nc-kanban-container flex mt-4 pb-4 px-4 overflow-y-hidden w-full nc-scrollbar-x-lg"
       :style="{
-        minHeight: 'calc(100vh - var(--topbar-height) - 3.5rem)',
-        maxHeight: 'calc(100vh - var(--topbar-height) - 3.5rem)',
+        minHeight: isKanbanView? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',
+        maxHeight: isKanbanView? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',
       }"
     >
       <div v-if="isViewDataLoading" class="flex flex-row min-h-full gap-x-2">
@@ -436,7 +440,7 @@ const getRowId = (row: RowType) => {
               <a-card
                 v-if="!stack.collapsed"
                 :key="`${stack.id}-${stackIdx}`"
-                class="mx-4 !bg-gray-100 flex flex-col w-80 h-full !rounded-xl overflow-y-hidden"
+                class="mx-4 !bg-slate-100 flex flex-col w-80 h-full !rounded-xl overflow-y-hidden"
                 :class="{
                   'not-draggable': stack.title === null || isLocked || isPublic || !hasEditPermission,
                   '!cursor-default': isLocked || !hasEditPermission,
@@ -456,9 +460,9 @@ const getRowId = (row: RowType) => {
                 </div>
 
                 <!-- Stack -->
-                <a-layout v-else class="!bg-gray-100">
-                  <a-layout-header>
-                    <div class="nc-kanban-stack-head font-medium flex items-center">
+                <a-layout v-else class="!bg-slate-100">
+                  <a-layout-header class="!bg-slate-100">
+                    <div class="nc-kanban-stack-head bg-slate-100 font-medium flex items-center">
                       <a-dropdown
                         :trigger="['click']"
                         overlay-class-name="nc-dropdown-kanban-stack-context-menu"
@@ -512,8 +516,8 @@ const getRowId = (row: RowType) => {
                     </div>
                   </a-layout-header>
 
-                  <a-layout-content class="overflow-y-hidden mt-1" style="max-height: calc(100% - 11rem)">
-                    <div :ref="kanbanListRef" class="nc-kanban-list h-full nc-scrollbar-dark-md" :data-stack-title="stack.title">
+                  <a-layout-content class="overflow-y-hidden mt-1 bg-slate-100" style="max-height: calc(100% - 11rem)">
+                    <div :ref="kanbanListRef" class="nc-kanban-list bg-slate-100 h-full nc-scrollbar-dark-md" :data-stack-title="stack.title">
                       <!-- Draggable Record Card -->
                       <Draggable
                         :list="formattedData.get(stack.title)"
@@ -672,7 +676,7 @@ const getRowId = (row: RowType) => {
                           }
                         "
                       >
-                        Add Record
+                        {{ $t("activity.addRecord") }}
                         <component :is="iconMap.plus" v-if="!isPublic && !isLocked" class="" />
                       </div>
                     </div>
@@ -764,7 +768,7 @@ const getRowId = (row: RowType) => {
 
   <GeneralDeleteModal v-model:visible="deleteStackVModel" entity-name="Stack" :on-delete="handleDeleteStackConfirmClick">
     <template #entity-preview>
-      <div v-if="stackToBeDeleted" class="flex flex-row items-center py-2 px-2.25 bg-gray-100 rounded-lg text-gray-700 mb-4">
+      <div v-if="stackToBeDeleted" class="flex flex-row items-center py-2 px-2.25 bg-slate-100 rounded-lg text-gray-700 mb-4">
         <div
           class="capitalize text-ellipsis overflow-hidden select-none w-full pl-1.75"
           :style="{ wordBreak: 'keep-all', whiteSpace: 'nowrap', display: 'inline' }"
@@ -781,7 +785,7 @@ const getRowId = (row: RowType) => {
 .a-layout,
 .ant-layout-header,
 .ant-layout-content {
-  @apply !bg-gray-100;
+  @apply !bg-slate-100;
 }
 
 .ant-layout-header {

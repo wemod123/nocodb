@@ -162,7 +162,6 @@
         <div class="flex flex-col rounded-lg overflow-hidden border-1">
           <div class="flex flex-row bg-slate-100 min-h-12 items-center">
             <div class="text-gray-700 users-email-grid">{{ $t('objects.users') }}</div>
-            <!-- <div class="text-gray-700 date-joined-grid">{{ $t('title.email') }}</div> -->
             <div class="text-gray-700 user-access-grid">{{ $t('general.access') }}</div>
           </div>
 
@@ -173,12 +172,16 @@
                  class="user-row flex flex-row border-b-1 py-1 min-h-14 items-center">
               <div class="flex gap-3 items-center users-email-grid">
                 <GeneralUserIcon size="base"
-                                 :email="collab.email" />
-                <span class="truncate">
-                  {{ collab.display_name || collab.display_name }}
-                </span>
+                                 :user="collab" />
+                <div class="h-9">
+                  <div class="truncate font-bold">
+                    {{ collab.display_name || collab.email }}
+                  </div>
+                  <div class="truncate text-slate-400 text-xs leading-none">
+                    {{ collab.email }}
+                  </div>
+                </div>
               </div>
-              <div class="date-joined-grid">{{ timeAgo(collab.created_at) }}</div>
               <div class="user-access-grid">
                 <template v-if="accessibleRoles.includes(collab.roles)">
                   <RolesSelector :role="collab.roles"
@@ -225,7 +228,7 @@
 }
 
 .user-access-grid {
-  @apply w-40;
+  @apply w-1/3;
 }
 
 .user-row {

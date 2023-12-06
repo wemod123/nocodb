@@ -39,6 +39,8 @@
     }
   },
   "general": {
+    "showXHidden": "显示{x}个隐藏字段",
+    "dontShowXHidden": "不显示{x}个隐藏字段",
     "_langSpace": "",
     "workingDirs": "工作空间",
     "baseTable": "多维表格",
@@ -417,7 +419,7 @@
     "defaultView": "默认视图",
     "relations": "数据模型",
     "switchLanguage": "切换语言",
-    "renameFile": "Rename File",
+    "renameFile": "重命名文件",
     "links": {
       "noAction": "No Action",
       "cascade": "Cascade",
@@ -427,6 +429,7 @@
     }
   },
   "labels": {
+    "sAtatchments": "的附件列表",
     "startTyping": "输入...",
     "pinned": "置顶",
     "heading1": "一级标题",
@@ -658,6 +661,7 @@
     "newFormLoaded": "New form will be loaded after"
   },
   "activity": {
+    "addRecord": "添加记录",
     "pinTable": "置顶",
     "unpinTable": "取消置顶",
     "openInANewTab": "Open in a new tab",
@@ -961,20 +965,20 @@
     "enterPassword": "输入密码",
     "bySigningUp": "注册即表示您同意服务条款",
     "subscribeToOurWeeklyNewsletter": "订阅我们的每周的新闻",
-    "verifyingPassword": "Verifying Password",
-    "thisSharedViewIsProtected": "This shared view is protected",
-    "successfullySubmittedFormData": "Successfully submitted form data",
-    "formViewNotSupportedOnMobile": "Form view is not supported on mobile",
-    "newFormWillBeLoaded": "New form will be loaded after {seconds} seconds",
-    "optimizedQueryDisabled": "Optimized query is disabled",
-    "optimizedQueryEnabled": "Optimized query is enabled",
-    "lookupNonBtWarning": "Lookup field is not supported for non-Belongs to relation",
-    "invalidTime": "Invalid Time",
-    "linkColumnClearNotSupportedYet": "You don't have any supported links for Lookup",
-    "recordCouldNotBeFound": "Record could not be found",
-    "invalidPhoneNumber": "Invalid phone number",
-    "pageSizeChanged": "Page size changed",
-    "errorLoadingData": "Error loading data",
+    "verifyingPassword": "验证密码",
+    "thisSharedViewIsProtected": "受保护的视图",
+    "successfullySubmittedFormData": "表单数据已提交",
+    "formViewNotSupportedOnMobile": "手机版本不支持表单设计",
+    "newFormWillBeLoaded": "新表单将在{seconds}秒后加载",
+    "optimizedQueryDisabled": "已禁用优化查询",
+    "optimizedQueryEnabled": "已启用优化查询",
+    "lookupNonBtWarning": "不支持非关系字段的Lookup字段",
+    "invalidTime": "无效的时间",
+    "linkColumnClearNotSupportedYet": "未找到受支持的链接字段",
+    "recordCouldNotBeFound": "没有查询到数据",
+    "invalidPhoneNumber": "无效手机号码",
+    "pageSizeChanged": "更改每页条目数量",
+    "errorLoadingData": "加载数据错误",
     "webhookBodyMsg1": "Use context variable",
     "webhookBodyMsg2": "body",
     "webhookBodyMsg3": "to refer the record under consideration",
@@ -1230,7 +1234,7 @@
       "makeLineBreak": "to make a line break",
       "goToPrevious": "转到上一个",
       "goToNext": "转到下一个",
-      "thankYou": "谢谢你！",
+      "thankYou": "谢谢",
       "submittedFormData": "您已成功提交表单数据。"
     },
     "error": {

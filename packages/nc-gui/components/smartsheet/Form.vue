@@ -426,15 +426,16 @@ const onFormItemClick = (element: any) => {
 
     <a-row v-else class="h-full flex" data-testid="nc-form-wrapper">
       <a-col v-if="isEditable" :span="8" class="shadow p-2 md:p-4 h-full overflow-auto scrollbar-thin-dull nc-form-left-drawer">
-        <div class="flex flex-wrap gap-2">
-          <div class="flex-1 text-lg">
+        <div class="flex flex-wrap gap-2 items-center pb-4">
+          <div class="flex-1 text-lg font-bold">
             {{ $t('objects.fields') }}
           </div>
 
-          <div class="flex flex-wrap gap-2 mb-4">
+          <div class="flex flex-wrap gap-2">
             <NcButton
               v-if="hiddenColumns.length"
               type="secondary"
+              size="small"
               class="nc-form-add-all"
               data-testid="nc-form-add-all"
               :disabled="isLocked"
@@ -447,6 +448,7 @@ const onFormItemClick = (element: any) => {
             <NcButton
               v-if="localColumns.length"
               type="secondary"
+              size="small"
               class="nc-form-remove-all"
               data-testid="nc-form-remove-all"
               :disabled="isLocked"
@@ -471,7 +473,7 @@ const onFormItemClick = (element: any) => {
           <template #item="{ element, index }">
             <a-card
               size="small"
-              class="!border-0 color-transition cursor-pointer item hover:(bg-primary ring-1 ring-accent ring-opacity-100) bg-opacity-10 !rounded !shadow-lg"
+              class="color-transition cursor-pointer item hover:(bg-primary ring-1 ring-primary ring-opacity-100) bg-opacity-10 !rounded !shadow"
               :class="{
                 '!bg-gray-50 !hover:bg-gray-50 !hover:ring-transparent !cursor-not-allowed': isLocked,
               }"

@@ -105,6 +105,7 @@ import Fields from '~icons/nc-icons/fields'
 import Filter from '~icons/nc-icons/filter'
 import Group from '~icons/nc-icons/group'
 import Sort from '~icons/nc-icons/sort'
+import Trash from '~icons/mdi/trash-can-outline'
 
 // keep it for reference
 // todo: remove it after all icons are migrated
@@ -254,6 +255,7 @@ import Sort from '~icons/nc-icons/sort'
 } as const */
 
 export const iconMap = {
+  trash: Trash,
   sort: Sort,
   group: Group,
   filter: Filter,

@@ -10,6 +10,7 @@ export const useBases = defineStore('basesStore', () => {
   const { $api } = useNuxtApp()
 
   const bases = ref<Map<string, NcProject>>(new Map())
+  const baseUsers = ref<User[]>([])
 
   const basesList = computed<NcProject[]>(() => Array.from(bases.value.values()).sort((a, b) => a.updated_at - b.updated_at))
 
@@ -53,25 +54,32 @@ export const useBases = defineStore('basesStore', () => {
     page,
     searchText,
   }: {
-    baseId: string
+    baseId?: string
     limit?: number
     page?: number
-    searchText: string | undefined
+    searchText?: string | undefined
   }) {
-    const response: any = await api.auth.baseUserList(baseId, {
-      query: {
-        limit: limit || 200,
-        offset: typeof page === 'number' ? ((page - 1) * (limit || 20)) : 0,
-        query: searchText,
-      },
-    } as RequestParams)
+    if (baseId || activeProjectId.value) {
+      const response: any = await api.auth.baseUserList(baseId || activeProjectId.value, {
+        query: {
+          limit: limit || 200,
+          offset: typeof page === 'number' ? ((page - 1) * (limit || 20)) : 0,
+          query: searchText,
+        },
+      } as RequestParams)
 
-    const totalRows = response.users.pageInfo.totalRows ?? 0
+      const totalRows = response.users.pageInfo.totalRows ?? 0
 
-    return {
-      users: response.users.list,
-      totalRows,
+      baseUsers.value = response.users.list;
+
+      return {
+        users: response.users.list,
+        totalRows,
+      }
+    } else {
+      return { users: [], totalRows: 0 }
     }
+
   }
 
   const createProjectUser = async (baseId: string, user: User) => {
@@ -292,6 +300,7 @@ export const useBases = defineStore('basesStore', () => {
   const toggleStarred = async (..._args: any) => { }
 
   return {
+    baseUsers,
     bases,
     basesList,
     loadProjects,

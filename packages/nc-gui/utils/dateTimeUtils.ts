@@ -1,13 +1,14 @@
 import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
 
-export const timeAgo = (date: any) => {
+export const timeAgo = (date: any, lang = 'en') => {
   if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(date)) {
     // if there is no timezone info, consider as UTC
     // e.g. 2023-01-01 08:00:00 (MySQL)
     date += '+00:00'
   }
   // show in local time
-  return dayjs(date).fromNow()
+  return dayjs(date).locale(lang).fromNow()
 }
 
 export const dateFormats = [

@@ -386,15 +386,13 @@ onMounted(() => {
 
           <Transition name="slide-left">
             <div v-if="submitted" class="flex flex-col justify-center items-center text-center">
-              <div class="text-lg px-6 py-3 bg-green-300 text-gray-700 rounded" data-testid="nc-survey-form__success-msg">
+              <div class="text-lg px-6 py-3 bg-green-200 text-gray-700 rounded" data-testid="nc-survey-form__success-msg">
                 <template v-if="sharedFormView?.success_msg">
                   {{ sharedFormView?.success_msg }}
                 </template>
 
                 <template v-else>
                   <div class="flex flex-col gap-1">
-                    <div>{{ $t('msg.info.thankYou') }}</div>
-
                     <div>{{ $t('msg.info.submittedFormData') }}</div>
                   </div>
                 </template>
@@ -418,7 +416,7 @@ onMounted(() => {
     </div>
 
     <template v-if="!submitted">
-      <div class="mb-24 md:my-4 select-none text-center text-gray-500 dark:text-slate-200" data-testid="nc-survey-form__footer">
+      <div class="mb-30 md:my-4 select-none text-center text-gray-500 dark:text-slate-200" data-testid="nc-survey-form__footer">
         {{ index + 1 }} / {{ formColumns?.length }}
       </div>
     </template>
@@ -473,7 +471,7 @@ onMounted(() => {
         </div>
       </Transition>
 
-      <GeneralPoweredBy />
+      <!-- <GeneralPoweredBy /> -->
     </div>
   </div>
 </template>

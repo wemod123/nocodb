@@ -198,6 +198,11 @@ watch(
     immediate: true,
   },
 )
+
+const isSharedView = computed(()=>{
+  return route.fullPath.includes('/nc/gallery')
+})
+
 </script>
 
 <template>
@@ -225,11 +230,13 @@ watch(
     </template>
 
     <div
-      class="flex flex-col w-full nc-gallery nc-scrollbar-md bg-[#fbfbfb]"
+      class="flex flex-col w-full nc-gallery nc-scrollbar-dark-md"
       data-testid="nc-gallery-wrapper"
       style="height: calc(100% - var(--topbar-height) + 0.7rem)"
       :class="{
         '!overflow-hidden': isViewDataLoading,
+        'bg-slate-200 px-3': isSharedView,
+        'bg-slate-100': !isSharedView
       }"
     >
       <div v-if="isViewDataLoading" class="flex flex-col h-full">
@@ -237,7 +244,8 @@ watch(
           <a-skeleton-input v-for="index of Array(20)" :key="index" class="!min-w-60.5 !h-96 !rounded-md overflow-hidden" />
         </div>
       </div>
-      <div v-else class="nc-gallery-container grid gap-3 my-4 px-3">
+      <div v-else class="nc-gallery-container grid gap-3 px-3"
+           :class="{'my-4': !isSharedView, 'mt-1 mb-5': isSharedView}">
         <div v-for="(record, rowIndex) in data" :key="`record-${record.row.id}`">
           <LazySmartsheetRow :row="record">
             <a-card

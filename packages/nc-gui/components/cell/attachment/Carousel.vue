@@ -2,6 +2,7 @@
 import { onKeyDown } from '@vueuse/core'
 import { useAttachmentCell } from './utils'
 import { computed, iconMap, isImage, ref, useAttachment, useEventListener } from '#imports'
+import type { NcButton } from '#build/components';
 
 const { selectedImage, visibleItems, downloadFile } = useAttachmentCell()!
 
@@ -53,24 +54,24 @@ useEventListener(container, 'click', (e) => {
 </script>
 
 <template>
-  <GeneralOverlay v-model="selectedImage" :z-index="1001" class="bg-gray-500 bg-opacity-50">
+  <GeneralOverlay v-model="selectedImage" :z-index="1001" class="bg-gray-500 bg-opacity-80">
     <template v-if="selectedImage">
-      <div ref="container" class="overflow-hidden p-12 text-center relative xs:h-screen">
-        <div class="text-white group absolute top-5 right-5">
-          <component
-            :is="iconMap.closeCircle"
-            class="group-hover:text-red-500 cursor-pointer text-4xl"
-            @click.stop="selectedImage = false"
-          />
-        </div>
-
+      <div ref="container" class="overflow-hidden text-center relative xs:h-screen">
         <div
-          class="keep-open select-none group hover:(ring-1 ring-accent) ring-opacity-100 cursor-pointer leading-8 inline-block px-3 py-1 bg-gray-300 text-white mb-4 text-center rounded shadow"
-          @click.stop="downloadFile(selectedImage)"
+          class="keep-open flex items-center h-14 px-8 w-full py-2 bg-gray-700 text-white mb-4 text-center rounded shadow"
+          
         >
-          <h3 class="group-hover:text-primary">{{ selectedImage && selectedImage.title }}</h3>
+          <div class="font-bold text-slate-100 text-lg">{{ selectedImage && selectedImage.title }}</div>
+          <div class="flex-grow" />
+          <NcButton size="small" @click.stop="downloadFile(selectedImage)"> 
+            <component :is="iconMap.cloudDownload" class="mx-2 !text-white"/>
+            <span>{{ $t("general.download") }}</span>
+          </NcButton>
+          <a-button shape="circle" type="text" class="ml-4 hover:!bg-slate-500/60 !bg-slate-600"  @click.stop="selectedImage = false"> 
+            <component :is="iconMap.close" class="text-slate-300"/>
+          </a-button>
         </div>
-
+        <div class="px-12 pt-8">
         <a-carousel
           v-if="!!selectedImage"
           :ref="setCarouselRef"
@@ -103,6 +104,7 @@ useEventListener(container, 'click', (e) => {
             <LazyCellAttachmentImage :srcs="getPossibleAttachmentSrc(item)" class="max-w-70vw max-h-70vh" />
           </div>
         </a-carousel>
+        </div>
       </div>
     </template>
   </GeneralOverlay>

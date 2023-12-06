@@ -80,7 +80,7 @@
       </a-button>
     </div>
     <template #overlay>
-      <div class="w-full bg-white shadow-xl menu-filter-dropdown border-1 border-gray-50 rounded-lg min-w-[160px] overflow-hidden"
+      <div class="w-full bg-white shadow-xl menu-filter-dropdown border-1 border-gray-50 rounded min-w-[160px] overflow-hidden"
            data-testid="nc-height-menu">
         <div class="flex flex-col w-full text-sm"
              @click.stop>

@@ -39,6 +39,8 @@
     }
   },
   "general": {
+    "showXHidden": "Show {x} hidden {unit}",
+    "dontShowXHidden": "Hide {x} hidden {unit}",
     "_langSpace": " ",
     "workingDirs": "Workspace",
     "baseTable": "Base table",
@@ -425,6 +427,7 @@
     }
   },
   "labels": {
+    "sAtatchments": "'s attachements list",
     "startTyping": "Start typing...",
     "pinned": "Pinned",
     "heading1": "Heading 1",
@@ -656,6 +659,7 @@
     "newFormLoaded": "New form will be loaded after"
   },
   "activity": {
+    "addRecord": "Add record",
     "pinTable": "Pin table",
     "unpinTable": "Un pin table",
     "openInANewTab": "Open in a new tab",

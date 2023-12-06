@@ -95,23 +95,26 @@ const handleFileDelete = (i: number) => {
       <div class="flex gap-4">
         <div
           v-if="isSharedForm || (!readOnly && isUIAllowed('dataEdit') && !isPublic)"
-          class="nc-attach-file group"
+          class="nc-attach-file group text-sm"
           data-testid="attachment-expand-file-picker-button"
           @click="open"
         >
-          <MaterialSymbolsAttachFile class="transform group-hover:(text-accent scale-120)" />
+          <component :is="iconMap.plus" />
           {{ $t('activity.attachFile') }}
         </div>
 
         <div class="flex items-center gap-2">
           <div v-if="readOnly" class="text-gray-400">[{{ $t('labels.readOnly') }}]</div>
-          {{ $t('labels.viewingAttachmentsOf') }}
-          <div class="font-semibold underline">{{ column?.title }}</div>
+          <div class="flex items-center">
+            <strong>{{ column?.title }}</strong>
+            <span class="text-sm">{{ $t('labels.sAtatchments') }}</span>
+          </div>
         </div>
 
-        <div v-if="selectedVisibleItems.includes(true)" class="flex flex-1 items-center gap-3 justify-end mr-[30px]">
-          <NcButton type="primary" class="nc-attachment-download-all" @click="bulkDownloadFiles">
-            {{ $t('activity.bulkDownload') }}
+        <div v-if="selectedVisibleItems.includes(true)" class="flex pb-1 flex-1 items-center gap-3 justify-end mr-[30px]">
+          <NcButton type="primary" size="small" class="!px-3 nc-attachment-download-all" @click="bulkDownloadFiles">
+            <component :is="iconMap.cloudDownload" />
+            <span class="pl-2">{{ $t('activity.bulkDownload') }}</span>
           </NcButton>
         </div>
       </div>
@@ -131,26 +134,14 @@ const handleFileDelete = (i: number) => {
       <div ref="sortableRef" :class="{ dragging }" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 relative p-6">
         <div v-for="(item, i) of visibleItems" :key="`${item.title}-${i}`" class="flex flex-col gap-1">
           <a-card class="nc-attachment-item group">
-            <a-checkbox
-              v-model:checked="selectedVisibleItems[i]"
-              class="nc-attachment-checkbox group-hover:(opacity-100)"
-              :class="{ '!opacity-100': selectedVisibleItems[i] }"
-            />
-
-            <a-tooltip v-if="!readOnly">
-              <template #title> {{ $t('title.removeFile') }} </template>
-              <component
-                :is="iconMap.closeCircle"
-                v-if="isSharedForm || (isUIAllowed('dataEdit') && !isPublic)"
-                class="nc-attachment-remove"
-                @click.stop="onRemoveFileClick(item.title, i)"
-              />
-            </a-tooltip>
-
+            <div class="flex px-4 items-center nc-attachement-tools-bottom opacity-0 group-hover:opacity-100 absolute bottom-0 left-0 w-full h-12"
+                 :class="{ '!opacity-100': selectedVisibleItems[i] }">
+              <a-checkbox v-model:checked="selectedVisibleItems[i]" />
+            <div class="flex-grow" />
             <a-tooltip placement="bottom">
               <template #title> {{ $t('title.downloadFile') }} </template>
 
-              <div class="nc-attachment-download group-hover:(opacity-100)">
+              <div class="nc-attachment-download mr-3">
                 <component :is="iconMap.download" @click.stop="downloadFile(item)" />
               </div>
             </a-tooltip>
@@ -158,11 +149,20 @@ const handleFileDelete = (i: number) => {
             <a-tooltip v-if="isSharedForm || (!readOnly && isUIAllowed('dataEdit') && !isPublic)" placement="bottom">
               <template #title> {{ $t('title.renameFile') }} </template>
 
-              <div class="nc-attachment-download group-hover:(opacity-100) mr-[35px]">
+              <div class="nc-attachment-download mr-4">
                 <component :is="iconMap.edit" @click.stop="renameFile(item, i)" />
               </div>
             </a-tooltip>
-
+            <a-tooltip v-if="!readOnly" placement="bottom">
+              <template #title> {{ $t('title.removeFile') }} </template>
+              <component
+                :is="iconMap.trash"
+                v-if="isSharedForm || (isUIAllowed('dataEdit') && !isPublic)"
+                class="nc-attachment-download min-w-6.5 min-h-6.5 text-red-500"
+                @click.stop="onRemoveFileClick(item.title, i)"
+              />
+            </a-tooltip>
+            </div>
             <div
               :class="[dragging ? 'cursor-move' : 'cursor-pointer']"
               class="nc-attachment h-full w-full flex items-center justify-center overflow-hidden"
@@ -221,13 +221,29 @@ const handleFileDelete = (i: number) => {
 <style lang="scss">
 .nc-attachment-modal {
   .nc-attach-file {
-    @apply select-none cursor-pointer color-transition flex items-center gap-1 border-1 p-2 rounded
-    @apply hover:(bg-primary bg-opacity-10 text-primary ring);
-    @apply active:(ring-accent ring-opacity-100 bg-primary bg-opacity-20);
+    @apply select-none cursor-pointer flex items-center gap-1 border-1 p-2 rounded bg-slate-200/60
+    @apply hover:(bg-primary bg-opacity-10 text-primary);
+  }
+
+  .ant-modal-content{
+     @apply !p-0
+  }
+
+  .ant-modal-header{
+    @apply bg-slate-100 !pb-2 rounded-t-lg
+  }
+
+  .nc-attachement-tools-bottom{
+    background: linear-gradient(rgba(32, 41, 59, 0), rgba(32, 41, 59, 0.8));
+    @apply rounded-b-lg;
   }
 
   .nc-attachment-item {
-    @apply !h-2/3 !min-h-[200px] flex items-center justify-center relative;
+    @apply !h-2/3 !min-h-[200px] flex items-center justify-center relative rounded-lg;
+
+    .ant-card-body {
+      @apply !p-0 !rounded-lg !overflow-hidden
+    }
 
     @supports (-moz-appearance: none) {
       @apply hover:border-0;
@@ -250,15 +266,8 @@ const handleFileDelete = (i: number) => {
   }
 
   .nc-attachment-download {
-    @apply bg-white absolute bottom-2 right-2;
-    @apply transition-opacity duration-150 ease-in opacity-0 hover:ring;
+    @apply bg-white hover:bg-slate-100;
     @apply cursor-pointer rounded shadow flex items-center p-1 border-1;
-    @apply active:(ring border-0 ring-accent);
-  }
-
-  .nc-attachment-checkbox {
-    @apply absolute top-2 left-2;
-    @apply transition-opacity duration-150 ease-in opacity-0;
   }
 
   .nc-attachment-remove {

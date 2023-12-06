@@ -695,8 +695,7 @@ export default {
                 class="flex-shrink-1 !text-sm"
                 @click="toggleHiddenFields"
               >
-                {{ showHiddenFields ? `Hide ${hiddenFields.length} hidden` : `Show ${hiddenFields.length} hidden` }}
-                {{ hiddenFields.length > 1 ? `fields` : `field` }}
+                {{ showHiddenFields ? $t('general.dontShowXHidden', { x: hiddenFields.length, unit: hiddenFields.length > 1 ? `fields` : `field`}) : $t('general.showXHidden', { x: hiddenFields.length, unit: hiddenFields.length > 1 ? `fields` : `field`}) }}
                 <MdiChevronDown class="ml-1" :class="showHiddenFields ? 'transform rotate-180' : ''" />
               </NcButton>
               <div class="flex-grow h-px ml-1 bg-gray-100"></div>
@@ -811,7 +810,7 @@ export default {
                 :disabled="changedColumns.size === 0 && !isUnsavedFormExist"
                 @click="save"
               >
-                <div class="xs:px-1">Save</div>
+                <div class="xs:px-1">{{$t("general.save")}}</div>
               </NcButton>
             </div>
           </div>

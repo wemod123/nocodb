@@ -70,12 +70,14 @@ const onDecode = async (scannedCodeValue: string) => {
 </script>
 
 <template>
-  <div class="h-full flex flex-col items-center">
+  <div class="flex flex-col items-center p-4 w-full max-w-[720px]">
     <div
-      class="color-transition flex flex-col justify-center gap-2 w-full max-w-[max(33%,600px)] m-auto py-4 pb-8 px-16 md:(bg-white dark:bg-slate-700 rounded-lg border-1 border-gray-200 shadow-xl)"
+      style="box-shadow: 0px 2px 4px hsla(0,0%,8%,.1),0px 6px 12px hsla(0,0%,8%,.06);"
+      class="f-form-contianer flex flex-col relative justify-center gap-2 w-full max-w-[max(33%,600px)] m-auto pb-4 pt-30 pb-8 px-16 bg-white rounded-lg border-1 border-gray-200"
     >
+      <div class="w-full absolute left-0 top-0 h-[158px] bg-slate-200/30 z-0" />
       <template v-if="sharedFormView">
-        <h1 class="prose-2xl font-bold self-center my-4 break-words">
+        <h1 class="prose-2xl z-1 font-bold self-center text-center mb-4 mt-16">
           {{ sharedFormView.heading }}
         </h1>
 
@@ -210,9 +212,9 @@ const onDecode = async (scannedCodeValue: string) => {
       </template>
     </div>
 
-    <div class="flex items-end">
+    <!-- <div class="flex items-end">
       <GeneralPoweredBy />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -223,5 +225,11 @@ const onDecode = async (scannedCodeValue: string) => {
 .nc-btn-fill-form-column-by-scan {
   @apply h-auto;
   @apply ml-1;
+}
+
+.f-form-contianer{
+  background-image: url('/img/s-bg-1.jpg');
+  background-repeat: no-repeat;
+  background-position: top center;
 }
 </style>

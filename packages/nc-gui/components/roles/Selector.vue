@@ -10,7 +10,7 @@ const props = withDefaults(
     description?: boolean
     inherit?: string
     onRoleChange: (role: keyof typeof RoleLabels) => void
-    size: 'sm' | 'md'
+    size?: 'sm' | 'md'
   }>(),
   {
     description: true,
