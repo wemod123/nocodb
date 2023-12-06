@@ -54,14 +54,14 @@ export const useBases = defineStore('basesStore', () => {
     searchText,
   }: {
     baseId: string
-    limit: number
-    page: number
+    limit?: number
+    page?: number
     searchText: string | undefined
   }) {
     const response: any = await api.auth.baseUserList(baseId, {
       query: {
-        limit,
-        offset: (page - 1) * limit,
+        limit: limit || 200,
+        offset: typeof page === 'number' ? ((page - 1) * (limit || 20)) : 0,
         query: searchText,
       },
     } as RequestParams)
@@ -247,7 +247,7 @@ export const useBases = defineStore('basesStore', () => {
     }
     try {
       meta = (isString(base.meta) ? JSON.parse(base.meta) : base.meta) ?? meta
-    } catch {}
+    } catch { }
 
     return meta
   }
@@ -289,7 +289,7 @@ export const useBases = defineStore('basesStore', () => {
     else navigateTo('/')
   }
 
-  const toggleStarred = async (..._args: any) => {}
+  const toggleStarred = async (..._args: any) => { }
 
   return {
     bases,

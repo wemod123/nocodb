@@ -14,7 +14,7 @@ const selectable = computed(() => props.selectable ?? false)
 
 <style lang="scss">
 .nc-menu {
-  @apply bg-white !rounded-md !py-1.5;
+  @apply bg-white !rounded-md !py-3;
 }
 
 .nc-menu.ant-dropdown-menu {

@@ -53,18 +53,20 @@ export const themeColors = {
 export const themeV2Colors = {
   /** Primary shades */
   'royal-blue': {
-    'DEFAULT': '#4351E8',
-    '50': '#E7E8FC',
-    '100': '#D4D8FA',
-    '200': '#B0B6F5',
-    '300': '#8C94F1',
-    '400': '#6773EC',
-    '500': '#4351E8',
-    '600': '#1A2BD8',
-    '700': '#1421A6',
-    '800': '#0E1774',
-    '900': '#080D42',
+    'DEFAULT': '#6366f1',
+    '50': '#eef2ff',
+    '100': '#e0e7ff',
+    '200': '#c7d2fe',
+    '300': '#a5b4fc',
+    '400': '#818cf8',
+    '500': '#6366f1',
+    '600': '#4f46e5',
+    '700': '#4338ca',
+    '800': '#3730a3',
+    '900': '#312e81',
   },
+
+  
 
   /** Accent shades */
   'pink': colors.pink,

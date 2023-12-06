@@ -1,6 +1,6 @@
 import { useStorage } from '@vueuse/core'
 import type { JwtPayload } from 'jwt-decode'
-import type { AppInfo, State, StoredState } from './types'
+import type { AppInfo, State, StoredState, EntryConfig } from './types'
 import {
   BASE_FALLBACK_URL,
   computed,
@@ -52,7 +52,7 @@ export function useGlobalState(storageKey = 'nocodb-gui-v2'): State {
     if (availableLocale) locale = availableLocale as keyof typeof Language
 
     return locale
-  }, 'en' /** fallback locale */)
+  }, 'zh-Hans' /** fallback locale */)
 
   /** State */
   const initialState: StoredState = {
@@ -124,7 +124,10 @@ export function useGlobalState(storageKey = 'nocodb-gui-v2'): State {
   /** our local user object */
   const user = ref<User | null>(null)
 
+  const entryConfig = ref<EntryConfig | null>(null)
+
   return {
+    entryConfig,
     ...toRefs(storage.value),
     storage,
     token,

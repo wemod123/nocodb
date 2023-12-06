@@ -39,7 +39,7 @@ const roleProperties = computed(() => {
 
 <template>
   <div
-    class="flex items-start rounded-md"
+    class="flex items-start rounded"
     :class="{
       'cursor-pointer': clickableRef,
     }"

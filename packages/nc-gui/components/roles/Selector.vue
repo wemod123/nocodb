@@ -39,7 +39,7 @@ const sizeRef = toRef(props, 'size')
             @click="props.onRoleChange(rl)"
           >
             <div
-              class="flex flex-col py-1.5 rounded-lg px-2 gap-1 bg-transparent cursor-pointer hover:bg-gray-100"
+              class="flex flex-col py-1.5 rounded px-2 gap-1 bg-transparent cursor-pointer hover:bg-gray-100"
               :class="{
                 'w-[350px]': descriptionRef,
                 'w-[200px]': !descriptionRef,

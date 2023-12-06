@@ -36,7 +36,8 @@ export class UsersController {
     );
   }
 
-  @Patch(['/api/v1/user/profile'])
+  @Patch(['/api/v1/user/metadata'])
+  @UseGuards(GlobalGuard)
   @HttpCode(200)
   @Acl('UpdateUserMetaData')
   async updateUser(@Body() body, @Request() req, @Response() res) {

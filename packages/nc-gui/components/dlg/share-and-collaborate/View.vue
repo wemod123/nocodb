@@ -8,6 +8,8 @@ const { isViewToolbar } = defineProps<{
   isViewToolbar?: boolean
 }>()
 
+const { isSuper } = useRoles();
+
 const { copy } = useCopy()
 const { dashboardUrl } = useDashboard()
 const baseStore = useBase()
@@ -134,8 +136,12 @@ watch(showShareModal, (val) => {
     <div v-else class="flex flex-col px-1">
       <div class="flex flex-row justify-between items-center pb-1 mx-4 mt-3">
         <div class="flex text-base font-medium">{{ $t('activity.share') }}</div>
+        <div class="w-7 h-7 flex items-center justify-center bg-slate-100 hover:bg-slate-200 cursor-pointer rounded" 
+             @click="showShareModal = false">
+          <component :is="iconMap.close" />
+        </div>
       </div>
-      <div v-if="isViewToolbar && activeView" class="share-view">
+      <div v-if="isViewToolbar && activeView" class="share-view bg-slate-100">
         <div class="flex flex-row items-center gap-x-2 px-4 pt-3 pb-3 select-none">
           <component
             :is="viewIcons[view?.type]?.icon"
@@ -152,7 +158,7 @@ watch(showShareModal, (val) => {
         </div>
         <DlgShareAndCollaborateSharePage />
       </div>
-      <div class="share-base">
+      <div v-if="isSuper" class="share-base">
         <div class="flex flex-row items-center gap-x-2 px-4 pt-3 pb-3 select-none">
           <GeneralProjectIcon :type="base.type" class="nc-view-icon group-hover" />
 
@@ -167,16 +173,16 @@ watch(showShareModal, (val) => {
         <LazyDlgShareAndCollaborateShareBase />
       </div>
       <div class="flex flex-row justify-end mx-3 mt-1 mb-2 pt-4 gap-x-2">
-        <NcButton type="secondary" data-testid="docs-cancel-btn" @click="showShareModal = false">
+        <!-- <NcButton type="secondary" data-testid="docs-cancel-btn" @click="showShareModal = false">
           {{ $t('general.close') }}
-        </NcButton>
-        <NcButton
+        </NcButton> -->
+        <!-- <NcButton
           data-testid="docs-share-manage-access"
           type="secondary"
           :loading="isOpeningManageAccess"
           @click="openManageAccess"
           >{{ $t('activity.manageProjectAccess') }}</NcButton
-        >
+        > -->
 
         <!-- <a-button
           v-if="formStatus === 'base-collaborate'"

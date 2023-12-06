@@ -3,13 +3,13 @@ import RedisMockCacheMgr from './RedisMockCacheMgr';
 import type CacheMgr from './CacheMgr';
 import { CacheGetType } from '~/utils/globals';
 
-export default class NocoCache {
+export default class NocoStore {
   private static client: CacheMgr;
   private static cacheDisabled: boolean;
   private static prefix: string;
 
   public static init() {
-    this.cacheDisabled = (process.env.NC_DISABLE_CACHE || false) === 'true';
+    this.cacheDisabled = (process.env.NC_DISABLE_CACHE_STORE || false) === 'true';
     if (this.cacheDisabled) {
       return;
     }

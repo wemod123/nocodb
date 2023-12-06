@@ -39,6 +39,9 @@
     }
   },
   "general": {
+    "_langSpace": " ",
+    "workingDirs": "Workspace",
+    "baseTable": "Base table",
     "quit": "Quit",
     "home": "Home",
     "load": "Load",
@@ -235,7 +238,7 @@
       "orgLevelViewer": "Organization Level Viewer"
     },
     "sqlVIew": "SQL View",
-    "rowHeight": "Record Height",
+    "rowHeight": "Row Height",
     "heightClass": {
       "short": "Short",
       "medium": "Medium",
@@ -297,6 +300,15 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "updatesRecords": "Audits",
+    "activitiesNComments": "Comments",
+    "asDisplayField": "As primary display field",
+    "privilegesMgmt": "Privileges management",
+    "membersPrivileges": "Members privileges type",
+    "otherTables": "Other tables",
+    "noItems": "No items",
+    "pinnedTables": "Pinned tables",
+    "tables": "Tables",
     "docs": "Docs",
     "forum": "Forum",
     "parameter": "Parameter",
@@ -413,6 +425,8 @@
     }
   },
   "labels": {
+    "startTyping": "Start typing...",
+    "pinned": "Pinned",
     "heading1": "Heading 1",
     "heading2": "Heading 2",
     "heading3": "Heading 3",
@@ -642,6 +656,8 @@
     "newFormLoaded": "New form will be loaded after"
   },
   "activity": {
+    "pinTable": "Pin table",
+    "unpinTable": "Un pin table",
     "openInANewTab": "Open in a new tab",
     "copyIFrameCode": "Copy IFrame code",
     "onCondition": "On Condition",
@@ -932,6 +948,13 @@
     "key": "Key"
   },
   "msg": {
+    "changesOfThisRecord": "Changes of this record",
+    "totalXItems": "Total {x} items",
+    "scrollHMsg": "💡Scroll horizontal: Shift + Mouse Wheel",
+    "successMsgOfSwitchView": "Successfully Switched to {type}",
+    "tableEntityMsg": "{table} is a table entity",
+    "viewEntifyMsg": "{view} is a view layout based on table {table}",
+    "notAuthorized": "Not authorized",
     "clickToCopyFieldId": "Click to copy Field Id",
     "enterPassword": "Enter password",
     "bySigningUp": "By signing up, you agree to the",

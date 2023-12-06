@@ -6,7 +6,7 @@ import type { SidebarTableNode } from '~/lib'
 export const useTablesStore = defineStore('tablesStore', () => {
   const { includeM2M, ncNavigateTo } = useGlobal()
   const { api } = useApi()
-  const { $e, $api } = useNuxtApp()
+  const { $e, $api, $state } = useNuxtApp()
   const { addUndo, defineProjectScope } = useUndoRedo()
   const { refreshCommandPalette } = useCommandPalette()
 
@@ -16,6 +16,8 @@ export const useTablesStore = defineStore('tablesStore', () => {
   const baseTables = ref<Map<string, SidebarTableNode[]>>(new Map())
   const basesStore = useBases()
   // const baseStore = useBase()
+
+  const tablePins = ref<{ [key: string]: boolean }>({})
 
   const workspaceStore = useWorkspace()
 
@@ -63,6 +65,26 @@ export const useTablesStore = defineStore('tablesStore', () => {
     },
   )
 
+
+  const loadTablesPins = async (baseId: string) => {
+    tablePins.value = await $fetch(`/api/v1/user/store/projects/${baseId}/key/userPinnedTables`, {
+      baseURL: $api.instance.defaults.baseURL,
+      method: 'GET',
+      headers: { 'xc-auth': $state.token.value as string }
+    })
+  }
+
+  const setTablePins = async (baseId: string, pinned: any) => {
+    await $fetch(`/api/v1/user/store/projects/${baseId}/key/userPinnedTables`, {
+      baseURL: $api.instance.defaults.baseURL,
+      method: 'PATCH',
+      headers: { 'xc-auth': $state.token.value as string },
+      body: pinned
+    })
+
+    await loadTablesPins(baseId);
+  }
+
   const loadProjectTables = async (baseId: string, force = false) => {
     if (!force && baseTables.value.get(baseId)) {
       return
@@ -93,6 +115,8 @@ export const useTablesStore = defineStore('tablesStore', () => {
     })
 
     baseTables.value.set(baseId, tables.list || [])
+
+    await loadTablesPins(baseId)
   }
 
   const addTable = (baseId: string, table: TableType) => {
@@ -235,6 +259,9 @@ export const useTablesStore = defineStore('tablesStore', () => {
   }
 
   return {
+    tablePins,
+    loadTablesPins,
+    setTablePins,
     baseTables,
     loadProjectTables,
     addTable,

@@ -30,7 +30,7 @@ export function useGlobalActions(state: State): Actions {
   }
 
   /** Sign in by setting the token in localStorage */
-  const signIn: Actions['signIn'] = async (newToken) => {
+  const signIn: Actions['signIn'] = async (newToken, entryConfig) => {
     state.token.value = newToken
 
     if (state.jwtPayload.value) {
@@ -42,6 +42,8 @@ export function useGlobalActions(state: State): Actions {
         roles: state.jwtPayload.value.roles,
         display_name: state.jwtPayload.value.display_name,
       }
+
+      state.entryConfig.value = entryConfig || null
     }
   }
 

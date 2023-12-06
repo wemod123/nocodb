@@ -148,5 +148,9 @@ export const useRoles = createSharedComposable(() => {
     )
   }
 
-  return { allRoles, orgRoles, workspaceRoles, baseRoles, loadRoles, isUIAllowed }
+  const isSuper = computed<boolean>(() => {
+    return user.value?.roles.super === true
+  })
+
+  return { allRoles, orgRoles, workspaceRoles, baseRoles, loadRoles, isUIAllowed, isSuper }
 })

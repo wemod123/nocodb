@@ -96,6 +96,7 @@ function onWindowResize() {
 onMounted(() => {
   document.addEventListener('mousemove', handleMouseMove)
   window.addEventListener('resize', onWindowResize)
+  onWindowResize();
 })
 
 onBeforeUnmount(() => {
@@ -139,8 +140,8 @@ function onResize(widthPercent: any) {
 
   const widthRem = width / fontSize
 
-  if (widthRem < 16) {
-    sideBarSize.value.old = ((16 * fontSize) / viewportWidth.value) * 100
+  if (widthRem < 19.5) {
+    sideBarSize.value.old = ((20 * fontSize) / viewportWidth.value) * 100
     if (isLeftSidebarOpen.value) sideBarSize.value.current = sideBarSize.value.old
     return
   } else if (widthRem > 23.5) {
@@ -156,7 +157,7 @@ function onResize(widthPercent: any) {
 
 const normalizedWidth = computed(() => {
   const maxSize = remToPx(23.5)
-  const minSize = remToPx(16)
+  const minSize = remToPx(20)
   if (sidebarWidth.value > maxSize) {
     return maxSize
   } else if (sidebarWidth.value < minSize) {

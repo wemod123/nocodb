@@ -218,7 +218,7 @@ onMounted(async () => {
           </div>
         </div>
 
-        <InfiniteLoading v-bind="$attrs" @infinite="loadListData">
+        <!-- <InfiniteLoading v-bind="$attrs" @infinite="loadListData">
           <template #spinner>
             <div class="flex flex-row w-full justify-center mt-2">
               <GeneralLoader />
@@ -227,7 +227,7 @@ onMounted(async () => {
           <template #complete>
             <span></span>
           </template>
-        </InfiniteLoading>
+        </InfiniteLoading> -->
       </div>
     </template>
   </div>

@@ -297,15 +297,15 @@ const goToPreviousRow = () => {
 <style lang="scss">
 .nc-grid-pagination-wrapper .ant-dropdown-button {
   > .ant-btn {
-    @apply !p-0 !rounded-l-lg hover:border-gray-300;
+    @apply !p-0 !rounded-l hover:border-gray-300;
   }
 
   > .ant-dropdown-trigger {
-    @apply !rounded-r-lg;
+    @apply !rounded-r;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  @apply !rounded-lg;
+  @apply !rounded;
 }
 </style>

@@ -205,7 +205,7 @@ const onImageClick = (item: any) => {
     <div
       v-if="!isReadonly"
       :class="{ 'sm:(mx-auto px-4) xs:(w-full min-w-8)': !visibleItems.length }"
-      class="group cursor-pointer py-1 flex gap-1 items-center active:(ring ring-accent ring-opacity-100) rounded border-none shadow-sm hover:(bg-primary bg-opacity-10) dark:(!bg-slate-500)"
+      class="group cursor-pointer py-1 flex gap-1 items-center"
       data-testid="attachment-cell-file-picker-button"
       @click="open"
     >
@@ -218,15 +218,15 @@ const onImageClick = (item: any) => {
 
         <div
           v-if="active || !visibleItems.length || (isForm && visibleItems.length)"
-          class="flex items-center gap-1 xs:(w-full min-w-12 h-8 justify-center)"
+          class="flex items-center gap-1"
         >
-          <MaterialSymbolsAttachFile
-            class="transform dark:(!text-white) group-hover:(!text-accent scale-120) text-gray-500 text-[0.75rem]"
-          />
+          <div class="rounded-full min-w-6 h-6 hover:bg-slate-200 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="none" stroke="#6D83AF" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12.75 7.75h-10m5-5v10"/></svg>
+          </div>
           <div
             v-if="!visibleItems.length"
             data-rec="true"
-            class="group-hover:text-primary text-gray-500 dark:text-gray-200 dark:group-hover:!text-white text-xs xs:(justify-center rounded-lg text-sm)"
+            class="group-hover:text-primary text-gray-400 text-xs"
           >
             {{ $t('activity.addFiles') }}
           </div>
@@ -240,7 +240,7 @@ const onImageClick = (item: any) => {
       <div
         ref="sortableRef"
         :class="{ 'justify-center': !isExpandedForm && !isGallery && !isKanban }"
-        class="flex cursor-pointer w-full items-center flex-wrap gap-2 py-1.5 scrollbar-thin-dull overflow-hidden mt-0 items-start"
+        class="flex cursor-pointer w-full items-center flex-wrap gap-2 py-1.5 px-1 scrollbar-thin-dull overflow-hidden mt-0 items-start"
         :style="{
           maxHeight: isForm || isExpandedForm ? undefined : `max(${(rowHeight || 1) * 1.8}rem, 41px)`,
         }"
@@ -253,7 +253,6 @@ const onImageClick = (item: any) => {
             <div v-if="isImage(item.title, item.mimetype ?? item.type)">
               <div
                 class="nc-attachment flex items-center flex-col flex-wrap justify-center"
-                :class="{ 'ml-2': active }"
                 @click="() => onImageClick(item)"
               >
                 <LazyCellAttachmentImage
@@ -272,7 +271,6 @@ const onImageClick = (item: any) => {
             <div
               v-else
               class="nc-attachment flex items-center justify-center"
-              :class="{ 'ml-2': active }"
               @click="openAttachment(item)"
             >
               <component :is="FileIcon(item.icon)" v-if="item.icon" />
@@ -285,7 +283,7 @@ const onImageClick = (item: any) => {
 
       <div
         v-if="active || (isForm && visibleItems.length)"
-        class="xs:hidden h-6 w-5 group cursor-pointer flex gap-1 items-center active:(ring ring-accent ring-opacity-100) rounded border-none p-1 hover:(bg-primary bg-opacity-10) dark:(!bg-slate-500)"
+        class="xs:hidden h-6 w-5 group cursor-pointer flex gap-1 items-center rounded border-none p-1 hover:(bg-primary bg-opacity-10)"
       >
         <component :is="iconMap.reload" v-if="isLoading" :class="{ 'animate-infinite animate-spin': isLoading }" />
 

@@ -145,4 +145,33 @@ export class BaseUsersController {
       user: req.user,
     });
   }
+
+  @Get(['/api/v1/user/store/projects/:baseId/key/:cacheKey'])
+  async getUserBaseStoreKv(
+    @Param('baseId') baseId: string,
+    @Param('cacheKey') cacheKey: string,
+    @Req() req: Request
+  ): Promise<any> {
+    return await this.baseUsersService.getUserCacheStore({
+      baseId,
+      userId: req.user.id,
+      cacheKey
+    });
+  }
+
+  @Patch(['/api/v1/user/store/projects/:baseId/key/:cacheKey'])
+  async setUserBaseStoreKv(
+    @Param('baseId') baseId: string,
+    @Param('cacheKey') cacheKey: string,
+    @Req() req: Request,
+    @Body() body: ProjectUserReqType,
+  ): Promise<any> {
+    return await this.baseUsersService.setUserCacheStore({
+      baseId,
+      userId: req.user.id,
+      cacheKey,
+      payload: body
+    });
+  }
+
 }

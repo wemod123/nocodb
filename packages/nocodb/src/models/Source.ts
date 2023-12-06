@@ -94,6 +94,26 @@ export default class Source implements SourceType {
     return returnBase;
   }
 
+  public static async renameBase(
+    baseId: string,
+    sourceId: string,
+    source: { alias: string },
+    ncMeta = Noco.ncMeta
+  ) {
+    await ncMeta.metaUpdate(
+      baseId,
+      null,
+      MetaTable.BASES,
+      source,
+      sourceId
+    );
+    await NocoCache.del(`${CacheScope.BASE}:${sourceId}`);
+
+    const updatedSource = await Source.get(sourceId, false, ncMeta);
+
+    return updatedSource
+  }
+
   public static async updateBase(
     sourceId: string,
     source: SourceType & {
@@ -230,19 +250,19 @@ export default class Source implements SourceType {
         force
           ? {}
           : {
-              _or: [
-                {
-                  deleted: {
-                    neq: true,
-                  },
+            _or: [
+              {
+                deleted: {
+                  neq: true,
                 },
-                {
-                  deleted: {
-                    eq: null,
-                  },
+              },
+              {
+                deleted: {
+                  eq: null,
                 },
-              ],
-            },
+              },
+            ],
+          },
       );
 
       if (baseData) {

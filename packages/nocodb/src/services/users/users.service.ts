@@ -99,11 +99,14 @@ export class UsersService {
   }: {
     id: string;
     params: {
-      tid?: string;
-      uid?: string;
+      email?: string
+      display_name?: string
+      avatar?: string
+      tid?: string
+      uid?: string
     };
   }) {
-    const updateObj = extractProps(params, ['tid', 'uid']);
+    const updateObj = extractProps(params, ['email', 'display_name', 'avatar', 'tid', 'uid']);
 
     return await User.update(id, updateObj);
   }

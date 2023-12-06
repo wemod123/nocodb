@@ -25,7 +25,7 @@ const vModel = useVModel(props, 'modelValue', emits)
     :destroy-on-close="true"
   >
     <div class="flex justify-between w-full items-start pb-4 border-b-1 border-gray-50 mb-4">
-      <div class="select-none text-gray-900 font-medium text-lg">
+      <div class="select-none text-gray-900 font-normal text-lg">
         {{ `ERD for "${activeTable?.title}"` }}
       </div>
     </div>

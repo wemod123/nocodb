@@ -357,7 +357,7 @@ const selectedOpts = computed(() => {
       }"
     >
       <template v-for="selectedOpt of selectedOpts" :key="selectedOpt.value">
-        <a-tag class="rounded-tag" :color="selectedOpt.color">
+        <a-tag class="!rounded" :color="selectedOpt.color">
           <span
             :style="{
               'color': tinycolor.isReadable(selectedOpt.color || '#ccc', '#fff', { level: 'AA', size: 'large' })
@@ -402,7 +402,7 @@ const selectedOpts = computed(() => {
         :class="`nc-select-option-${column.title}-${op.title}`"
         @click.stop
       >
-        <a-tag class="rounded-tag" :color="op.color">
+        <a-tag class="!rounded" :color="op.color">
           <span
             :style="{
               'color': tinycolor.isReadable(op.color || '#ccc', '#fff', { level: 'AA', size: 'large' })
@@ -433,7 +433,7 @@ const selectedOpts = computed(() => {
       <template #tagRender="{ value: val, onClose }">
         <a-tag
           v-if="options.find((el) => el.title === val)"
-          class="rounded-tag nc-selected-option"
+          class="rounded nc-selected-option"
           :style="{ display: 'flex', alignItems: 'center' }"
           :color="options.find((el) => el.title === val)?.color"
           :closable="editAllowed && (vModel.length > 1 || !column?.rqd)"
@@ -495,12 +495,12 @@ const selectedOpts = computed(() => {
   }
 }
 
-.rounded-tag {
+.rounded {
   @apply py-0 px-[12px] rounded-[12px];
 }
 
 :deep(.ant-tag) {
-  @apply "rounded-tag" my-[2px];
+  @apply "rounded" my-[2px];
 }
 
 :deep(.ant-tag-close-icon) {

@@ -95,7 +95,7 @@ async function changeLockType(type: LockType) {
       lock_type: type,
     })
 
-    message.success(`Successfully Switched to ${type} view`)
+    message.success(t('msg.successMsgOfSwitchView', { type: t(`title.${type}`) }))
   } catch (e: any) {
     message.error(await extractSdkResponseErrorMsg(e))
   }

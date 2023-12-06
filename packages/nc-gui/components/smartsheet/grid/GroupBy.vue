@@ -157,15 +157,22 @@ const parseKey = (group) => {
 
 const shouldRenderCell = (column) =>
   [UITypes.Lookup, UITypes.Attachment, UITypes.Barcode, UITypes.QrCode, UITypes.Links].includes(column?.uidt)
+
+const showTooltip = ref(false)
+const checkMouseMove = (evt: MouseEvent)=>{
+  const diff = window.innerHeight - (evt.y || evt.clientY || evt.pageY)
+  showTooltip.value =  (diff < 52 && diff > 41)
+}
 </script>
 
 <template>
   <div class="flex flex-col h-full w-full">
     <div
       ref="wrapper"
-      class="flex flex-col h-full w-full scrollbar-thin-dull overflow-auto"
+      class="flex flex-col h-full w-full nc-scrollbar-x-lg overflow-auto bg-slate-100/60"
       :style="`${!vGroup.root && vGroup.nested ? 'padding-left: 12px; padding-right: 12px;' : ''}`"
       @scroll="onScroll"
+      @mousemove="checkMouseMove"
     >
       <div
         ref="scrollable"
@@ -175,13 +182,13 @@ const shouldRenderCell = (column) =>
       >
         <div v-if="vGroup.root === true" class="flex sticky top-0 z-5">
           <div
-            class="bumper mb-2"
-            style="background-color: #f9f9fa; border-color: #e7e7e9; border-bottom-width: 1px"
+            class="bumper mb-2 bg-slate-100"
+            style="border-color: #e7e7e9; border-bottom-width: 1px"
             :style="{ 'padding-left': `${(maxDepth || 1) * 13}px` }"
           ></div>
           <Table ref="tableHeader" class="mb-2" :data="[]" :header-only="true" />
         </div>
-        <div :class="{ 'px-[12px]': vGroup.root === true }">
+        <div :class="{ 'px-[12px] pb-4': vGroup.root === true }">
           <a-collapse
             v-model:activeKey="_activeGroupKeys"
             class="!bg-transparent w-full nc-group-wrapper"
@@ -192,7 +199,7 @@ const shouldRenderCell = (column) =>
             <a-collapse-panel
               v-for="[i, grp] of Object.entries(vGroup?.children ?? [])"
               :key="`group-panel-${i}`"
-              class="!border-1 nc-group rounded-[12px]"
+              class="!border-1 nc-group rounded"
               :class="{ 'mb-4': vGroup.children && +i !== vGroup.children.length - 1 }"
               :style="`background: rgb(${245 - _depth * 10}, ${245 - _depth * 10}, ${245 - _depth * 10})`"
               :show-arrow="false"
@@ -201,37 +208,30 @@ const shouldRenderCell = (column) =>
                 <div class="flex !sticky left-[15px]">
                   <div class="flex items-center">
                     <span role="img" aria-label="right" class="anticon anticon-right ant-collapse-arrow">
-                      <svg
-                        focusable="false"
-                        data-icon="right"
-                        width="1em"
-                        height="1em"
-                        fill="currentColor"
-                        aria-hidden="true"
-                        viewBox="64 64 896 896"
-                        :style="`${activeGroups.includes(i) ? 'transform: rotate(90deg)' : ''}`"
-                      >
-                        <path
-                          d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
-                        ></path>
+                      <svg xmlns="http://www.w3.org/2000/svg" 
+                           width="12" 
+                           height="12" 
+                           viewBox="0 0 512 512"
+                           :style="`${activeGroups.includes(i) ? 'transform: rotate(90deg)' : ''}`">
+                        <path fill="#93A3C4" 
+                                 d="M133 440a35.37 35.37 0 0 1-17.5-4.67c-12-6.8-19.46-20-19.46-34.33V111c0-14.37 7.46-27.53 19.46-34.33a35.13 35.13 0 0 1 35.77.45l247.85 148.36a36 36 0 0 1 0 61l-247.89 148.4A35.5 35.5 0 0 1 133 440Z"/>
                       </svg>
                     </span>
                   </div>
                   <div class="flex items-center">
                     <div class="flex flex-col">
                       <div class="flex gap-2">
-                        <div class="text-xs nc-group-column-title">{{ grp.column.title }}</div>
-                        <div class="text-xs text-gray-400 nc-group-row-count">({{ $t('datatype.Count') }}: {{ grp.count }})</div>
+                        <div class="text-xs nc-group-column-title text-slate-500">{{ grp.column.title }}</div>
+                        <div class="text-xs text-gray-400 nc-group-row-count">{{ $t('msg.totalXItems',{ x: grp.count }) }}</div>
                       </div>
                       <div class="flex mt-1">
                         <template v-if="grp.column.uidt === 'MultiSelect'">
-                          <a-tag
+                          <span
                             v-for="[tagIndex, tag] of Object.entries(grp.key.split(','))"
                             :key="`panel-tag-${grp.column.id}-${tag}`"
-                            class="!py-0 !px-[12px] !rounded-[12px]"
-                            :color="grp.color.split(',')[+tagIndex]"
+                            class="font-bold text-xs"
                           >
-                            <span
+                            <!-- <span
                               class="nc-group-value"
                               :style="{
                                 'color': tinycolor.isReadable(grp.color.split(',')[+tagIndex] || '#ccc', '#fff', {
@@ -247,8 +247,9 @@ const shouldRenderCell = (column) =>
                               }"
                             >
                               {{ tag in GROUP_BY_VARS.VAR_TITLES ? GROUP_BY_VARS.VAR_TITLES[tag] : tag }}
-                            </span>
-                          </a-tag>
+                            </span> -->
+                            {{ tag in GROUP_BY_VARS.VAR_TITLES ? GROUP_BY_VARS.VAR_TITLES[tag] : tag }}
+                          </span>
                         </template>
                         <div
                           v-else-if="!(grp.key in GROUP_BY_VARS.VAR_TITLES) && shouldRenderCell(grp.column)"
@@ -263,7 +264,7 @@ const shouldRenderCell = (column) =>
                           v-else
                           :key="`panel-tag-${grp.column.id}-${grp.key}`"
                           class="!py-0 !px-[12px]"
-                          :class="`${grp.column.uidt === 'SingleSelect' ? '!rounded-[12px]' : '!rounded-[6px]'}`"
+                          :class="`${grp.column.uidt === 'SingleSelect' ? '!rounded' : '!rounded-[6px]'}`"
                           :color="grp.color"
                         >
                           <span
@@ -336,7 +337,7 @@ const shouldRenderCell = (column) =>
       custom-label="groups"
       show-api-timing
       :change-page="(p: number) => groupWrapperChangePage(p, vGroup)"
-      :style="`${props.depth && props.depth > 0 ? 'border-radius: 0 0 12px 12px !important;' : ''}`"
+      :style="`${props.depth && props.depth > 0 ? 'border-radius: 0 0 4px 4px !important;' : ''}`"
     ></LazySmartsheetPagination>
     <LazySmartsheetPagination
       v-else
@@ -346,34 +347,37 @@ const shouldRenderCell = (column) =>
       show-api-timing
       :change-page="(p: number) => groupWrapperChangePage(p, vGroup)"
       :hide-sidebars="true"
-      :style="`${props.depth && props.depth > 0 ? 'border-radius: 0 0 12px 12px !important;' : ''}margin-left: ${scrollBump}px;`"
+      :style="`${props.depth && props.depth > 0 ? 'border-radius: 0 0 4px 4px !important;' : ''}margin-left: ${scrollBump}px;`"
       :fixed-size="fullPage ? props.viewWidth : undefined"
     ></LazySmartsheetPagination>
+    <div v-if="showTooltip" class="absolute right-[40%] bottom-15 bg-slate-700 text-slate-50 rounded-lg border-1 px-3 py-2">
+      {{ $t("msg.scrollHMsg") }}
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 :deep(.ant-collapse-content > .ant-collapse-content-box) {
   padding: 0px !important;
-  border-radius: 0 0 12px 12px !important;
+  border-radius: 0 0 4px 4px !important;
 }
 
 :deep(.ant-collapse-item > .ant-collapse-header) {
-  border-radius: 12px !important;
+  border-radius: 4px !important;
   background: white;
 }
 
 :deep(.ant-collapse-item-active > .ant-collapse-header) {
-  border-radius: 12px 12px 0 0 !important;
+  border-radius: 4px 4px 0 0 !important;
   background: white;
   border-bottom: solid 1px lightgray;
 }
 
 :deep(.ant-collapse-borderless > .ant-collapse-item:last-child) {
-  border-radius: 12px !important;
+  border-radius: 4px !important;
 }
 
 :deep(.ant-collapse > .ant-collapse-item:last-child) {
-  border-radius: 12px !important;
+  border-radius: 4px !important;
 }
 </style>

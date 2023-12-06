@@ -3,6 +3,8 @@ import { IsPublicInj, inject, ref, useSmartsheetStoreOrThrow, useViewsStore } fr
 
 const { isGrid, isForm, isGallery, isKanban, isMap } = useSmartsheetStoreOrThrow()
 
+const { isSuper } = useRoles();
+
 const router = useRouter()
 const route = router.currentRoute
 
@@ -29,7 +31,7 @@ const isSharedBase = computed(() => route.value.params.typeOrId === 'base')
       <GeneralOpenLeftSidebarBtn />
       <LazySmartsheetToolbarViewInfo v-if="!isPublic" />
 
-      <div v-if="!isSharedBase && !isMobileMode" class="w-47.5">
+      <div v-if="!isSharedBase && !isMobileMode && isSuper" class="w-47.5">
         <SmartsheetTopbarSelectMode />
       </div>
       <div class="flex-1" />

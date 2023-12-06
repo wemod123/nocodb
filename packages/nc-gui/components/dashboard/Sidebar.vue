@@ -2,7 +2,7 @@
 const workspaceStore = useWorkspace()
 
 const { isWorkspaceLoading } = storeToRefs(workspaceStore)
-
+const { isSuper } = useRoles()
 const { isSharedBase } = storeToRefs(useBase())
 
 const { isMobileMode } = useGlobal()
@@ -35,7 +35,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="nc-sidebar flex flex-col bg-gray-50 outline-r-1 outline-gray-100 select-none w-full h-full"
+    class="nc-sidebar flex flex-col bg-white outline-r-1 outline-gray-100 select-none w-full h-full"
     :style="{
       outlineWidth: '1px',
     }"
@@ -47,16 +47,17 @@ onUnmounted(() => {
     </div>
     <div
       ref="treeViewDom"
-      class="flex flex-col nc-scrollbar-dark-md flex-grow xs:(border-transparent pt-2 pr-2)"
+      class="flex flex-col pb-4 nc-scrollbar-dark-md flex-grow xs:(border-transparent pt-2 pr-2)"
       :class="{
         'border-t-1': !isSharedBase,
         'border-transparent': !isTreeViewOnScrollTop,
         'pt-0.25': isSharedBase,
       }"
     >
-      <DashboardTreeView v-if="!isWorkspaceLoading" />
+      <DashboardTreeView v-if="!isWorkspaceLoading && isSuper" />
+      <DashboardTreeViewFolders v-else />
     </div>
-    <div v-if="!isSharedBase">
+    <div v-if="!isSharedBase && isSuper">
       <DashboardSidebarUserInfo />
     </div>
   </div>

@@ -199,7 +199,7 @@ onUnmounted(() => {
     :class="[
       `nc-cell-${(column?.uidt || 'default').toLowerCase()}`,
       {
-        'text-brand-500': isPrimary(column) && !props.virtual && !isForm,
+        'font-bold': isPrimary(column) && !props.virtual && !isForm,
         'nc-grid-numeric-cell-right': isGrid && isNumericField && !isEditColumnMenu && !isForm && !isExpandedFormOpen,
         'h-10': isForm && !isSurveyForm && !isAttachment(column) && !props.virtual,
         'nc-grid-numeric-cell-left': (isForm && isNumericField && isExpandedFormOpen) || isEditColumnMenu,

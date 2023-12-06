@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+import { ViewTypes } from 'nocodb-sdk'
+
+const { isSuper } = useRoles();
+
 const { activeTable } = storeToRefs(useTablesStore())
 
 const { isMobileMode } = useGlobal()
@@ -149,7 +153,7 @@ function openDeleteDialog() {
     <input
       ref="renameInputDom"
       v-model="viewRenameTitle"
-      class="ml-0.25 w-full px-1 py-0.5 rounded-md font-medium text-gray-800"
+      class="ml-0.25 w-full px-1 py-0.5 rounded-md text-gray-800"
       :class="{
         'outline-brand-500': !error,
         'outline-red-500 pr-6': error,
@@ -168,6 +172,7 @@ function openDeleteDialog() {
   <NcDropdown
     v-else
     v-model:visible="isDropdownOpen"
+    :disabled="isSuper ? false : activeView?.type === ViewTypes.FORM"
     class="!xs:pointer-events-none nc-actions-menu-btn nc-view-context-btn"
     overlay-class-name="nc-dropdown-actions-menu"
   >
@@ -179,18 +184,18 @@ function openDeleteDialog() {
         'max-w-3/5': !isSharedBase && !isMobileMode && !activeView?.is_default,
         'max-w-1/2': isMobileMode,
         'text-gray-500': activeView?.is_default,
-        'text-gray-800 font-medium': !activeView?.is_default,
+        'text-gray-800': !activeView?.is_default,
       }"
     >
       <span
-        class="truncate xs:pl-1.25 text-inherit"
+        class="truncate xs:pl-1.25 text-inherit font-normal"
         :class="{
           'max-w-28/100': !isMobileMode,
         }"
       >
         {{ activeView?.is_default ? $t('title.defaultView') : activeView?.title }}
       </span>
-      <GeneralIcon icon="arrowDown" class="ml-1" />
+      <GeneralIcon v-if="isSuper ? true : activeView?.type !== ViewTypes.FORM" icon="arrowDown" class="ml-1" />
     </div>
     <template #overlay>
       <SmartsheetToolbarViewActionMenu

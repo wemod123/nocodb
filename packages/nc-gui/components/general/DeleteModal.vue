@@ -56,7 +56,7 @@ onKeyStroke('Enter', () => {
           $t('msg.areYouSureUWantToDeleteLabel', {
             deleteLabel: deleteLabel.toLowerCase(),
           })
-        }}<span class="ml-1">{{ props.entityName.toLowerCase() }}?</span>
+        }}{{$t('general._langSpace')}}{{ props.entityName.toLowerCase() }}?
       </div>
 
       <slot name="entity-preview"></slot>
@@ -74,7 +74,7 @@ onKeyStroke('Enter', () => {
           data-testid="nc-delete-modal-delete-btn"
           @click="onDelete"
         >
-          {{ `${deleteLabel} ${props.entityName}` }}
+          {{ `${deleteLabel}${$t('general._langSpace')}${props.entityName}` }}
           <template #loading>
             {{ $t('general.deleting') }}
           </template>

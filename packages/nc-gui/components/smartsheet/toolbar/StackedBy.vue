@@ -144,7 +144,7 @@ const handleChange = () => {
           </div>
         </div>
         <div class="mt-4 border-1 px-4 pt-4 pb-3 border-gray-50 rounded-2xl">
-          <div class="text-base font-medium mb-2">Options</div>
+          <div class="text-base font-normal mb-2">Options</div>
           <LazySmartsheetColumnEditOrAddProvider
             v-if="open"
             :column="groupingFieldColumn"

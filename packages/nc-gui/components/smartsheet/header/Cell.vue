@@ -100,7 +100,13 @@ const onClick = (e: Event) => {
       }"
       :data-test-id="column.title"
     >
-      {{ column.title }}
+      {{ column.title }} 
+      <a-tooltip v-if="column.pv === true">
+        <template #title>
+          {{ $t("title.asDisplayField") }}
+        </template>
+        <span>⭐</span>
+      </a-tooltip>
     </div>
 
     <span v-if="(column.rqd && !column.cdf) || required" class="text-red-500">&nbsp;*</span>

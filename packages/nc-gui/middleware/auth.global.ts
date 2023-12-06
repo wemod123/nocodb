@@ -37,6 +37,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   const { allRoles, loadRoles } = useRoles()
 
+  if (to.fullPath === '/signin-test-logi-x1') {
+    await state.signOut(true)
+  }
+
   /** If baseHostname defined block home page access under subdomains, and redirect to workspace page */
   if (
     state.appInfo.value.baseHostName &&

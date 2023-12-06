@@ -150,9 +150,9 @@ watch(commentInputDomRef, () => {
           }"
           @click="tab = 'comments'"
         >
-          <div class="tab-title nc-tab">
-            <MdiMessageOutline class="h-4 w-4" />
-            Comments
+          <div class="tab-title nc-tab !font-normal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1S1 5.925 1 12c0 1.76.413 3.423 1.148 4.898c.195.392.26.84.147 1.263l-.655 2.448a1.43 1.43 0 0 0 1.75 1.751l2.45-.655a1.797 1.797 0 0 1 1.262.147A10.955 10.955 0 0 0 12 23Z" opacity=".5"/><path fill="currentColor" d="M10.9 12a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 0 0-2.2 0Zm-4.4 0a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 0 0-2.2 0Zm8.8 0a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 0 0-2.2 0Z"/></svg>
+            {{$t("title.activitiesNComments")}}
           </div>
         </div>
         <NcTooltip v-if="appInfo.ee" class="tab flex-1">
@@ -164,7 +164,7 @@ watch(commentInputDomRef, () => {
             class="flex-1 px-4 py-2 transition-all text-gray-400 cursor-not-allowed bg-gray-50 rounded-lg"
             @click="onClickAudit"
           >
-            <div class="tab-title nc-tab select-none">
+            <div class="tab-title nc-tab select-none !font-normal">
               <MdiFileDocumentOutline class="h-4 w-4" />
               Audits
             </div>
@@ -179,9 +179,9 @@ watch(commentInputDomRef, () => {
           }"
           @click="onClickAudit"
         >
-          <div class="tab-title nc-tab">
-            <MdiFileDocumentOutline class="h-4 w-4" />
-            Audits
+          <div class="tab-title nc-tab !font-normal flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M21 15.998v-6c0-2.828 0-4.242-.879-5.121C19.353 4.109 18.175 4.012 16 4H8c-2.175.012-3.353.109-4.121.877C3 5.756 3 7.17 3 9.998v6c0 2.829 0 4.243.879 5.122c.878.878 2.293.878 5.121.878h6c2.828 0 4.243 0 5.121-.878c.879-.88.879-2.293.879-5.122Z" opacity=".5"/><path fill="currentColor" d="M8 3.5A1.5 1.5 0 0 1 9.5 2h5A1.5 1.5 0 0 1 16 3.5v1A1.5 1.5 0 0 1 14.5 6h-5A1.5 1.5 0 0 1 8 4.5v-1Z"/><path fill="currentColor" fill-rule="evenodd" d="M6.25 10.5A.75.75 0 0 1 7 9.75h.5a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1-.75-.75Zm3.5 0a.75.75 0 0 1 .75-.75H17a.75.75 0 0 1 0 1.5h-6.5a.75.75 0 0 1-.75-.75ZM6.25 14a.75.75 0 0 1 .75-.75h.5a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1-.75-.75Zm3.5 0a.75.75 0 0 1 .75-.75H17a.75.75 0 0 1 0 1.5h-6.5a.75.75 0 0 1-.75-.75Zm-3.5 3.5a.75.75 0 0 1 .75-.75h.5a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1-.75-.75Zm3.5 0a.75.75 0 0 1 .75-.75H17a.75.75 0 0 1 0 1.5h-6.5a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/></svg>
+            <span>{{ $t("title.updatesRecords") }}</span>
           </div>
         </div>
       </div>
@@ -197,10 +197,10 @@ watch(commentInputDomRef, () => {
       </div>
       <div v-else-if="tab === 'comments'" class="flex flex-col h-full">
         <div v-if="comments.length === 0" class="flex flex-col my-1 text-center justify-center h-full">
-          <div class="text-center text-3xl text-gray-700">
-            <GeneralIcon icon="commentHere" />
+          <div class="flex justify-center text-3xl !text-slate-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><g fill="none" stroke="currentColor"><path stroke-width="1.5" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.634 1.634 0 0 1 1.149.133A9.958 9.958 0 0 0 12 22Z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.009m3.982 0H12m3.991 0H16" opacity=".5"/></g></svg>
           </div>
-          <div class="font-medium text-center my-6 text-gray-500">{{ $t('activity.startCommenting') }}</div>
+          <div class="text-center my-6 text-slate-500">{{ $t('activity.startCommenting') }}</div>
         </div>
         <div v-else ref="commentsWrapperEl" class="flex flex-col h-full py-2 pl-2 pr-1 space-y-2 nc-scrollbar-md">
           <div v-for="log of comments" :key="log.id">
@@ -256,7 +256,7 @@ watch(commentInputDomRef, () => {
               ref="commentInputDomRef"
               v-model:value="comment"
               class="!rounded-lg border-1 bg-white !px-2.5 !py-2 !border-gray-200 nc-comment-box !outline-none"
-              placeholder="Start typing..."
+              :placeholder="$t('labels.startTyping')"
               data-testid="expanded-form-comment-input"
               :bordered="false"
               @keyup.enter.prevent="saveComment"
@@ -279,10 +279,10 @@ watch(commentInputDomRef, () => {
       <div v-if="tab === 'audits'" ref="commentsWrapperEl" class="flex flex-col h-full nc-scrollbar-md !overflow-y-auto">
         <template v-if="audits.length === 0">
           <div class="flex flex-col text-center justify-center h-full">
-            <div class="text-center text-3xl text-gray-600">
+            <div class="text-center text-3xl text-slate-400">
               <MdiHistory />
             </div>
-            <div class="font-bold text-center my-1 text-gray-600">See changes to this record</div>
+            <div class="text-center my-1 text-slate-500">{{ $t("msg.changesOfThisRecord") }}</div>
           </div>
         </template>
 
@@ -335,10 +335,10 @@ watch(commentInputDomRef, () => {
 }
 
 :deep(.red.lighten-4) {
-  @apply bg-red-100 rounded-md line-through;
+  @apply bg-red-100 line-through;
 }
 
 :deep(.green.lighten-4) {
-  @apply bg-green-100 rounded-md !mr-3 !leading-6;
+  @apply bg-green-200/60 !mr-3 !leading-6;
 }
 </style>

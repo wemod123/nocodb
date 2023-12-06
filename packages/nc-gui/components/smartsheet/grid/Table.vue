@@ -1232,6 +1232,12 @@ onKeyStroke('ArrowLeft', onLeft)
 onKeyStroke('ArrowRight', onRight)
 onKeyStroke('ArrowUp', onUp)
 onKeyStroke('ArrowDown', onDown)
+
+const showTooltip = ref(false)
+const checkMouseMove = (evt: MouseEvent)=>{
+  const diff = window.innerHeight - (evt.y || evt.clientY || evt.pageY)
+  showTooltip.value =  (diff < 52 && diff > 41)
+}
 </script>
 
 <template>
@@ -1254,7 +1260,7 @@ onKeyStroke('ArrowDown', onDown)
         class="border-r-1 border-l-1 border-gray-200 h-full"
       ></div>
     </div>
-    <div ref="gridWrapper" class="nc-grid-wrapper min-h-0 flex-1 relative" :class="gridWrapperClass">
+    <div ref="gridWrapper" class="nc-grid-wrapper min-h-0 flex-1 relative" :class="gridWrapperClass" @mousemove="checkMouseMove">
       <div v-show="isPaginationLoading" class="flex items-center justify-center absolute l-0 t-0 w-full h-full z-10 pb-10">
         <div class="flex flex-col justify-center gap-2">
           <GeneralLoader size="xlarge" />
@@ -1622,7 +1628,7 @@ onKeyStroke('ArrowDown', onDown)
                   <component
                     :is="iconMap.plus"
                     v-if="!isViewColumnsLoading"
-                    class="text-pint-500 text-base ml-2 mt-0 text-gray-600 group-hover:text-black"
+                    class="text-base ml-2 mt-0 text-gray-600 group-hover:text-violet-500"
                   />
                 </div>
                 <td class="!border-gray-100" :colspan="visibleColLength"></td>
@@ -1853,6 +1859,9 @@ onKeyStroke('ArrowDown', onDown)
         </div>
       </template>
     </LazySmartsheetPagination>
+    <div v-if="showTooltip" class="absolute right-[40%] bottom-15 bg-slate-700 text-slate-50 rounded-lg border-1 px-3 py-2">
+      {{ $t("msg.scrollHMsg") }}
+    </div>
   </div>
 </template>
 
@@ -1874,18 +1883,18 @@ onKeyStroke('ArrowDown', onDown)
 
 <style scoped lang="scss">
 .nc-grid-wrapper {
-  @apply h-full w-full;
+  @apply h-full w-full bg-whte;
 
   .nc-grid-add-edit-column {
-    @apply bg-gray-50;
+    @apply bg-slate-100;
   }
   .nc-grid-add-new-cell:hover td {
-    @apply text-black !bg-gray-50;
+    @apply text-black !bg-slate-50;
   }
 
   td,
   th {
-    @apply border-gray-100 border-solid border-r bg-gray-50;
+    @apply border-gray-100 border-solid border-r bg-slate-100;
     min-height: 41px !important;
     height: 41px !important;
     position: relative;
@@ -1923,10 +1932,10 @@ onKeyStroke('ArrowDown', onDown)
     content: '';
     position: absolute;
     z-index: 3;
-    height: calc(100% + 2px);
-    width: calc(100% + 2px);
-    left: -1px;
-    top: -1px;
+    height: 100%;
+    width: calc(100% - 1px);
+    left: 1px;
+    top: 0px;
     pointer-events: none;
   }
 
@@ -1983,7 +1992,8 @@ onKeyStroke('ArrowDown', onDown)
       position: sticky !important;
       z-index: 5;
       left: 85px;
-      @apply border-r-1 border-r-gray-200;
+      box-shadow: 2px 0px 4px 0px rgba(178, 177, 204, 0.1);
+      @apply border-r-1 border-r-slate-300;
     }
 
     tbody td:nth-child(2) {
@@ -1991,7 +2001,15 @@ onKeyStroke('ArrowDown', onDown)
       z-index: 4;
       left: 85px;
       background: white;
-      @apply border-r-1 border-r-gray-100;
+      @apply border-r-1 border-r-slate-200;
+    }
+
+    tbody tr:not(.nc-grid-add-new-cell) td:nth-child(2){
+      box-shadow: 2px 0px 4px 0px rgba(178, 177, 204, 0.1);
+    }
+
+    tbody tr.nc-grid-add-new-cell td:nth-child(2){
+      margin-right:2px;
     }
   }
 
@@ -2009,7 +2027,7 @@ onKeyStroke('ArrowDown', onDown)
 :deep(.resizer:active),
 :deep(.resizer:focus) {
   // todo: replace with primary color
-  @apply bg-blue-500/50;
+  @apply bg-violet-500;
   cursor: col-resize;
 }
 
@@ -2083,5 +2101,3 @@ tbody tr:hover {
   animation: slow-show-1 5s ease 5s forwards;
 }
 </style>
-
-<style lang="scss"></style>

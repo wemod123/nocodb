@@ -3,6 +3,7 @@ import type { BaseType, TableType } from 'nocodb-sdk'
 import { storeToRefs } from 'pinia'
 import Sortable from 'sortablejs'
 import TableNode from './TableNode.vue'
+import ForderTableNode from './ForderTableNode.vue'
 import { toRef, useNuxtApp } from '#imports'
 
 const props = withDefaults(
@@ -21,6 +22,8 @@ const sourceIndex = toRef(props, 'sourceIndex')
 const source = computed(() => base.value?.sources?.[sourceIndex.value])
 
 const { isMobileMode } = useGlobal()
+
+const {isSuper} = useRoles()
 
 const { baseTables } = storeToRefs(useTablesStore())
 const tables = computed(() => baseTables.value.get(base.value.id!) ?? [])
@@ -147,6 +150,7 @@ const availableTables = computed(() => {
         :key="`sortable-${source?.id}-${source?.id && source?.id in keys ? keys[source?.id] : '0'}`"
         :nc-source="source?.id"
       >
+      <template v-if="isSuper">
         <TableNode
           v-for="table of availableTables"
           :key="table.id"
@@ -161,6 +165,23 @@ const availableTables = computed(() => {
           :data-type="table.type"
         >
         </TableNode>
+      </template>
+      <template v-else>
+        <ForderTableNode
+          v-for="table of availableTables"
+          :key="table.id"
+          class="nc-tree-item text-sm"
+          :data-order="table.order"
+          :data-id="table.id"
+          :table="table"
+          :base="base"
+          :source-index="sourceIndex"
+          :data-title="table.title"
+          :data-source-id="source?.id"
+          :data-type="table.type"
+        >
+        </ForderTableNode>
+      </template>
       </div>
     </template>
   </div>

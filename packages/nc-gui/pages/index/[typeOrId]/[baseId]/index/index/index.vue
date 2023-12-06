@@ -6,6 +6,8 @@ import { message, ref, resolveComponent, storeToRefs, useBase, useDialog, useFil
 const baseStore = useBase()
 const { base } = storeToRefs(baseStore)
 
+const { isSuper } = useRoles()
+
 const { isMobileMode } = useGlobal()
 
 const { files, reset } = useFileDialog()
@@ -131,5 +133,6 @@ watch(
 </script>
 
 <template>
-  <ProjectView v-if="!isMobileMode" />
+  <ProjectView v-if="!isMobileMode && isSuper" />
+  <ProjectFolderView v-else-if="!isMobileMode" />
 </template>

@@ -68,7 +68,7 @@ function openQuickImportDialog(type: string) {
     <template #expandIcon></template>
 
     <NcMenuItem
-      v-if="isUIAllowed('airtableImport', { roles: baseRole })"
+      v-if="false && isUIAllowed('airtableImport', { roles: baseRole })"
       key="quick-import-airtable"
       @click="openAirtableImportDialog(source.base_id, source.id)"
     >

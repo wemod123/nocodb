@@ -20,7 +20,7 @@ definePageMeta({
 
 const route = useRoute()
 
-const { signIn: _signIn, appInfo } = useGlobal()
+const { signIn: _signIn, appInfo , signOut} = useGlobal()
 
 const { api, isLoading, error } = useApi({ useGlobalInstance: true })
 
@@ -89,10 +89,13 @@ function navigateForgotPassword() {
     query: route.query,
   })
 }
+
+onMounted(()=>{ signOut() })
 </script>
 
 <template>
-  <NuxtLayout>
+  <div></div>
+  <!-- <NuxtLayout>
     <div
       data-testid="nc-form-signin"
       class="md:bg-primary bg-opacity-5 signin h-full min-h-[600px] flex flex-col justify-center items-center nc-form-signin"
@@ -199,7 +202,7 @@ function navigateForgotPassword() {
         </a-form>
       </div>
     </div>
-  </NuxtLayout>
+  </NuxtLayout> -->
 </template>
 
 <style lang="scss">

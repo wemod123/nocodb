@@ -1,105 +1,116 @@
 <script setup lang="ts">
-import type { GridType } from 'nocodb-sdk'
-import { ActiveViewInj, IsLockedInj, iconMap, inject, ref, storeToRefs, useMenuCloseOnEsc, useUndoRedo } from '#imports'
+  import type { GridType } from 'nocodb-sdk'
+  import { ActiveViewInj, IsLockedInj, iconMap, inject, ref, storeToRefs, useMenuCloseOnEsc, useUndoRedo } from '#imports'
 
-const { isSharedBase } = storeToRefs(useBase())
+  const { isSharedBase } = storeToRefs(useBase())
 
-const view = inject(ActiveViewInj, ref())
+  const view = inject(ActiveViewInj, ref())
 
-const isPublic = inject(IsPublicInj, ref(false))
+  const isPublic = inject(IsPublicInj, ref(false))
 
-const isLocked = inject(IsLockedInj, ref(false))
+  const isLocked = inject(IsLockedInj, ref(false))
 
-const { $api } = useNuxtApp()
+  const { $api } = useNuxtApp()
 
-const { addUndo, defineViewScope } = useUndoRedo()
+  const { addUndo, defineViewScope } = useUndoRedo()
 
-const open = ref(false)
+  const open = ref(false)
 
-const updateRowHeight = async (rh: number, undo = false) => {
-  if (view.value?.id) {
-    if (rh === (view.value.view as GridType).row_height) return
+  const updateRowHeight = async (rh: number, undo = false) => {
+    if (view.value?.id) {
+      if (rh === (view.value.view as GridType).row_height) return
 
-    if (!undo) {
-      addUndo({
-        redo: {
-          fn: (r: number) => updateRowHeight(r, true),
-          args: [rh],
-        },
-        undo: {
-          fn: (r: number) => updateRowHeight(r, true),
-          args: [(view.value.view as GridType).row_height || 0],
-        },
-        scope: defineViewScope({ view: view.value }),
-      })
-    }
-
-    try {
-      if (!isPublic.value && !isSharedBase.value) {
-        await $api.dbView.gridUpdate(view.value.id, {
-          row_height: rh,
+      if (!undo) {
+        addUndo({
+          redo: {
+            fn: (r: number) => updateRowHeight(r, true),
+            args: [rh],
+          },
+          undo: {
+            fn: (r: number) => updateRowHeight(r, true),
+            args: [(view.value.view as GridType).row_height || 0],
+          },
+          scope: defineViewScope({ view: view.value }),
         })
       }
 
-      ;(view.value.view as GridType).row_height = rh
+      try {
+        if (!isPublic.value && !isSharedBase.value) {
+          await $api.dbView.gridUpdate(view.value.id, {
+            row_height: rh,
+          })
+        }
 
-      open.value = false
-    } catch (e) {
-      message.error('There was an error while updating view!')
+        ; (view.value.view as GridType).row_height = rh
+
+        open.value = false
+      } catch (e) {
+        message.error('There was an error while updating view!')
+      }
     }
   }
-}
 
-useMenuCloseOnEsc(open)
+  useMenuCloseOnEsc(open)
 </script>
 
 <template>
-  <a-dropdown v-model:visible="open" offset-y class="" :trigger="['click']" overlay-class-name="nc-dropdown-height-menu">
+  <a-dropdown v-model:visible="open"
+              offset-y
+              class=""
+              :trigger="['click']"
+              overlay-class-name="nc-dropdown-height-menu">
     <div>
-      <a-button v-e="['c:row-height']" class="nc-height-menu-btn nc-toolbar-btn" :disabled="isLocked">
+      <a-button v-e="['c:row-height']"
+                class="nc-height-menu-btn nc-toolbar-btn"
+                :disabled="isLocked">
         <div class="flex items-center gap-0.5">
-          <component :is="iconMap.rowHeight" class="!h-3.75 !w-3.75" />
-          <!-- <span v-if="!isMobileMode" class="!text-sm !font-medium">{{ $t('objects.rowHeight') }}</span> -->
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="20"
+               height="20"
+               viewBox="0 0 24 24">
+            <path fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.6"
+                  d="M6 10V5m0 0L4 7m2-2l2 2m-2 7v5m0 0l2-2m-2 2l-2-2m8-10h8m0 5h-8m0 5h8" />
+          </svg>
+          <span class="!text-sm font-normal">{{ $t('objects.rowHeight') }}</span>
         </div>
       </a-button>
     </div>
     <template #overlay>
-      <div
-        class="w-full bg-white shadow-lg menu-filter-dropdown border-1 border-gray-50 rounded-md overflow-hidden"
-        data-testid="nc-height-menu"
-      >
-        <div class="flex flex-col w-full text-sm" @click.stop>
+      <div class="w-full bg-white shadow-xl menu-filter-dropdown border-1 border-gray-50 rounded-lg min-w-[160px] overflow-hidden"
+           data-testid="nc-height-menu">
+        <div class="flex flex-col w-full text-sm"
+             @click.stop>
           <div class="text-xs text-gray-500 px-3 pt-2 pb-1 select-none">{{ $t('objects.rowHeight') }}</div>
-          <div
-            class="nc-row-height-option"
-            :class="{'active': !(view?.view as GridType).row_height }"
-            @click="updateRowHeight(0)"
-          >
-            <GeneralIcon icon="heightShort" class="nc-row-height-icon" />
+          <div class="nc-row-height-option"
+               :class="{ 'active': !(view?.view as GridType).row_height }"
+               @click="updateRowHeight(0)">
+            <GeneralIcon icon="heightShort"
+                         class="nc-row-height-icon" />
             {{ $t('objects.heightClass.short') }}
           </div>
-          <div
-            class="nc-row-height-option"
-            :class="{'active': (view?.view as GridType).row_height === 1}"
-            @click="updateRowHeight(1)"
-          >
-            <GeneralIcon icon="heightMedium" class="nc-row-height-icon" />
+          <div class="nc-row-height-option"
+               :class="{ 'active': (view?.view as GridType).row_height === 1 }"
+               @click="updateRowHeight(1)">
+            <GeneralIcon icon="heightMedium"
+                         class="nc-row-height-icon" />
             {{ $t('objects.heightClass.medium') }}
           </div>
-          <div
-            class="nc-row-height-option"
-            :class="{'active': (view?.view as GridType).row_height === 2}"
-            @click="updateRowHeight(2)"
-          >
-            <GeneralIcon icon="heightTall" class="nc-row-height-icon" />
+          <div class="nc-row-height-option"
+               :class="{ 'active': (view?.view as GridType).row_height === 2 }"
+               @click="updateRowHeight(2)">
+            <GeneralIcon icon="heightTall"
+                         class="nc-row-height-icon" />
             {{ $t('objects.heightClass.tall') }}
           </div>
-          <div
-            class="nc-row-height-option"
-            :class="{'active': (view?.view as GridType).row_height === 3}"
-            @click="updateRowHeight(3)"
-          >
-            <GeneralIcon icon="heightExtra" class="nc-row-height-icon" />
+          <div class="nc-row-height-option"
+               :class="{ 'active': (view?.view as GridType).row_height === 3 }"
+               @click="updateRowHeight(3)">
+            <GeneralIcon icon="heightExtra"
+                         class="nc-row-height-icon" />
             {{ $t('objects.heightClass.extra') }}
           </div>
         </div>

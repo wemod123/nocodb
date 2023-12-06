@@ -46,7 +46,7 @@ const rolePermissions = {
   },
   [ProjectRoles.CREATOR]: {
     include: {
-      baseCreate: true,
+      baseCreate: false,
       fieldUpdate: true,
       hookList: true,
       tableCreate: true,

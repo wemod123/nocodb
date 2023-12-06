@@ -52,7 +52,20 @@ export interface StoredState {
   lastOpenedWorkspaceId: string | null
 }
 
+export interface EntryConfig {
+  parentFrame: any
+  context?: string
+  entryToken: string
+  lang: string
+  path: string
+  email: string
+  tid: string
+  theme: string
+  actorToken: string
+}
+
 export type State = ToRefs<Omit<StoredState, 'token'>> & {
+  entryConfig: Ref<EntryConfig | null>
   storage: Ref<StoredState>
   user: Ref<User | null>
   token: WritableComputedRef<StoredState['token']>
@@ -70,7 +83,7 @@ export interface Getters {
 
 export interface Actions {
   signOut: (skipRedirect?: boolean) => void
-  signIn: (token: string) => void
+  signIn: (token: string, entryConfig?: any) => void
   refreshToken: () => void
   loadAppInfo: () => void
   setIsMobileMode: (isMobileMode: boolean) => void

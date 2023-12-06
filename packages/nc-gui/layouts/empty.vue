@@ -1,11 +1,5 @@
-<script lang="ts">
-export default {
-  name: 'EmptyLayout',
-}
-</script>
-
 <template>
-  <NuxtLayout class="h-screen">
+  <div class="h-screen">
     <slot></slot>
-  </NuxtLayout>
+  </div>
 </template>

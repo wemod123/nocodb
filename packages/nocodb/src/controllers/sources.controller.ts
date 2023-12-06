@@ -18,7 +18,7 @@ import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
 @Controller()
 @UseGuards(MetaApiLimiterGuard, GlobalGuard)
 export class SourcesController {
-  constructor(private readonly sourcesService: SourcesService) {}
+  constructor(private readonly sourcesService: SourcesService) { }
 
   @Get([
     '/api/v1/db/meta/projects/:baseId/bases/:sourceId',
@@ -56,6 +56,24 @@ export class SourcesController {
     });
 
     return source;
+  }
+
+  @Patch([
+    '/api/v1/db/meta/projects/:baseId/bases/:sourceId/name'
+  ])
+  @Acl('baseRename')
+  async baseRename(
+    @Param('sourceId') sourceId: string,
+    @Param('baseId') baseId: string,
+    @Body() body: BaseReqType,
+    @Req() req: Request,
+  ) {
+    return await this.sourcesService.baseRename({
+      sourceId,
+      source: { alias: body.alias },
+      baseId,
+      req
+    })
   }
 
   @Get([

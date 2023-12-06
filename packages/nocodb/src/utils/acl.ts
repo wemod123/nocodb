@@ -117,7 +117,7 @@ const permissionScopes = {
     'relationDataRemove',
     'relationDataAdd',
     'duplicateColumn',
-
+    'filterChildrenList',
     // Base API Tokens
     'baseApiTokenList',
     'baseApiTokenCreate',
@@ -127,9 +127,9 @@ const permissionScopes = {
 
 const rolePermissions:
   | Record<
-      Exclude<OrgUserRoles, OrgUserRoles.SUPER_ADMIN> | ProjectRoles | 'guest',
-      { include?: Record<string, boolean>; exclude?: Record<string, boolean> }
-    >
+    Exclude<OrgUserRoles, OrgUserRoles.SUPER_ADMIN> | ProjectRoles | 'guest',
+    { include?: Record<string, boolean>; exclude?: Record<string, boolean> }
+  >
   | Record<OrgUserRoles.SUPER_ADMIN, string> = {
   guest: {},
   [OrgUserRoles.SUPER_ADMIN]: '*',
@@ -217,6 +217,7 @@ const rolePermissions:
       bulkDataDeleteAll: true,
       relationDataRemove: true,
       relationDataAdd: true,
+      filterChildrenList: true
       // TODO add ACL with base scope
       // upload: true,
       // uploadViaURL: true,
@@ -224,9 +225,10 @@ const rolePermissions:
   },
   [ProjectRoles.CREATOR]: {
     exclude: {
+      baseCreate: true,
       baseDelete: true,
       baseUpdate: true
-    },
+    }
   },
   [ProjectRoles.OWNER]: {
     exclude: {
@@ -236,6 +238,7 @@ const rolePermissions:
       pluginUpdate: true,
       isPluginActive: true,
       createBase: true,
+      baseRename: true
     },
   },
   [OrgUserRoles.VIEWER]: {

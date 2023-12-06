@@ -108,9 +108,6 @@ useEventListener(NcButton, 'mousedown', () => {
       <div
         v-if="!(size === 'xxsmall' && loading) && !props.iconOnly"
         class="flex flex-row items-center"
-        :class="{
-          'font-medium': type === 'primary' || type === 'danger',
-        }"
       >
         <slot v-if="loading && slots.loading" name="loading" />
 
@@ -144,16 +141,16 @@ useEventListener(NcButton, 'mousedown', () => {
 
 .desktop {
   .nc-button.ant-btn.focused {
-    box-shadow: 0px 0px 0px 2px #fff, 0px 0px 0px 4px #3069fe;
+    box-shadow: 0px 0px 0px 2px #fff, 0px 0px 0px 4px #6366f1;
   }
 
   .nc-button.ant-btn-text.focused {
-    @apply text-brand-500;
+    @apply text-violet-500;
   }
 }
 
 .nc-button.ant-btn {
-  @apply rounded-lg font-medium;
+  @apply rounded-lg;
 }
 
 .nc-button.ant-btn.small {
@@ -187,7 +184,7 @@ useEventListener(NcButton, 'mousedown', () => {
 }
 
 .nc-button.ant-btn-primary {
-  @apply bg-brand-500 border-0 text-white xs:(hover:border-0) md:(hover:bg-brand-600);
+  @apply bg-violet-500 border-0 text-white xs:(hover:border-0) md:(hover:bg-violet-600);
 }
 
 .nc-button.ant-btn-secondary {

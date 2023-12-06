@@ -11,7 +11,7 @@ import { NcError } from '~/helpers/catchError';
 
 @Injectable()
 export class SourcesService {
-  constructor(protected readonly appHooksService: AppHooksService) {}
+  constructor(protected readonly appHooksService: AppHooksService) { }
 
   async baseGetWithConfig(param: { sourceId: any }) {
     const source = await Source.get(param.sourceId);
@@ -46,6 +46,28 @@ export class SourcesService {
     });
 
     return source;
+  }
+
+  async baseRename(param: {
+    sourceId: string;
+    source: { alias: string };
+    baseId: string;
+    req: NcRequest;
+  }) {
+    validatePayload('swagger.json#/components/schemas/BaseReq', param.source);
+
+    const source = await Source.renameBase(
+      param.baseId,
+      param.sourceId,
+      param.source
+    );
+
+    this.appHooksService.emit(AppEvents.BASE_UPDATE, {
+      source,
+      req: param.req,
+    });
+
+    return 1;
   }
 
   async baseList(param: { baseId: string }) {

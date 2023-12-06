@@ -137,10 +137,10 @@ const pagesList = computed(() => {
 
 <style lang="scss" scoped>
 :deep(.ant-select-selector) {
-  @apply !border-gray-200 !rounded-lg;
+  @apply !border-gray-200 !rounded;
 }
 
 :deep(.ant-select-dropdown) {
-  @apply !rounded-lg !overflow-hidden;
+  @apply !rounded !overflow-hidden;
 }
 </style>

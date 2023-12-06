@@ -275,7 +275,7 @@ const isPublicShared = computed(() => {
 
 <template>
   <div class="flex flex-col py-2 px-3 mb-1">
-    <div class="flex flex-col w-full mt-2.5 px-3 py-2.5 border-gray-200 border-1 rounded-md gap-y-2">
+    <div class="flex flex-col w-full bg-white mt-2.5 px-3 py-2.5 border-gray-200 border-1 rounded-md gap-y-2">
       <div class="flex flex-row w-full justify-between py-0.5">
         <div class="flex" :style="{ fontWeight: 500 }">{{ $t('activity.enabledPublicViewing') }}</div>
         <a-switch

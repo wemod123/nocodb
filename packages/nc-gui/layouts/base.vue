@@ -126,11 +126,11 @@ hooks.hook('page:finish', () => {
         </template>
       </a-layout-header>
 
-      <a-tooltip v-if="!appInfo.ee" placement="bottom">
+      <!-- <a-tooltip v-if="!appInfo.ee" placement="bottom">
         <template #title>{{ $t('title.switchLanguage') }}</template>
 
         <LazyGeneralLanguage v-if="!signedIn && !route.params.baseId && !route.params.erdUuid" class="nc-lang-btn" />
-      </a-tooltip>
+      </a-tooltip> -->
 
       <div class="w-full h-full overflow-hidden nc-layout-base-inner">
         <slot />

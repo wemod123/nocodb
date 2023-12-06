@@ -33,7 +33,7 @@ export class AuthController {
     protected readonly usersService: UsersService,
     protected readonly appHooksService: AppHooksService,
     protected readonly config: ConfigService<AppConfig>,
-  ) {}
+  ) { }
 
   @Post([
     '/auth/user/signup',
@@ -91,7 +91,7 @@ export class AuthController {
   @Post('/api/v1/auth/user/signout')
   @HttpCode(200)
   async signOut(@Req() req: Request, @Res() res: Response): Promise<any> {
-    if (!(req as any).isAuthenticated()) {
+    if (!(req?.isAuthenticated && req.isAuthenticated())) {
       NcError.forbidden('Not allowed');
     }
     res.json(
@@ -139,7 +139,7 @@ export class AuthController {
   })
   @HttpCode(200)
   async passwordChange(@Req() req: Request): Promise<any> {
-    if (!(req as any).isAuthenticated()) {
+    if (!(req?.isAuthenticated && req.isAuthenticated())) {
       NcError.forbidden('Not allowed');
     }
 

@@ -7,6 +7,7 @@ import Noco from '~/Noco';
 import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
 import NcUpgrader from '~/version-upgrader/NcUpgrader';
 import NocoCache from '~/cache/NocoCache';
+import NocoStore from 'src/cache/NocoStore';
 import getInstance from '~/utils/getInstance';
 import initAdminFromEnv from '~/helpers/initAdminFromEnv';
 import { User } from '~/models';
@@ -31,6 +32,7 @@ export const InitMetaServiceProvider: Provider = {
 
     // init cache
     await NocoCache.init();
+    await NocoStore.init();
 
     // init meta service
     const metaService = new MetaService(config);

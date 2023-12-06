@@ -2,7 +2,7 @@
 const workspaceStore = useWorkspace()
 const baseStore = useBase()
 
-const { isUIAllowed } = useRoles()
+const { isUIAllowed, isSuper } = useRoles()
 
 const { appInfo } = useGlobal()
 
@@ -42,7 +42,7 @@ const navigateToSettings = () => {
       </div>
     </div>
   </template>
-  <template v-else-if="!isSharedBase">
+  <template v-else-if="!isSharedBase && isSuper">
     <div class="xs:hidden flex flex-col p-1 gap-y-0.5 mt-0.25 mb-0.5 truncate">
       <DashboardSidebarTopSectionHeader />
 

@@ -12,6 +12,7 @@ import validator from 'validator';
 import type { ProjectUserReqType, UserType } from 'nocodb-sdk';
 import type { NcRequest } from '~/interface/config';
 import NocoCache from '~/cache/NocoCache';
+import NocoStore from '~/cache/NocoStore';
 import { validatePayload } from '~/helpers';
 import Noco from '~/Noco';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
@@ -28,6 +29,32 @@ import { getProjectRolePower } from '~/utils/roleHelper';
 @Injectable()
 export class BaseUsersService {
   constructor(protected appHooksService: AppHooksService) { }
+
+  async getUserCacheStore(param: {
+    baseId: string,
+    userId: string,
+    cacheKey: string
+  }) {
+    const cache = await NocoStore.get(
+      `{userStore}:${param.baseId}:${param.userId}:${param.cacheKey}`,
+      CacheGetType.TYPE_OBJECT
+    )
+
+    return cache || {}
+  }
+
+  async setUserCacheStore(param: {
+    baseId: string,
+    userId: string,
+    cacheKey: string,
+    payload: any
+  }) {
+    await NocoStore.set(
+      `{userStore}:${param.baseId}:${param.userId}:${param.cacheKey}`,
+      param.payload
+    )
+    return 1
+  }
 
   async userList(param: { baseId: string; query: any, tid?: string }) {
     return new PagedResponseImpl(
