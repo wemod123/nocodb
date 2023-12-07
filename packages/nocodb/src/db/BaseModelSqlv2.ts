@@ -4560,6 +4560,13 @@ class BaseModelSqlv2 {
                         s3: true,
                       }).then((r) => (attachment.signedUrl = r)),
                     );
+                  } else {
+                    promises.push(
+                      PresignedUrl.getSignedUrl({
+                        path: attachment.url,
+                        s3: true
+                      }).then((r) => (attachment.signedUrl = r)),
+                    );
                   }
                 }
               }

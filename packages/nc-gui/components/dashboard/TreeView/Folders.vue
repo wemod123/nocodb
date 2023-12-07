@@ -229,7 +229,7 @@
       <template v-if="basesList?.length">
         <ProjectWrapper v-for="base of basesList"
                         :key="base.id"
-                        :base-role="base.project_role"
+                        :base-role="base.project_role || ''"
                         :base="base">
           <DashboardTreeViewProjectNode v-if="isSuper" />
           <DashboardTreeViewFolderTree v-else />
@@ -238,7 +238,7 @@
 
       <WorkspaceEmptyPlaceholder v-else-if="!isWorkspaceLoading" />
     </div>
-    <WorkspaceCreateProjectDlg v-model="baseCreateDlg" />
+    <!-- <WorkspaceCreateProjectDlg v-model="baseCreateDlg" /> -->
   </div>
 </template>
 

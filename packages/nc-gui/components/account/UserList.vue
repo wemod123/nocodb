@@ -202,7 +202,7 @@ const openDeleteModal = (user: UserType) => {
             }"
           >
             <div class="text-3.5 text-start w-2/3 pl-5 flex items-center">
-              <GeneralTruncateText length="29">
+              <GeneralTruncateText :length="29">
                 {{ el.email }}
               </GeneralTruncateText>
             </div>

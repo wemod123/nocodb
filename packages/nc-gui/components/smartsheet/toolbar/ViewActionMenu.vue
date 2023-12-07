@@ -9,7 +9,7 @@ import DownloadIcon from '~icons/nc-icons/download'
 const props = defineProps<{
   view: ViewType
   table: TableType
-  inSidebar: boolean
+  inSidebar?: boolean
 }>()
 
 const emits = defineEmits(['rename', 'closeModal', 'delete'])

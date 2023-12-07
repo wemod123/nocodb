@@ -230,7 +230,7 @@
     "developer": "Developer",
     "roleType": {
       "owner": "Owner",
-      "creator": "Creator",
+      "creator": "Administrator",
       "editor": "Editor",
       "commenter": "Commenter",
       "viewer": "Viewer",
@@ -952,6 +952,7 @@
     "key": "Key"
   },
   "msg": {
+    "uploadInformation": "Click attach file button to upload file, or drop file to here to upload",
     "changesOfThisRecord": "Changes of this record",
     "totalXItems": "Total {x} items",
     "scrollHMsg": "💡Scroll horizontal: Shift + Mouse Wheel",

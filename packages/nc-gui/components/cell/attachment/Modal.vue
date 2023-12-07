@@ -124,14 +124,14 @@ const handleFileDelete = (i: number) => {
         <general-overlay
           v-model="isOverDropZone"
           inline
-          class="text-white ring ring-accent ring-opacity-100 bg-gray-700/75 flex items-center justify-center gap-2 backdrop-blur-xl"
+          class="text-white ring border-2 ring-indigo-400 border-dashed rounded-lg ring-opacity-100 bg-gray-700/75 flex items-center justify-center gap-2 backdrop-blur-xl"
         >
-          <MaterialSymbolsFileCopyOutline class="text-accent" height="35" width="35" />
+          <MaterialSymbolsFileCopyOutline class="text-primary" height="35" width="35" />
           <div class="text-white text-3xl">{{ $t('labels.dropHere') }}</div>
         </general-overlay>
       </template>
 
-      <div ref="sortableRef" :class="{ dragging }" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 relative p-6">
+      <div ref="sortableRef" :class="{ dragging }" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 relative p-6 !rounded-b-lg">
         <div v-for="(item, i) of visibleItems" :key="`${item.title}-${i}`" class="flex flex-col gap-1">
           <a-card class="nc-attachment-item group">
             <div class="flex px-4 items-center nc-attachement-tools-bottom opacity-0 group-hover:opacity-100 absolute bottom-0 left-0 w-full h-12"
@@ -199,6 +199,10 @@ const handleFileDelete = (i: number) => {
           </a-card>
         </div>
       </div>
+      <div class="flex items-center pb-5 pl-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" stroke="#64748B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M19 11V9a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/><path d="m13 13l9 3l-4 2l-2 4l-3-9M3 3v.01M7 3v.01M11 3v.01M15 3v.01M3 7v.01M3 11v.01M3 15v.01"/></g></svg>
+        <div class="pl-2 text-slate-500">{{ $t("msg.uploadInformation") }}</div>
+      </div>
     </div>
     <GeneralDeleteModal v-model:visible="isModalOpen" entity-name="File" :on-delete="() => handleFileDelete(filetoDelete.i)">
       <template #entity-preview>
@@ -226,7 +230,7 @@ const handleFileDelete = (i: number) => {
   }
 
   .ant-modal-content{
-     @apply !p-0
+     @apply !p-0 !rounded-b-lg
   }
 
   .ant-modal-header{
@@ -260,7 +264,7 @@ const handleFileDelete = (i: number) => {
       }
 
       &:active::after {
-        @apply ring ring-accent ring-opacity-100 shadow transform scale-103;
+        @apply ring ring-primary ring-opacity-100 shadow transform scale-103;
       }
     }
   }

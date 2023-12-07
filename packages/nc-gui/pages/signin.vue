@@ -94,7 +94,22 @@ onMounted(()=>{ signOut() })
 </script>
 
 <template>
-  <div></div>
+  <div class="w-full h-full flex-col flex justify-center items-center">
+    <div style="width:300px;"
+         class="flex flex-col items-center justify-center py-4">
+      <component :is="iconMap.acl"
+                 class="text-4xl text-orange-500" />
+      <div class="py-3 text-slate-400">
+        {{ $t('msg.notAuthorized') }}
+      </div>
+      <button class="scaling-btn bg-opacity-100">
+        <span class="flex items-center gap-2">
+          <component :is="iconMap.reload" />
+          {{ $t('general.reload') }}
+        </span>
+      </button>
+    </div>
+  </div>
   <!-- <NuxtLayout>
     <div
       data-testid="nc-form-signin"

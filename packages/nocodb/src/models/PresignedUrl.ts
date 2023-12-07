@@ -112,8 +112,8 @@ export default class PresignedUrl {
     );
 
     if (url) {
-      // if present, check if the expiry date is greater than now
-      if (new Date(url.expires_at).getTime() > new Date().getTime()) {
+      // if present, check if the expiry date is greater than now + 30 minutes
+      if (new Date(url.expires_at).getTime() > (new Date().getTime() + 1000 * 60 * 30)) {
         // if greater, return the url
         return url.url;
       } else {

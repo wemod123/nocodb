@@ -33,8 +33,7 @@ export class BaseUsersController {
     return {
       users: await this.baseUsersService.userList({
         baseId,
-        query: req.query,
-        tid: get(req.user.roles, ['super']) === true ? undefined : req.user.tid
+        query: req.query
       }),
     };
   }

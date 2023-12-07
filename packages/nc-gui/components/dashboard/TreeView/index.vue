@@ -225,7 +225,7 @@ watch(
     <div v-if="!isSharedBase" class="text-gray-500 font-medium pl-3.5 mb-1">{{ $t('objects.projects') }}</div>
     <div mode="inline" class="nc-treeview pb-0.5 flex-grow min-h-50 overflow-x-hidden">
       <template v-if="basesList?.length">
-        <ProjectWrapper v-for="base of basesList" :key="base.id" :base-role="base.project_role" :base="base">
+        <ProjectWrapper v-for="base of basesList" :key="base.id" :base-role="base.project_role || ''" :base="base">
           <DashboardTreeViewProjectNode />
         </ProjectWrapper>
       </template>

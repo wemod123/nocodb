@@ -24,6 +24,7 @@ import {
 } from '#imports'
 import MdiMinusIcon from '~icons/mdi/minus-circle-outline'
 import MdiIdentifierIcon from '~icons/mdi/identifier'
+import MdiPlusIcon from '~icons/mdi/plus-circle-outline'
 
 const props = defineProps<{
   preload?: Partial<ColumnType>

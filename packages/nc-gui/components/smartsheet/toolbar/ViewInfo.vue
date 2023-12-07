@@ -71,8 +71,8 @@ const openedBaseUrl = computed(() => {
           <div v-else
                class="flex text-slate-500  items-center justify-center hover:text-violet-500">
             <svg xmlns="http://www.w3.org/2000/svg"
-               height="14"
-               width="14"
+               height="16"
+               width="16"
                viewBox="0 0 512 512">
               <path class="fa-secondary"
                     opacity="0.4"

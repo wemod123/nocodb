@@ -100,6 +100,8 @@ export default class BaseUser {
         `${MetaTable.USERS}.created_at as created_at`,
         `${MetaTable.USERS}.avatar`,
         `${MetaTable.USERS}.display_name`,
+        `${MetaTable.USERS}.uid`,
+        `${MetaTable.USERS}.tid`,
         `${MetaTable.PROJECT_USERS}.base_id`,
         `${MetaTable.PROJECT_USERS}.roles as roles`
       )

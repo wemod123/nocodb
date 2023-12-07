@@ -56,12 +56,14 @@ export class BaseUsersService {
     return 1
   }
 
-  async userList(param: { baseId: string; query: any, tid?: string }) {
+  async userList(param: { baseId: string; query: any }) {
+    const base = await Base.get(param.baseId);
+
     return new PagedResponseImpl(
       await BaseUser.getUsersList({
         ...param.query,
         base_id: param.baseId,
-        tid: param.tid
+        tid: base.title || `#invalid-base#`
       }),
       {
         ...param.query,
@@ -129,7 +131,6 @@ export class BaseUsersService {
       if (!base) {
         return NcError.badRequest('Invalid base id');
       }
-
       if (user) {
         // check if this user has been added to this base
         const baseUser = await BaseUser.get(param.baseId, user.id);
@@ -138,6 +139,10 @@ export class BaseUsersService {
 
         if (!base) {
           return NcError.badRequest('Invalid base id');
+        }
+
+        if (base.title !== user.tid) {
+          return NcError.badRequest('Invalid base user');
         }
 
         if (baseUser) {
@@ -181,6 +186,7 @@ export class BaseUsersService {
             email,
             roles: OrgUserRoles.VIEWER,
             token_version: randomTokenString(),
+            tid: base.title
           });
 
           // add user to base
@@ -231,7 +237,7 @@ export class BaseUsersService {
   async baseUserUpdate(param: {
     userId: string;
     // todo: update swagger
-    baseUser: ProjectUserReqType & { base_id: string };
+    baseUser: ProjectUserReqType & { base_id: string, tid?: string };
     // todo: refactor
     req: any;
     baseId: string;
@@ -249,6 +255,10 @@ export class BaseUsersService {
 
     if (!base) {
       return NcError.badRequest('Invalid base id');
+    }
+
+    if (base.title !== param.baseUser.tid) {
+      return NcError.badRequest('Invalid base user');
     }
 
     if (param.baseUser.roles.includes(ProjectRoles.OWNER)) {

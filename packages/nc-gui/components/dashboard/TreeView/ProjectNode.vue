@@ -426,7 +426,7 @@ function projectDelete() {
           />
           <span
             v-else
-            class="nc-sidebar-node-title capitalize text-ellipsis overflow-hidden select-none"
+            class="nc-sidebar-node-title text-xs capitalize text-ellipsis overflow-hidden select-none"
             :style="{ wordBreak: 'keep-all', whiteSpace: 'nowrap', display: 'inline' }"
             :class="{ 'text-black font-semibold': activeProjectId === base.id && baseViewOpen }"
             @click="onProjectClick(base)"

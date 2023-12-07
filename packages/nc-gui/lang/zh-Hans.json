@@ -495,8 +495,8 @@
     "createdBy": "创建自",
     "viewingAttachmentsOf": "查看附件",
     "readOnly": "只读",
-    "dropHere": "Drop here",
-    "createdOn": "Created On",
+    "dropHere": "上传文件",
+    "createdOn": "创建于",
     "notifyVia": "通知方式",
     "projName": "项目名",
     "profile": "Profile",
@@ -954,6 +954,7 @@
     "key": "键"
   },
   "msg": {
+    "uploadInformation": "点击添加文件按钮或拖拽文件到此处以上传文件",
     "changesOfThisRecord": "这条数据的更改记录",
     "totalXItems": "共{x}条记录",
     "scrollHMsg": "💡左右滑动: Shit + 鼠标滚轮",

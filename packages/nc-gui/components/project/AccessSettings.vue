@@ -2,7 +2,7 @@
 import type { WorkspaceUserRoles } from 'nocodb-sdk'
 import { OrderedProjectRoles, OrgUserRoles, ProjectRoles, WorkspaceRolesToProjectRoles, extractRolesObj } from 'nocodb-sdk'
 import InfiniteLoading from 'v3-infinite-loading'
-import { isEeUI, storeToRefs, timeAgo } from '#imports'
+import { isEeUI, storeToRefs, Empty, timeAgo, message } from '#imports'
 
 const basesStore = useBases()
 const { getProjectUsers, createProjectUser, updateProjectUser, removeProjectUser } = basesStore
@@ -95,12 +95,20 @@ const updateCollaborator = async (collab: any, roles: ProjectRoles) => {
         collab.roles = ProjectRoles.NO_ACCESS
       }
     } else if (collab.base_roles) {
-      collab.roles = roles
-      await updateProjectUser(activeProjectId.value!, collab)
+      try {
+        await updateProjectUser(activeProjectId.value!, collab)
+        collab.roles = roles
+      } catch(err) {
+        message.error(err?.response?.data?.msg)
+      }
     } else {
-      collab.roles = roles
-      collab.base_roles = roles
-      await createProjectUser(activeProjectId.value!, collab)
+      try {
+        await createProjectUser(activeProjectId.value!, collab);
+        collab.roles = roles
+        collab.base_roles = roles
+      } catch(err) {
+        message.error(err?.response?.data?.msg)
+      }
     }
   } catch (e: any) {
     message.error(await extractSdkResponseErrorMsg(e))

@@ -34,7 +34,7 @@ export class BasesService {
     protected readonly appHooksService: AppHooksService,
     protected metaService: MetaService,
     protected tablesService: TablesService,
-  ) {}
+  ) { }
 
   async baseList(param: {
     user: { id: string; roles?: string | Record<string, boolean> };
@@ -98,6 +98,12 @@ export class BasesService {
       base.title !== data.title &&
       (await Base.getByTitle(data.title))
     ) {
+      NcError.badRequest('Base title already in use');
+    }
+  }
+
+  protected async baseTitleIsAvailable(title: string) {
+    if (await Base.getByTitle(title)) {
       NcError.badRequest('Base title already in use');
     }
   }
@@ -187,6 +193,8 @@ export class BasesService {
     if (baseBody?.title.length > 50) {
       NcError.badRequest('Base title exceeds 50 characters');
     }
+
+    await this.baseTitleIsAvailable(baseBody?.title)
 
     baseBody.title = DOMPurify.sanitize(baseBody.title);
     baseBody.slug = baseBody.title;
