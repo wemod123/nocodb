@@ -24,6 +24,10 @@ jobs:
         with:
           node-version: 18.14.0
 
+      - name: Get Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+
       - name: Build Common SDK
         working-directory: packages/nocodb-sdk
         run: |
@@ -55,5 +59,5 @@ jobs:
       - name: Build Image
         working-directory: packages/nocodb
         run: |
-          docker build -f Dockerfile.lift . -t ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}
+          docker build -f Dockerfile.lift . -t ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ steps.package-version.outputs.current-version }}
+          docker push ${{ secrets.REGISTRY }}/${{ env.APP_NAME }}:${{ steps.package-version.outputs.current-version }}

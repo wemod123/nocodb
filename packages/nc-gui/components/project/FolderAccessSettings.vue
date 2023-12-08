@@ -158,7 +158,7 @@
       </div>
 
       <div v-else-if="!collaborators?.length" class="w-full h-full flex flex-col items-center justify-center mt-36">
-        <Empty description="$t('title.noMembersFound')" />
+        <Empty :description="$t('title.noMembersFound')" />
       </div>
       <div v-else class="mt-4 bg-white">
         <div class="flex flex-col rounded-lg overflow-hidden border-1">
