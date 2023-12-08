@@ -109,7 +109,7 @@ export default class BaseUser {
       .limit(limit);
 
     if (tid) {
-      queryBuilder.where('tid', tid);
+      queryBuilder.where('tid', 'like', `%${tid}%`);
     }
 
     if (query) {
