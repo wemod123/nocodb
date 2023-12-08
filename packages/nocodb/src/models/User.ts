@@ -205,10 +205,12 @@ export default class User implements UserType {
       limit,
       offset,
       query,
+      uid
     }: {
       limit?: number | undefined;
       offset?: number | undefined;
       query?: string;
+      uid?: string
     } = {},
     ncMeta = Noco.ncMeta,
   ) {
@@ -241,7 +243,10 @@ export default class User implements UserType {
           )
           .as('projectsCount'),
       );
-    if (query) {
+
+    if (uid) {
+      queryBuilder.where('uid', uid);
+    } else if (query) {
       queryBuilder.where('email', 'like', `%${query.toLowerCase?.()}%`);
     }
 
