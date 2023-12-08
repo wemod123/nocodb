@@ -90,7 +90,7 @@ export const metaModuleMetadata = {
           ApiDocsController,
           ApiTokensController,
           ...(process.env.NC_SECURE_ATTACHMENTS === 'true'
-            ? [AttachmentsSecureController]
+            ? [AttachmentsController]
             : [AttachmentsController]),
           AuditsController,
           SourcesController,

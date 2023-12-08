@@ -18,11 +18,11 @@ export function genJwt(user: User, config: NcConfig) {
   );
 }
 
-export function verifyPWJwt(token: string): { uid: string } | null {
+export function verifyPWJwt(token: string, config: NcConfig): { uid: string } | null {
   try {
     return jwt.verify(
       token,
-      process.env.NC_PW_JWT_SECRET || 'xFRmABv/W2E5Ho6-f5fHLqgena46r_Oj7r7OKHYfLElqcBfGFHHpjBhivyi5'
+      config.auth.jwt.secret
     ) as { uid: string } | null
   } catch (err) {
     return null

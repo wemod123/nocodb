@@ -87,6 +87,13 @@ export class AuthController {
     res.json(await this.usersService.login(req.user, req));
   }
 
+  @Post(['/api/v1/auth/user/dry-signin'])
+  @UseGuards(PublicApiLimiterGuard, AuthGuard('local'))
+  @HttpCode(200)
+  async drySignIn(@Req() req: Request, @Res() res: Response) {
+    res.json(await this.usersService.login(req.user, req));
+  }
+
   @UseGuards(GlobalGuard)
   @Post('/api/v1/auth/user/signout')
   @HttpCode(200)
