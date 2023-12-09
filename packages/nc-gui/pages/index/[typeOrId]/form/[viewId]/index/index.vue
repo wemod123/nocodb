@@ -70,10 +70,10 @@ const onDecode = async (scannedCodeValue: string) => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center p-4 w-full max-w-[720px]">
+  <div class="flex flex-col items-center px-0 sm:px-4 w-full max-w-[720px]">
     <div
       style="box-shadow: 0px 2px 4px hsla(0,0%,8%,.1),0px 6px 12px hsla(0,0%,8%,.06);"
-      class="f-form-contianer flex flex-col relative justify-center gap-2 w-full max-w-[max(33%,600px)] m-auto pb-4 pt-30 pb-8 px-16 bg-white rounded-lg border-1 border-gray-200"
+      class="f-form-contianer flex flex-col xs:!shadow-none relative justify-center gap-2 w-full max-w-[max(33%,600px)] m-auto pb-4 pt-30 pb-8 px-8 sm:px-16 bg-white rounded-lg border-1 border-gray-200"
     >
       <div class="w-full absolute left-0 top-0 h-[158px] bg-slate-200/30 z-0" />
       <template v-if="sharedFormView">
@@ -202,7 +202,7 @@ const onDecode = async (scannedCodeValue: string) => {
               </div>
 
               <div class="text-center mt-4">
-                <NcButton type="primary" html-type="submit" data-testid="shared-form-submit-button" @click="submitForm">
+                <NcButton class="!px-16" type="primary" html-type="submit" data-testid="shared-form-submit-button" @click="submitForm">
                   {{ $t('general.submit') }}
                 </NcButton>
               </div>

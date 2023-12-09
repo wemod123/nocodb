@@ -27,8 +27,8 @@ const openedBaseUrl = computed(() => {
   <div
     class="ml-0.25 flex flex-row font-normal items-center border-gray-50 transition-all duration-100"
     :class="{
-      'min-w-36/100 max-w-36/100': !isMobileMode && isLeftSidebarOpen,
-      'min-w-39/100 max-w-39/100': !isMobileMode && !isLeftSidebarOpen,
+      'min-w-36/100 max-w-50/100': !isMobileMode && isLeftSidebarOpen,
+      'min-w-39/100 max-w-50/100': !isMobileMode && !isLeftSidebarOpen,
       'w-2/3 text-base ml-1.5': isMobileMode,
       '!max-w-3/4': isSharedBase && !isMobileMode,
     }"
@@ -46,7 +46,7 @@ const openedBaseUrl = computed(() => {
         <NcTooltip class="!text-inherit">
           <template #title>
             <span class="capitalize">
-              {{ isSuper ? base?.title : $t("general.workingDirs") }}
+              {{ isSuper ? base?.title : $t("title.workspaceHome") }}
             </span>
           </template>
           <div v-if="isSuper" class="flex flex-row items-center gap-x-1.5">

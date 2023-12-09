@@ -385,7 +385,7 @@ onBeforeUnmount(() => {
             </div>
           </template>
           <div v-else class="flex flex-row gap-x-2 w-full">
-            <span v-if="!i" class="flex items-center ml-2 mr-7.35">{{ $t('labels.where') }}</span>
+            <span v-if="!i" class="flex items-center ml-2 w-[72px]">{{ $t('labels.where') }}</span>
 
             <NcSelect
               v-else

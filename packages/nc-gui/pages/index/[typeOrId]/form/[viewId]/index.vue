@@ -1,45 +1,43 @@
 <script setup lang="ts">
-import { navigateTo, useDark, useRoute, useRouter, useSharedFormStoreOrThrow, useTheme, watch } from '#imports'
+  import { navigateTo, useDark, useRoute, useRouter, useSharedFormStoreOrThrow, useTheme, watch } from '#imports'
 
-const { sharedViewMeta } = useSharedFormStoreOrThrow()
+  const { sharedViewMeta } = useSharedFormStoreOrThrow()
 
-const isDark = useDark()
+  const isDark = useDark()
 
-const { setTheme } = useTheme()
+  const { setTheme } = useTheme()
 
-const route = useRoute()
+  const route = useRoute()
 
-const router = useRouter()
+  const router = useRouter()
 
-watch(
-  () => sharedViewMeta.value.withTheme,
-  (hasTheme) => {
-    if (hasTheme && sharedViewMeta.value.theme) setTheme(sharedViewMeta.value.theme)
-  },
-  { immediate: true },
-)
+  watch(
+    () => sharedViewMeta.value.withTheme,
+    (hasTheme) => {
+      if (hasTheme && sharedViewMeta.value.theme) setTheme(sharedViewMeta.value.theme)
+    },
+    { immediate: true },
+  )
 
-const onClick = () => {
-  isDark.value = !isDark.value
-}
-
-const shouldRedirect = (to: string) => {
-  if (sharedViewMeta.value.surveyMode) {
-    if (!to.includes('survey')) navigateTo(`/nc/form/${route.params.viewId}/survey`)
-  } else {
-    if (to.includes('survey')) navigateTo(`/nc/form/${route.params.viewId}`)
+  const onClick = () => {
+    isDark.value = !isDark.value
   }
-}
 
-shouldRedirect(route.name as string)
+  const shouldRedirect = (to: string) => {
+    if (sharedViewMeta.value.surveyMode) {
+      if (!to.includes('survey')) navigateTo(`/nc/form/${route.params.viewId}/survey`)
+    } else {
+      if (to.includes('survey')) navigateTo(`/nc/form/${route.params.viewId}`)
+    }
+  }
 
-router.afterEach((to) => shouldRedirect(to.name as string))
+  shouldRedirect(route.name as string)
+
+  router.afterEach((to) => shouldRedirect(to.name as string))
 </script>
 
 <template>
-  <div
-    class="bg-slate-100 nc-scrollbar-md overflow-y-auto overflow-x-hidden flex flex-col justify-center items-center color-transition nc-form-view relative h-[100vh] py-4"
-  >
+  <div class="bg-slate-100 nc-scrollbar-md overflow-y-auto overflow-x-hidden flex flex-col items-center color-transition nc-form-view relative h-[100vh] pt-0 pb-8 md:py-4">
     <NuxtPage />
 
     <!-- <div
@@ -69,10 +67,29 @@ p {
 
 .nc-form-view {
   .nc-cell {
-    @apply bg-white dark:bg-slate-500;
+    @apply !bg-slate-100/70 transition;
+    @apply bg-slate-100/80 border-1 border-slate-200;
+
+    &:hover {
+      @apply !border-slate-400/60;
+    }
+
+    &:focus-within {
+      @apply !border-violet-500
+    }
+
+    * {
+      @apply !bg-slate-100/70;
+    }
+
+    &.nc-cell-singlelinetext {
+      input {
+        @apply !pl-0
+      }
+    }
 
     &.nc-cell-checkbox {
-      @apply color-transition !border-0;
+      @apply color-transition !pl-0;
 
       .nc-icon {
         @apply !text-2xl;
@@ -87,57 +104,52 @@ p {
       }
     }
 
-    &:not(.nc-cell-checkbox) {
-      @apply bg-white dark:bg-slate-500;
+    &.nc-input {
+      @apply w-full rounded p-2 min-h-[40px] flex items-center;
 
-      &.nc-input {
-        @apply w-full rounded p-2 min-h-[40px] flex items-center border-solid border-1 border-gray-300 dark:border-slate-200;
+      .duration-cell-wrapper {
+        @apply w-full;
 
-        .duration-cell-wrapper {
-          @apply w-full;
-
-          input {
-            @apply !outline-none;
-
-            &::placeholder {
-              @apply text-gray-400 dark:text-slate-300;
-            }
+        input {
+          &::placeholder {
+            @apply text-gray-400;
           }
         }
+      }
 
-        input,
-        textarea,
-        &.nc-virtual-cell,
-        > div {
-          @apply bg-white dark:(bg-slate-500 text-white);
+      input,
+      textarea,
+      &.nc-virtual-cell,
+      >div {
+        @apply bg-white;
 
-          .ant-btn {
-            @apply dark:(bg-slate-300);
-          }
-
-          .chip {
-            @apply dark:(bg-slate-700 text-white);
-          }
+        .ant-btn {
+          @apply dark:(bg-slate-300);
         }
 
-        textarea {
-          @apply px-4 py-2 rounded;
+        .chip {
+          @apply dark:(bg-slate-700 text-white);
+        }
+      }
 
-          &:focus {
-            box-shadow: none !important;
-          }
+      textarea {
+        @apply px-4 py-2 rounded;
+
+        &:focus {
+          box-shadow: none !important;
         }
       }
     }
 
-    .nc-attachment-cell > div {
+
+    .nc-attachment-cell>div {
       @apply dark:(bg-slate-100);
     }
   }
 }
 
 .nc-form-column-label {
-  > * {
+  >* {
     @apply dark:text-slate-300;
   }
 }

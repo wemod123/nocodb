@@ -36,7 +36,7 @@ const { isUIAllowed } = useRoles()
 
 const { isSharedBase } = storeToRefs(useBase())
 
-const { isMobileMode } = useGlobal()
+const { isMobileMode, lang } = useGlobal()
 
 const showShareModel = ref(false)
 
@@ -93,8 +93,6 @@ const genShareLink = async () => {
 
   const meta = isString(response.meta) ? JSON.parse(response.meta) : response.meta
 
-  console.log('genShareLink', response, meta)
-
   shared.value = { ...response, meta }
 
   if (shared.value.type === ViewTypes.KANBAN) {
@@ -129,7 +127,7 @@ const sharedViewUrl = computed(() => {
       viewType = 'view'
   }
 
-  return encodeURI(`${dashboardUrl?.value}#/nc/${viewType}/${shared.value.uuid}`)
+  return encodeURI(`${dashboardUrl?.value}#/nc/${viewType}/${shared.value.uuid}?setLang=${lang}`)
 })
 
 async function saveAllowCSVDownload() {

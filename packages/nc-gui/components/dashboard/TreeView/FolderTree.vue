@@ -395,7 +395,7 @@
           </svg>
         </div>
 
-        <div class="pl-2 flex-grow">{{ $t("general.workingDirs") }} (<span>{{ (base?.sources?.length || 1) - 1 }}</span>)</div>
+        <div class="pl-2 flex-grow">{{ $t("title.workspaceHome") }} (<span>{{ (base?.sources?.length || 1) - 1 }}</span>)</div>
         <svg xmlns="http://www.w3.org/2000/svg"
              width="20"
              height="20"

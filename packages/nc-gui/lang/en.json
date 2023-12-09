@@ -302,6 +302,13 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "aboutViewsMsg": "Based on the entity table, multiple views can be created to customize the way data is displayed.",
+    "aboutTablesMsg": "The entity table is the fundamental table for storing data.",
+    "aboutWorkspaceMsg": "The workspace contains multiple tables, and the data between the tables can be interconnected. The data in different workspaces are isolated datasets and cannot be interconnected.",
+    "totalxTablesInyWorkspaces": "Total {x} table{xs} in {y} workspace{ys}",
+    "aboutWorkspace": "About workspace",
+    "about": "About",
+    "workspaceHome": "Workspace home",
     "updatesRecords": "Audits",
     "activitiesNComments": "Comments",
     "asDisplayField": "As primary display field",

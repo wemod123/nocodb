@@ -141,7 +141,7 @@ export class BaseUsersService {
           return NcError.badRequest('Invalid base id');
         }
 
-        if (base.title !== user.tid) {
+        if (!user.tid.includes(base.title)) {
           return NcError.badRequest('Invalid base user');
         }
 
@@ -257,7 +257,7 @@ export class BaseUsersService {
       return NcError.badRequest('Invalid base id');
     }
 
-    if (base.title !== param.baseUser.tid) {
+    if (!param.baseUser.tid.includes(base.title)) {
       return NcError.badRequest('Invalid base user');
     }
 

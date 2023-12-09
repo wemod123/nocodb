@@ -12,6 +12,8 @@ import PurgeIcons from 'vite-plugin-purge-icons'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  devServer: { port: 3001 },
+
   modules: ['@vueuse/nuxt', 'nuxt-windicss', '@nuxt/image-edge', '@pinia/nuxt'],
 
   ssr: false,
@@ -25,9 +27,9 @@ export default defineNuxtConfig({
     pageTransition: process.env.NUXT_PAGE_TRANSITION_DISABLE
       ? false
       : {
-          name: 'page',
-          mode: 'out-in',
-        },
+        name: 'page',
+        mode: 'out-in',
+      },
     // layoutTransition: process.env.NUXT_PAGE_TRANSITION_DISABLE
     //   ? false
     //   : {
@@ -40,24 +42,25 @@ export default defineNuxtConfig({
     /** In production build we need to load assets using relative path, to achieve the result we are using cdnURL */
     cdnURL: process.env.NODE_ENV === 'production' ? process.env.NC_CDN_URL || '.' : undefined,
     head: {
+      title: 'Base Tables',
       link: [
         {
           rel: 'icon',
           type: 'image/x-icon',
-          href: './favicon.ico',
+          href: './placeholder.png',
         },
 
         ...(process.env.NC_CDN_URL
           ? [
-              {
-                rel: 'preload',
-                as: 'font',
-                href: new URL('/shared/style/material.woff2', process.env.NC_CDN_URL).href,
-                type: 'font/woff2',
-                crossorigin: 'anonymous',
-              } as any,
-              { rel: 'stylesheet', href: new URL('/shared/style/fonts.css', process.env.NC_CDN_URL).href },
-            ]
+            {
+              rel: 'preload',
+              as: 'font',
+              href: new URL('/shared/style/material.woff2', process.env.NC_CDN_URL).href,
+              type: 'font/woff2',
+              crossorigin: 'anonymous',
+            } as any,
+            { rel: 'stylesheet', href: new URL('/shared/style/fonts.css', process.env.NC_CDN_URL).href },
+          ]
           : []),
       ],
       meta: [
@@ -66,41 +69,41 @@ export default defineNuxtConfig({
           name: 'viewport',
           content: 'width=device-width, initial-scale=1',
         },
-        {
-          hid: 'description',
-          name: 'description',
-          content: process.env.npm_package_description || '',
-        },
-        // Open Graph
-        { hid: 'og:site_name', property: 'og:site_name', content: 'NocoDB' },
-        { hid: 'og:type', property: 'og:type', content: 'website' },
-        { hid: 'og:title', property: 'og:title', content: 'NocoDB' },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content:
-            'NocoDB provides an intuitive spreadsheet interface for creating online databases, either from scratch or by connecting to any Postgres/MySQL. Access your data through interactive UIs or via API and SQL. Get started for free.',
-        },
-        { hid: 'og:url', property: 'og:url', content: 'https://nocodb.com' },
-        // Twitter
-        { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
-        { hid: 'twitter:title', name: 'twitter:title', content: 'NocoDB' },
-        {
-          hid: 'twitter:description',
-          name: 'twitter:description',
-          content:
-            'NocoDB provides an intuitive spreadsheet interface for creating online databases, either from scratch or by connecting to any Postgres/MySQL. Access your data through interactive UIs or via API and SQL. Get started for free.',
-        },
-        {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: './link-preview.webp',
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: './link-preview.webp',
-        },
+        // {
+        //   hid: 'description',
+        //   name: 'description',
+        //   content: process.env.npm_package_description || '',
+        // },
+        // // Open Graph
+        // { hid: 'og:site_name', property: 'og:site_name', content: 'NocoDB' },
+        // { hid: 'og:type', property: 'og:type', content: 'website' },
+        // { hid: 'og:title', property: 'og:title', content: 'NocoDB' },
+        // {
+        //   hid: 'og:description',
+        //   property: 'og:description',
+        //   content:
+        //     'NocoDB provides an intuitive spreadsheet interface for creating online databases, either from scratch or by connecting to any Postgres/MySQL. Access your data through interactive UIs or via API and SQL. Get started for free.',
+        // },
+        // { hid: 'og:url', property: 'og:url', content: 'https://nocodb.com' },
+        // // Twitter
+        // { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+        // { hid: 'twitter:title', name: 'twitter:title', content: 'NocoDB' },
+        // {
+        //   hid: 'twitter:description',
+        //   name: 'twitter:description',
+        //   content:
+        //     'NocoDB provides an intuitive spreadsheet interface for creating online databases, either from scratch or by connecting to any Postgres/MySQL. Access your data through interactive UIs or via API and SQL. Get started for free.',
+        // },
+        // {
+        //   hid: 'twitter:image',
+        //   name: 'twitter:image',
+        //   content: './link-preview.webp',
+        // },
+        // {
+        //   hid: 'og:image',
+        //   property: 'og:image',
+        //   content: './link-preview.webp',
+        // },
       ],
     },
   },
@@ -194,7 +197,7 @@ export default defineNuxtConfig({
     ],
     define: {
       'process.env.DEBUG': 'false',
-      'process.nextTick': () => {},
+      'process.nextTick': () => { },
       'process.env.ANT_MESSAGE_DURATION': process.env.ANT_MESSAGE_DURATION,
     },
     server: {

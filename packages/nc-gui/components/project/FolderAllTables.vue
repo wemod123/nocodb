@@ -41,18 +41,18 @@
 
 <template>
   <div class="w-full">
-    <div class="flex items-center px-8 pt-8 font-bold">
-      <div class="text-lg text-slate-500">
-        {{ $t('title.tables') }}
-      </div>
-      <div class="tab-info bg-violet-200/80 rounded flex items-center justify-center px-1.5 h-5 ml-2">
-        {{ activeTables.length }}
-      </div>
+    <div class="flex px-9 pt-7 font-bold text-lg text-slate-500">
+      {{ $t('title.totalxTablesInyWorkspaces', {
+        x: activeTables.length,
+        y: ((openedProject?.sources?.length || 1) - 1),
+        xs: activeTables.length > 1 ? 's' : '',
+        ys: (openedProject?.sources?.length || 1) > 2 ? 's' : ''
+      }) }}
     </div>
     <div class="nc-scrollbar-md px-8 pb-8"
-         style="height:calc(100vh - 100px)">
+         style="height:calc(100vh - 92px)">
       <div v-for="(tables, k) in tablesGroup"
-           class="mt-6 p-4 bg-white rounded border-1 border-slate-100/80">
+           class="mt-6 p-4 bg-white rounded border-1 border-slate-200/60">
 
         <div class="flex text-slate-500 items-center pb-2">
           <GeneralWsTableListPin v-if="k === 'pinnedTables'"

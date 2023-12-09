@@ -180,9 +180,6 @@ function openDeleteDialog() {
       v-e="['c:breadcrumb:view-actions']"
       class="truncate nc-active-view-title !hover:(bg-gray-100 text-gray-800) ml-0.25 pl-1 pr-0.25 rounded-md py-1 cursor-pointer"
       :class="{
-        'max-w-2/5': !isSharedBase && !isMobileMode && activeView?.is_default,
-        'max-w-3/5': !isSharedBase && !isMobileMode && !activeView?.is_default,
-        'max-w-1/2': isMobileMode,
         'text-gray-500': activeView?.is_default,
         'text-gray-800': !activeView?.is_default,
       }"

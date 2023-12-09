@@ -13,9 +13,10 @@
 
   const route = useRoute()
   const { signIn, signOut, lang } = useGlobal()
-  const { api, isLoading, error } = useApi({ useGlobalInstance: true })
+  const { api } = useApi({ useGlobalInstance: true })
 
-  const hasError = ref('')
+  const hasError = ref('');
+  let parentFrame: any;
 
   const runEntry = () => {
     hasError.value = '';
@@ -24,16 +25,21 @@
     const connection = connectToParent({ methods: {} });
 
     connection.promise.then((parent: any) => {
+      parentFrame = parent;
       parent.event('mounted');
 
       /** Get Embed Config */
       parent.getEmbedConfig()
         .then(async (params: EntryConfig) => {
-          console.log('---params---', params)
-
           if (params.lang) {
             await setI18nLanguage(params.lang)
             lang.value = params.lang
+            try {
+              localStorage.setItem('nocodb-gui-v2', JSON.stringify({
+                ...JSON.parse(localStorage.getItem('nocodb-gui-v2') as string),
+                lang: params.lang
+              }))
+            } catch (e) { }
           }
 
           if (!(params.entryToken)) {
@@ -85,7 +91,8 @@
       <div class="py-3 text-slate-400">
         {{ $t('msg.notAuthorized') }}
       </div>
-      <button class="scaling-btn bg-opacity-100">
+      <button class="scaling-btn bg-opacity-100"
+              @click="parentFrame.reload();">
         <span class="flex items-center gap-2">
           <component :is="iconMap.reload" />
           {{ $t('general.reload') }}

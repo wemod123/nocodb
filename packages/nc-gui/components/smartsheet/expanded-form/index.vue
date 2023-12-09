@@ -86,7 +86,7 @@ const isUnsavedFormExist = ref(false)
 
 const isRecordLinkCopied = ref(false)
 
-const { isUIAllowed } = useRoles()
+const { isUIAllowed, isSuper } = useRoles()
 
 const readOnly = computed(() => !isUIAllowed('dataEdit') || isPublic.value)
 
@@ -512,7 +512,7 @@ export default {
           </div>
           <div class="flex gap-2">
             <NcButton
-              v-if="!isNew"
+              v-if="!isNew && isSuper"
               type="secondary"
               class="!xs:hidden text-gray-700"
               @click="!isNew ? copyRecordUrl() : () => {}"

@@ -1,5 +1,3 @@
-<script lang="ts" setup></script>
-
 <template>
   <div class="flex flex-row flex-grow pr-1 py-0.5 rounded-md w-full" style="max-width: calc(100% - 2.5rem)">
     <div class="flex-grow min-w-20">
@@ -20,7 +18,12 @@
                 fill="#6366f1"
                 d="M448 160c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l384 0z" />
         </svg>
-        <span class="pl-2 truncate">{{ $t("general.baseTable") }}</span>  
+        <span class="pl-2 truncate">{{ $t("general.baseTable") }}</span> 
+        <div class="flex p-1 hover:bg-slate-200/90 ml-2 cursor-pointer bg-slate-200/50 rounded-lg items-center text-slate-500 font-normal"
+             @click="navigateTo('/')">
+          <GeneralIcon icon="reload"
+                       class="text-slate-400 text-sm text" />
+        </div> 
         <div class="flex flex-grow"></div>
       </div>
     </div>

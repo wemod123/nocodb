@@ -37,7 +37,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   const { allRoles, loadRoles } = useRoles()
 
-  if (to.fullPath === '/signin-test-logi-x1') {
+  if (to.fullPath === '/signin-test-logi_xc04q5jWrNAtNh') {
     await state.signOut(true)
   }
 

@@ -54,6 +54,7 @@ const loadCollaborators = async () => {
               : ProjectRoles.NO_ACCESS),
       })),
     ]
+    console.log('collaborators.value>>>',collaborators.value)
   } catch (e: any) {
     message.error(await extractSdkResponseErrorMsg(e))
   }
@@ -96,16 +97,16 @@ const updateCollaborator = async (collab: any, roles: ProjectRoles) => {
       }
     } else if (collab.base_roles) {
       try {
-        await updateProjectUser(activeProjectId.value!, collab)
         collab.roles = roles
+        await updateProjectUser(activeProjectId.value!, collab)
       } catch(err) {
         message.error(err?.response?.data?.msg)
       }
     } else {
       try {
-        await createProjectUser(activeProjectId.value!, collab);
         collab.roles = roles
         collab.base_roles = roles
+        await createProjectUser(activeProjectId.value!, collab);
       } catch(err) {
         message.error(err?.response?.data?.msg)
       }
