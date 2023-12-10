@@ -29,6 +29,20 @@ export function useGlobalActions(state: State): Actions {
     }
   }
 
+  const drySignOut: Actions['drySignOut'] = async () => {
+    state.token.value = null
+    state.user.value = null
+
+    // clear all stores data on logout
+    const pn = getActivePinia()
+    if (pn) {
+      pn._s.forEach((store) => {
+        store.$dispose()
+        delete pn.state.value[store.$id]
+      })
+    }
+  }
+
   /** Sign in by setting the token in localStorage */
   const signIn: Actions['signIn'] = async (newToken, entryConfig) => {
     state.token.value = newToken
@@ -55,7 +69,7 @@ export function useGlobalActions(state: State): Actions {
     return new Promise((resolve) => {
       nuxtApp.$api.instance
         .post('/auth/token/refresh', null, {
-          withCredentials: true,
+          // withCredentials: true,
         })
         .then((response) => {
           if (response.data?.token) {
@@ -151,5 +165,5 @@ export function useGlobalActions(state: State): Actions {
     return undefined
   }
 
-  return { signIn, signOut, refreshToken, loadAppInfo, setIsMobileMode, navigateToProject, getBaseUrl, ncNavigateTo, getMainUrl }
+  return { signIn, signOut, drySignOut, refreshToken, loadAppInfo, setIsMobileMode, navigateToProject, getBaseUrl, ncNavigateTo, getMainUrl }
 }

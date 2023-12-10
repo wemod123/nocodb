@@ -58,23 +58,24 @@
 <template>
   <div class="flex nc-user-avatar font-bold"
        :class="{
-         'min-w-4 min-h-4': size === 'small',
-         'min-w-6 min-h-6': size === 'medium',
-         'min-w-8 min-h-8 !text-md': size === 'base',
-         'min-w-20 min-h-20 !text-3xl': size === 'large',
-         'min-w-26 min-h-26 !text-4xl': size === 'xlarge',
+         'min-w-4 min-h-4 w-4 h-4': size === 'small',
+         'min-w-6 min-h-6 w-6 h-6': size === 'medium',
+         'min-w-8 min-h-8 w-8 h-8 !text-md': size === 'base',
+         'min-w-20 min-h-20 w-20 h-20 !text-3xl': size === 'large',
+         'min-w-26 min-h-26 w-26 h-26 !text-4xl': size === 'xlarge',
          'text-white': isColorDark(backgroundColor),
          'text-black': !isColorDark(backgroundColor),
        }"
        :style="{ backgroundColor }">
-    <img v-if="theUser?.avatar?.startsWith('https://')"
-         :src="theUser.avatar" />
+    <NuxtImg v-if="theUser?.avatar?.startsWith('https://')"
+             :src="theUser.avatar"
+             fit="cover" />
     <span v-else> {{ usernameInitials }}</span>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .nc-user-avatar {
-  @apply rounded-full text-xs flex items-center justify-center uppercase;
+  @apply rounded-full overflow-hidden text-xs flex items-center justify-center uppercase;
 }
 </style>

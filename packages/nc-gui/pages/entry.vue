@@ -12,7 +12,7 @@
   })
 
   const route = useRoute()
-  const { signIn, signOut, lang } = useGlobal()
+  const { signIn, drySignOut, lang, refreshToken } = useGlobal()
   const { api } = useApi({ useGlobalInstance: true })
 
   const hasError = ref('');
@@ -20,7 +20,7 @@
 
   const runEntry = () => {
     hasError.value = '';
-    signOut();
+    drySignOut();
 
     const connection = connectToParent({ methods: {} });
 

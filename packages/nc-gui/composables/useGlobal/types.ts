@@ -83,6 +83,7 @@ export interface Getters {
 
 export interface Actions {
   signOut: (skipRedirect?: boolean) => void
+  drySignOut: () => void
   signIn: (token: string, entryConfig?: any) => void
   refreshToken: () => void
   loadAppInfo: () => void
