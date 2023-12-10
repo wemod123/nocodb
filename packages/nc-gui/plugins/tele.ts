@@ -13,7 +13,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     let socket: Socket
 
-    const init = async (token: string) => {
+    const init = async (token: string, entryKey: string = '') => {
+      return;
       try {
         if (socket) socket.disconnect()
 
@@ -22,18 +23,18 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         socketPath += socketPath.endsWith('/') ? 'socket.io' : '/socket.io'
 
         socket = io(url.href, {
-          extraHeaders: { 'xc-auth': token },
+          extraHeaders: { 'xc-auth': token, 'xc-entry': entryKey },
           path: socketPath,
         })
 
         socket.on('connect_error', () => {
           socket.disconnect()
         })
-      } catch {}
+      } catch (err) { }
     }
 
-    if (nuxtApp.$state.signedIn.value) {
-      await init(nuxtApp.$state.token.value)
+    if (nuxtApp.$state.signedIn.value && false) {
+      await init(nuxtApp.$state.token.value, nuxtApp.$state.entryConfig.value?.entryKey?.join(','))
     }
 
     router.afterEach((to, from) => {

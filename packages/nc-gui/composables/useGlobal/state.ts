@@ -68,6 +68,7 @@ export function useGlobalState(storageKey = 'nocodb-gui-v2'): State {
     hiddenRelease: null,
     isMobileMode: null,
     lastOpenedWorkspaceId: null,
+    entryConfig: null
   }
 
   /** saves a reactive state, any change to these values will write/delete to localStorage */
@@ -124,11 +125,16 @@ export function useGlobalState(storageKey = 'nocodb-gui-v2'): State {
   /** our local user object */
   const user = ref<User | null>(null)
 
-  const entryConfig = ref<EntryConfig | null>(null)
+  const entryConfig = computed({
+    get: () => storage.value.entryConfig || null,
+    set: (val) => {
+      storage.value.entryConfig = val
+    },
+  })
 
   return {
-    entryConfig,
     ...toRefs(storage.value),
+    entryConfig,
     storage,
     token,
     jwtPayload: payload,

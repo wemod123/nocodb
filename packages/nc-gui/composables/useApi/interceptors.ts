@@ -13,6 +13,7 @@ export function addAxiosInterceptors(api: Api<any>) {
 
   api.instance.interceptors.request.use((config) => {
     config.headers['xc-gui'] = 'true'
+    config.headers['xc-entry'] = state.entryConfig?.value?.entryKey?.join(',')
 
     if (state.token.value) config.headers['xc-auth'] = state.token.value
 

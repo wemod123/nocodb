@@ -20,6 +20,7 @@ export const useNotification = defineStore('notificationStore', () => {
   let socket: Socket
 
   const init = (token) => {
+    return;
     const url = new URL(appInfo.value.ncSiteUrl, window.location.href.split(/[?#]/)[0]).href
 
     socket = io(`${url}${url.endsWith('/') ? '' : '/'}notifications`, {

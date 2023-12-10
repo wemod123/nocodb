@@ -50,6 +50,7 @@ export interface StoredState {
   hiddenRelease: string | null
   isMobileMode: boolean | null
   lastOpenedWorkspaceId: string | null
+  entryConfig: EntryConfig | null
 }
 
 export interface EntryConfig {
@@ -61,7 +62,8 @@ export interface EntryConfig {
   email: string
   tid: string
   theme: string
-  actorToken: string
+  actorToken: string,
+  entryKey: string[]
 }
 
 export type State = ToRefs<Omit<StoredState, 'token'>> & {

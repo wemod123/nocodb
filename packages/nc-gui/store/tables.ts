@@ -67,21 +67,12 @@ export const useTablesStore = defineStore('tablesStore', () => {
 
 
   const loadTablesPins = async (baseId: string) => {
-    tablePins.value = await $fetch(`/api/v1/user/store/projects/${baseId}/key/userPinnedTables`, {
-      baseURL: $api.instance.defaults.baseURL,
-      method: 'GET',
-      headers: { 'xc-auth': $state.token.value as string }
-    })
+    tablePins.value = await $api.instance.get(`/api/v1/user/store/projects/${baseId}/key/userPinnedTables`)
+      .then(v => v.data)
   }
 
   const setTablePins = async (baseId: string, pinned: any) => {
-    await $fetch(`/api/v1/user/store/projects/${baseId}/key/userPinnedTables`, {
-      baseURL: $api.instance.defaults.baseURL,
-      method: 'PATCH',
-      headers: { 'xc-auth': $state.token.value as string },
-      body: pinned
-    })
-
+    await $api.instance.patch(`/api/v1/user/store/projects/${baseId}/key/userPinnedTables`, pinned)
     await loadTablesPins(baseId);
   }
 
