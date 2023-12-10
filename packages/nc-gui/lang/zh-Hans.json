@@ -39,6 +39,20 @@
     }
   },
   "general": {
+    "emojiTrans": {
+      "people": "人物",
+      "nature": "动物&自然",
+      "foods": "食物",
+      "activity": "行动",
+      "places": "旅行&地点",
+      "objects": "对象",
+      "symbols": "图标",
+      "flags": "国旗",
+      "custom": "定制",
+      "smileys": "表情",
+      "recent": "常用",
+      "search": "搜索结果"
+    },
     "showXHidden": "显示{x}个隐藏字段",
     "dontShowXHidden": "不显示{x}个隐藏字段",
     "_langSpace": "",
@@ -113,6 +127,7 @@
     "showAll": "显示全部",
     "hideAll": "隐藏全部",
     "notFound": "未找到",
+    "notFoundEmoji": "没有找到图标",
     "showMore": "显示更多",
     "showOptions": "显示选项",
     "hideOptions": "隐藏选项",
@@ -436,6 +451,8 @@
     }
   },
   "labels": {
+    "tableViewName": "视图名称",
+    "tableEntity": "实体表",
     "sAtatchments": "的附件列表",
     "startTyping": "输入...",
     "pinned": "置顶",
@@ -525,7 +542,7 @@
     "createFormView": "创建表单视图",
     "duplicateKanbanView": "复制看板视图",
     "createKanbanView": "创建看板视图",
-    "viewName": "查看名称",
+    "viewName": "视图名称",
     "viewLink": "查看链接",
     "columnName": "列名",
     "columnToScanFor": "要扫描的列",
@@ -668,6 +685,7 @@
     "newFormLoaded": "New form will be loaded after"
   },
   "activity": {
+    "restoreToDefault": "恢复默认",
     "addRecord": "添加记录",
     "pinTable": "置顶",
     "unpinTable": "取消置顶",
@@ -961,6 +979,9 @@
     "key": "键"
   },
   "msg": {
+    "visible": "可见",
+    "invisible": "不可见",
+    "clickToApplyUIRules": "应用规则：角色<{role}>对<{name}>{visible}",
     "uploadInformation": "点击添加文件按钮或拖拽文件到此处以上传文件",
     "changesOfThisRecord": "这条数据的更改记录",
     "totalXItems": "共{x}条记录",

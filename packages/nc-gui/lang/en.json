@@ -39,6 +39,20 @@
     }
   },
   "general": {
+    "emojiTrans": {
+      "people": "People & Body",
+      "nature": "Animals & Nature",
+      "foods": "Food & Drink",
+      "activity": "Activity",
+      "places": "Travel & Places",
+      "objects": "Objects",
+      "symbols": "Symbols",
+      "flags": "Flags",
+      "custom": "Custom",
+      "smileys": "Smileys & Emoticon",
+      "recent": "Frequently Used",
+      "search": "Search Results"
+    }, 
     "showXHidden": "Show {x} hidden {unit}",
     "dontShowXHidden": "Hide {x} hidden {unit}",
     "_langSpace": " ",
@@ -113,6 +127,7 @@
     "showAll": "Show all",
     "hideAll": "Hide all",
     "notFound": "Not found",
+    "notFoundEmoji": "No Emoji Found",
     "showMore": "Show more",
     "showOptions": "Show options",
     "hideOptions": "Hide options",
@@ -434,6 +449,8 @@
     }
   },
   "labels": {
+    "tableViewName": "View name",
+    "tableEntity": "Table entity",
     "sAtatchments": "'s attachements list",
     "startTyping": "Start typing...",
     "pinned": "Pinned",
@@ -666,6 +683,7 @@
     "newFormLoaded": "New form will be loaded after"
   },
   "activity": {
+    "restoreToDefault": "Restore",
     "addRecord": "Add record",
     "pinTable": "Pin table",
     "unpinTable": "Un pin table",
@@ -959,6 +977,9 @@
     "key": "Key"
   },
   "msg": {
+    "visible": "Visible",
+    "invisible": "Invisible",
+    "clickToApplyUIRules": "Apply Rule: <{name}> is {visible} to Role <{role}>",
     "uploadInformation": "Click attach file button to upload file, or drop file to here to upload",
     "changesOfThisRecord": "Changes of this record",
     "totalXItems": "Total {x} items",

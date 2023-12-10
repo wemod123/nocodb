@@ -8,12 +8,19 @@ const props = defineProps<{
   ignoreColor?: boolean
 }>()
 
+const isEmoji = (i: string)=>{
+  return /[\u{1F300}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}]/u.test(i)
+}
+
 const viewMeta = toRef(props, 'meta')
 </script>
 
 <template>
+  <span v-if="viewMeta?.meta?.icon && isEmoji(viewMeta?.meta?.icon)">
+    {{ viewMeta?.meta?.icon }}
+  </span>
   <IcIcon
-    v-if="viewMeta?.meta?.icon"
+    v-else-if="viewMeta?.meta?.icon"
     :data-testid="`nc-icon-${viewMeta?.meta?.icon}`"
     class="text-[16px]"
     :icon="viewMeta?.meta?.icon"

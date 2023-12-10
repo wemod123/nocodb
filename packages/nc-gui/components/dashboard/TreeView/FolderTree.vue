@@ -357,6 +357,18 @@
   }
 
   onMounted(() => { base.value.isExpanded = true })
+  const isUIAclModalOpen = ref(false)
+  const activedSourceId = ref('')
+
+  function openAcl(sourceId: string | undefined) {
+    if (!sourceId) { return; }
+    activedSourceId.value = sourceId
+    isUIAclModalOpen.value = true
+  }
+
+  function atUpdateModalVis(evt: boolean) {
+    isUIAclModalOpen.value = evt
+  }
 </script>
 
 <template>
@@ -547,10 +559,10 @@
                                   <NcDivider v-if="isUIAllowed('tableCreate', { roles: baseRole })" />
                                   <NcMenuItem v-if="isUIAllowed('tableCreate', { roles: baseRole })"
                                               key="privilegesMgmt"
-                                              @click="openErdView(source)">
+                                              @click="openAcl(source.id)">
                                     <div v-e="['c:source:erd']"
                                          class="flex gap-2 items-center">
-                                      <GeneralIcon icon="erd" />
+                                      <GeneralIcon icon="acl" />
                                       {{ $t('title.privilegesMgmt') }}
                                     </div>
                                   </NcMenuItem>
@@ -625,6 +637,16 @@
                 size="large">
     <div class="h-[80vh]">
       <LazyDashboardSettingsErd :source-id="activeBaseId" />
+    </div>
+  </GeneralModal>
+  <GeneralModal v-model:visible="isUIAclModalOpen"
+                class="!w-[60rem]"
+                closable
+                @update:visible="atUpdateModalVis">
+    <div v-if="isUIAclModalOpen"
+         class="p-6">
+      <DashboardSettingsFolderUiAcl :source-id="activedSourceId"
+                                    @close="isUIAclModalOpen = false" />
     </div>
   </GeneralModal>
 </template>

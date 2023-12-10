@@ -19,6 +19,8 @@ const clearable = computed(() => {
   return !props.disableClearing && !readonly
 })
 
+const { t } = useI18n();
+
 const isOpen = ref(false)
 
 const emojiIndex = new EmojiIndex(data, {
@@ -56,6 +58,25 @@ const clearEmoji = () => {
   emit('emojiSelected', '')
 
   isOpen.value = false
+}
+
+const i18nTranslate = {
+  search: t('general.search'),
+  notfound: t('general.notFoundEmoji'),
+  categories: {
+    search: t('general.emojiTrans.search'),
+    recent: t('general.emojiTrans.recent'),
+    smileys: t('general.emojiTrans.smileys'),
+    people: t('general.emojiTrans.people'),
+    nature: t('general.emojiTrans.nature'),
+    foods: t('general.emojiTrans.foods'),
+    activity: t('general.emojiTrans.activity'),
+    places: t('general.emojiTrans.places'),
+    objects: t('general.emojiTrans.objects'),
+    symbols: t('general.emojiTrans.symbols'),
+    flags: t('general.emojiTrans.flags'),
+    custom: t('general.emojiTrans.custom')
+  }
 }
 
 // Due to calculation of dropdown position by ant dropdown, we need to delay the isOpen change
@@ -116,6 +137,7 @@ const showClearButton = computed(() => {
           :show-preview="false"
           color="#40444D"
           :auto-focus="true"
+          :i18n="i18nTranslate"
           @select="selectEmoji"
           @click.stop="() => {}"
         >
@@ -126,7 +148,7 @@ const showClearButton = computed(() => {
             class="flex flex-row items-center bg-white border-1 border-gray-100 py-0.5 px-2.5 rounded hover:bg-gray-100 cursor-pointer"
             @click="clearEmoji"
           >
-            Remove
+            {{ $t("activity.restoreToDefault")}}
           </div>
         </div>
       </div>
@@ -150,7 +172,7 @@ const showClearButton = computed(() => {
   .emoji-mart-anchor {
     @apply h-8 py-1.5;
     svg {
-      @apply h-3.5 !important;
+      @apply h-3.5 mx-auto
     }
   }
 

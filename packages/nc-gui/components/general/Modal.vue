@@ -74,6 +74,7 @@ const visible = useVModel(props, 'visible', emits)
     :destroy-on-close="destroyOnClose"
     :mask-closable="maskClosable"
     @keydown.esc="visible = false"
+    @update:model-value="emits('update:visible', $event)"
   >
     <div :class="`nc-modal max-h-[${height}]`">
       <slot />
@@ -85,6 +86,9 @@ const visible = useVModel(props, 'visible', emits)
 .nc-modal-wrapper {
   .ant-modal-content {
     @apply !p-0;
+    .ant-modal-close {
+      right: 8px; 
+    }
   }
 }
 </style>
