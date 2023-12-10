@@ -45,9 +45,9 @@
           roles: extractRolesObj(user.main_roles)?.[OrgUserRoles.SUPER_ADMIN]
             ? OrgUserRoles.SUPER_ADMIN
             : user.roles ??
-              (user.workspace_roles
-                ? WorkspaceRolesToProjectRoles[user.workspace_roles as WorkspaceUserRoles] ?? ProjectRoles.NO_ACCESS
-                : ProjectRoles.NO_ACCESS),
+            (user.workspace_roles
+              ? WorkspaceRolesToProjectRoles[user.workspace_roles as WorkspaceUserRoles] ?? ProjectRoles.NO_ACCESS
+              : ProjectRoles.NO_ACCESS),
         })),
       ]
     } catch (e: any) {
@@ -74,16 +74,16 @@
         }
       } else if (collab.base_roles) {
         try {
-          await updateProjectUser(activeProjectId.value!, collab)
           collab.roles = roles
+          await updateProjectUser(activeProjectId.value!, collab)
         } catch (err) {
           message.error(err?.response?.data?.msg)
         }
       } else {
         try {
-          await createProjectUser(activeProjectId.value!, collab)
           collab.roles = roles
           collab.base_roles = roles
+          await createProjectUser(activeProjectId.value!, collab)
         } catch (err) {
           message.error(err?.response?.data?.msg)
         }
@@ -140,41 +140,47 @@
 
 <template>
   <div class="px-8 w-full nc-access-settings-view">
-    <div v-if="isLoading" class="items-center justify-center">
+    <div v-if="isLoading"
+         class="items-center justify-center">
       <GeneralLoader size="xlarge" />
     </div>
     <template v-else>
       <div class="w-full flex flex-row justify-between items-baseline mt-6.5 mb-2 pr-0.25">
         <div class="font-bold text-lg text-slate-500">{{ $t('title.membersPrivileges') }}</div>
-        <a-input v-model:value="userSearchText" class="!max-w-90 !rounded" :placeholder="$t('title.searchMembers')">
+        <a-input v-model:value="userSearchText"
+                 class="!max-w-90 !rounded"
+                 :placeholder="$t('title.searchMembers')">
           <template #prefix>
             <PhMagnifyingGlassBold class="!h-3.5 text-gray-500" />
           </template>
         </a-input>
       </div>
 
-      <div v-if="isSearching" class="items-center justify-center">
+      <div v-if="isSearching"
+           class="items-center justify-center">
         <GeneralLoader size="xlarge" />
       </div>
 
-      <div v-else-if="!collaborators?.length" class="w-full h-full flex flex-col items-center justify-center mt-36">
+      <div v-else-if="!collaborators?.length"
+           class="w-full h-full flex flex-col items-center justify-center mt-36">
         <Empty :description="$t('title.noMembersFound')" />
       </div>
-      <div v-else class="mt-4 bg-white">
+      <div v-else
+           class="mt-4 bg-white">
         <div class="flex flex-col rounded-lg overflow-hidden border-1">
           <div class="flex flex-row bg-slate-100 min-h-12 items-center">
             <div class="text-gray-700 users-email-grid">{{ $t('objects.users') }}</div>
             <div class="text-gray-700 user-access-grid">{{ $t('general.access') }}</div>
           </div>
 
-          <div class="flex flex-col nc-scrollbar-md overflow-y-auto" style="max-height: calc(100vh - 196px)">
-            <div
-              v-for="(collab, i) of collaborators"
-              :key="i"
-              class="user-row flex flex-row border-b-1 py-1 min-h-14 items-center"
-            >
+          <div class="flex flex-col nc-scrollbar-md overflow-y-auto"
+               style="max-height: calc(100vh - 196px)">
+            <div v-for="(collab, i) of collaborators"
+                 :key="i"
+                 class="user-row flex flex-row border-b-1 py-1 min-h-14 items-center">
               <div class="flex gap-3 items-center users-email-grid">
-                <GeneralUserIcon size="base" :user="collab" />
+                <GeneralUserIcon size="base"
+                                 :user="collab" />
                 <div class="h-9">
                   <div class="truncate font-bold">
                     {{ collab.display_name || collab.email }}
@@ -186,17 +192,14 @@
               </div>
               <div class="user-access-grid">
                 <template v-if="accessibleRoles.includes(collab.roles)">
-                  <RolesSelector
-                    :role="collab.roles"
-                    :roles="accessibleRoles"
-                    :inherit="
-                      isEeUI && collab.workspace_roles && WorkspaceRolesToProjectRoles[collab.workspace_roles]
-                        ? WorkspaceRolesToProjectRoles[collab.workspace_roles]
-                        : null
-                    "
-                    :description="false"
-                    :on-role-change="(role: ProjectRoles) => updateCollaborator(collab, role)"
-                  />
+                  <RolesSelector :role="collab.roles"
+                                 :roles="accessibleRoles"
+                                 :inherit="isEeUI && collab.workspace_roles && WorkspaceRolesToProjectRoles[collab.workspace_roles]
+                                     ? WorkspaceRolesToProjectRoles[collab.workspace_roles]
+                                     : null
+                                   "
+                                 :description="false"
+                                 :on-role-change="(role: ProjectRoles) => updateCollaborator(collab, role)" />
                 </template>
                 <template v-else>
                   <RolesBadge :role="collab.roles" />
@@ -211,36 +214,35 @@
 </template>
 
 <style scoped lang="scss">
-  .color-band {
-    @apply w-6 h-6 left-0 top-2.5 rounded-full flex justify-center uppercase text-white font-weight-bold text-xs items-center;
-  }
+.color-band {
+  @apply w-6 h-6 left-0 top-2.5 rounded-full flex justify-center uppercase text-white font-weight-bold text-xs items-center;
+}
 
-  :deep(.nc-collaborator-role-select .ant-select-selector) {
-    @apply !rounded;
-  }
+:deep(.nc-collaborator-role-select .ant-select-selector) {
+  @apply !rounded;
+}
 
-  :deep(.ant-select-selection-item) {
-    @apply mt-0.75;
-  }
+:deep(.ant-select-selection-item) {
+  @apply mt-0.75;
+}
 
-  .users-email-grid {
-    @apply flex-grow ml-4 w-1/2;
-  }
+.users-email-grid {
+  @apply flex-grow ml-4 w-1/2;
+}
 
-  .date-joined-grid {
-    @apply flex items-start;
-    width: calc(50% - 10rem);
-  }
+.date-joined-grid {
+  @apply flex items-start;
+  width: calc(50% - 10rem);
+}
 
-  .user-access-grid {
-    @apply w-1/3;
-  }
+.user-access-grid {
+  @apply w-1/3;
+}
 
-  .user-row {
-    @apply w-full;
-  }
+.user-row {
+  @apply w-full;
+}
 
-  .user-row:last-child {
-    @apply border-b-0;
-  }
-</style>
+.user-row:last-child {
+  @apply border-b-0;
+}</style>

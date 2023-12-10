@@ -154,7 +154,7 @@ const onDrop = async (event: DragEvent) => {
       })
     }
   } catch (e) {
-    console.log('error', e)
+    // console.log('error', e)
   }
 }
 

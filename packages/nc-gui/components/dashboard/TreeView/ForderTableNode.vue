@@ -233,8 +233,8 @@
           <template #title>
             {{ $t('msg.tableEntityMsg', { table: table.title }) }}
           </template>
-          <GeneralIcon icon="info"
-                       class="text-gray-400 hover:text-primary mr-1 opacity-0 group-hover:opacity-100" />
+          <GeneralIcon icon="table"
+                       class="!text-gray-400 hover:!text-primary mr-1 opacity-0 group-hover:opacity-100" />
         </NcTooltip>
         <div class="flex flex-row items-center">
           <div v-if="!isSharedBase &&

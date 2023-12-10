@@ -496,7 +496,7 @@ const isKanbanView = computed(() => route.value.fullPath.includes('/nc/kanban'))
                             </a-menu-item>
                             <a-menu-item v-e="['c:kanban:collapse-stack']" @click="handleCollapseStack(stackIdx)">
                               <div class="py-2 flex gap-1.8 items-center">
-                                <component :is="iconMap.arrowCollapse" class="text-gray-500" />
+                                <component :is="iconMap.chevronLeft" class="text-gray-500" />
                                 {{ $t('activity.kanban.collapseStack') }}
                               </div>
                             </a-menu-item>
@@ -506,7 +506,7 @@ const isKanbanView = computed(() => route.value.fullPath.includes('/nc/kanban'))
                               @click="handleDeleteStackClick(stack.title, stackIdx)"
                             >
                               <div class="py-2 flex gap-2 items-center">
-                                <component :is="iconMap.delete" class="text-gray-500" />
+                                <component :is="iconMap.delete" class="text-rose-500" />
                                 {{ $t('activity.kanban.deleteStack') }}
                               </div>
                             </a-menu-item>

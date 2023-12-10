@@ -12,7 +12,7 @@ import PurgeIcons from 'vite-plugin-purge-icons'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devServer: { port: 3001 },
+  devServer: { port: process.env.NODE_ENV === 'development' ? 3001 : 3000 },
 
   modules: ['@vueuse/nuxt', 'nuxt-windicss', '@nuxt/image-edge', '@pinia/nuxt'],
 

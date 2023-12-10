@@ -256,7 +256,7 @@
         <template #title>
           {{ $t('msg.viewEntifyMsg', { table: table.title, view: vModel.alias || vModel.title }) }}
         </template>
-        <GeneralIcon icon="info"
+        <GeneralIcon icon="appStore"
                      class="text-slate-400 hover:text-primary mr-2 opacity-0 group-hover:opacity-100" />
       </NcTooltip>
 

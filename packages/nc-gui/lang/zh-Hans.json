@@ -305,7 +305,7 @@
   },
   "title": {
     "aboutViewsMsg": "基于实体表可以创建多个视图，定制数据的展示方式",
-    "aboutTablesMsg": "实体表是存储数据的基础表",
+    "aboutTablesMsg": "实体表格是存储数据的基础表",
     "aboutWorkspaceMsg": "工作空间包含多个表格，表格之间的数据可以相互关联。不同工作空间中的数据为相互隔离的数据集，不能相互关联",
     "totalxTablesInyWorkspaces": "在{y}个工作空间中共{x}个实体表",
     "aboutWorkspace": "关于工作空间",
