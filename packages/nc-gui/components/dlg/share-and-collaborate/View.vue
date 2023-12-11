@@ -150,7 +150,7 @@ watch(showShareModal, (val) => {
           />
           <div>{{ $t('activity.shareView') }}</div>
           <div
-            class="max-w-79/100 ml-2 px-2 py-0.5 rounded-md bg-gray-100 capitalize text-ellipsis overflow-hidden"
+            class="max-w-79/100 font-bold py-0.5 rounded-md capitalize text-ellipsis overflow-hidden"
             :style="{ wordBreak: 'keep-all', whiteSpace: 'nowrap' }"
           >
             {{ activeView.title }}

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useQRCode } from '@vueuse/integrations/useQRCode'
+
 const props = defineProps<{
   url: string
 }>()
@@ -6,6 +8,13 @@ const props = defineProps<{
 const emits = defineEmits(['update:url'])
 
 const url = useVModel(props, 'url', emits)
+
+const qrCode = computed(() => useQRCode(url.value, {
+  errorCorrectionLevel: 'M',
+  margin: 1,
+  rendererOpts: { quality: 1 },
+  width: 200
+}))
 
 const isCopied = ref({
   link: false,
@@ -19,6 +28,9 @@ const openUrl = async () => {
 const embedHtml = async () => {
   await navigator.clipboard.writeText(`<iframe src="${url.value}" width="100%" height="100%" style="border: none;"></iframe>`)
   isCopied.value.embed = true
+  setTimeout(() => {
+    isCopied.value.embed = false
+  }, 2000);
 }
 
 const copyUrl = async () => {
@@ -29,6 +41,10 @@ const copyUrl = async () => {
   setTimeout(() => {
     isCopied.value.link = true
   }, 100)
+
+  setTimeout(() => {
+    isCopied.value.link = false
+  }, 2000);
 }
 </script>
 
@@ -71,6 +87,17 @@ const copyUrl = async () => {
           <template v-else> {{ $t('activity.copyUrl') }} </template>
         </div>
       </div>
+      <a-dropdown :trigger="['click']">
+        <div class="button text-xs items-center flex">
+          <component :is="iconMap.qrCode" />
+          {{ $t("title.qrCode") }}
+        </div>
+        <template #overlay>
+          <div class="p-4 rounded-lg bg-white">
+            <img :src="qrCode.value" />
+          </div>
+        </template>
+      </a-dropdown>
     </div>
   </div>
 </template>

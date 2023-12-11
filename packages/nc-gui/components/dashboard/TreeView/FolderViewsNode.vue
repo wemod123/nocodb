@@ -254,7 +254,16 @@
                  class="flex"
                  placement="topLeft">
         <template #title>
-          {{ $t('msg.viewEntifyMsg', { table: table.title, view: vModel.alias || vModel.title }) }}
+          <div class="pt-1 px-1">
+            {{ $t('msg.viewEntifyMsg', { table: table.title, view: vModel.alias || vModel.title }) }}
+          </div>
+          <div class="p-1 flex items-center text-slate-200">
+            <span>{{ $t('msg.viewMode') }}</span>
+            <component class="!text-xs mx-0.5"
+                       :class="{ 'text-orange-500': vModel.lock_type === 'locked' }"
+                       :is="iconMap[vModel.lock_type === 'locked' ? 'lock' : 'users']" />
+            <span>{{ $t(`msg.view_${vModel.lock_type}`) }}</span>
+          </div>
         </template>
         <GeneralIcon icon="appStore"
                      class="text-slate-400 hover:text-primary mr-2 opacity-0 group-hover:opacity-100" />

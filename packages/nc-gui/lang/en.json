@@ -52,7 +52,7 @@
       "smileys": "Smileys & Emoticon",
       "recent": "Frequently Used",
       "search": "Search Results"
-    }, 
+    },
     "showXHidden": "Show {x} hidden {unit}",
     "dontShowXHidden": "Hide {x} hidden {unit}",
     "_langSpace": " ",
@@ -977,9 +977,14 @@
     "key": "Key"
   },
   "msg": {
+    "workspaceLimitReachInfo": "Workspace limit reached with current subscription, upgrade subscription to create more workspace",
+    "upgradeSubscription": "Upgrade subscription",
+    "viewMode": "Collabrate Mode",
+    "view_collaborative": "Collaborative",
+    "view_locked": "Locked",
     "visible": "Visible",
     "invisible": "Invisible",
-    "clickToApplyUIRules": "Apply Rule: <{name}> is {visible} to Role <{role}>",
+    "clickToApplyUIRules": "Click To Apply Rule: <{name}> is {visible} to Role <{role}>",
     "uploadInformation": "Click attach file button to upload file, or drop file to here to upload",
     "changesOfThisRecord": "Changes of this record",
     "totalXItems": "Total {x} items",

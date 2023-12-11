@@ -62,8 +62,9 @@ export interface EntryConfig {
   email: string
   tid: string
   theme: string
-  actorToken: string,
+  actorToken: string
   entryKey: string[]
+  subInfo: { [key: string]: any }
 }
 
 export type State = ToRefs<Omit<StoredState, 'token'>> & {

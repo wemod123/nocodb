@@ -34,12 +34,6 @@
           if (params.lang) {
             await setI18nLanguage(params.lang)
             lang.value = params.lang
-            try {
-              localStorage.setItem('nocodb-gui-v2', JSON.stringify({
-                ...JSON.parse(localStorage.getItem('nocodb-gui-v2') as string),
-                lang: params.lang
-              }))
-            } catch (e) { }
           }
 
           if (!(params.entryToken)) {
@@ -62,6 +56,13 @@
                   path: '/',
                   query: route.query,
                 })
+
+                try {
+                  localStorage.setItem('nocodb-gui-v2', JSON.stringify({
+                    ...JSON.parse(localStorage.getItem('nocodb-gui-v2') as string),
+                    lang: params.lang
+                  }))
+                } catch (e) { }
               } else {
                 hasError.value = 'unAuthed'
               }
@@ -72,6 +73,9 @@
         })
         .catch((err: Error) => {
           hasError.value = err.toString()
+        })
+        .finally(()=>{
+          parentFrame && parentFrame.event('initialized');
         })
     });
   }

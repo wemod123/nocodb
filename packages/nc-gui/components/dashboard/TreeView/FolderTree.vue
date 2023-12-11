@@ -1,31 +1,23 @@
 <script lang="ts" setup>
   import { nextTick } from '@vue/runtime-core'
-  import { message } from 'ant-design-vue'
-  import { stringifyRolesObj } from 'nocodb-sdk'
-  import type { BaseType, SourceType, TableType } from 'nocodb-sdk'
+  import type { SourceType, TableType } from 'nocodb-sdk'
   import { LoadingOutlined } from '@ant-design/icons-vue'
-  import { useTitle } from '@vueuse/core'
+
   import {
-    NcProjectType,
     ProjectInj,
     ProjectRoleInj,
-    ToggleDialogInj,
     TreeViewInj,
     computed,
-    extractSdkResponseErrorMsg,
     h,
     inject,
     navigateTo,
-    openLink,
     ref,
     resolveComponent,
     storeToRefs,
     useBase,
     useBases,
-    useCopy,
     useDialog,
     useGlobal,
-    useI18n,
     useNuxtApp,
     useRoles,
     useRouter,
@@ -57,7 +49,7 @@
 
   const { isMobileMode } = useGlobal()
 
-  const { createProject: _createProject, updateProject, getProjectMetaInfo } = basesStore
+  const { createProject: _createProject } = basesStore
 
   const { bases } = storeToRefs(basesStore)
 
@@ -65,9 +57,7 @@
 
   const { activeTable } = storeToRefs(useTablesStore())
 
-  const { appInfo } = useGlobal()
-
-  const { orgRoles, isUIAllowed } = useRoles()
+  const { isUIAllowed } = useRoles()
 
   useTabs()
 
@@ -79,8 +69,6 @@
 
   const isErdModalOpen = ref<boolean>(false)
 
-  const { t } = useI18n()
-
   const input = ref<HTMLInputElement>()
 
   const baseRole = inject(ProjectRoleInj)
@@ -88,8 +76,6 @@
   const { activeProjectId } = storeToRefs(useBases())
 
   const { baseUrl } = useBase()
-
-  const toggleDialog = inject(ToggleDialogInj, () => { })
 
   const { $e } = useNuxtApp()
 
@@ -101,7 +87,6 @@
   const filterQuery = ref('')
   const keys = ref<Record<string, number>>({})
   const isTableDeleteDialogVisible = ref(false)
-  const isProjectDeleteDialogVisible = ref(false)
 
   // If only base is open, i.e in case of docs, base view is open and not the page view
   const baseViewOpen = computed(() => {
@@ -126,62 +111,9 @@
     })
   }
 
-  async function updateProjectTitle() {
-    if (!tempTitle.value) return
-
-    try {
-      await updateProject(base.value.id!, {
-        title: tempTitle.value,
-      })
-      editMode.value = false
-      tempTitle.value = ''
-
-      $e('a:base:rename')
-
-      useTitle(`${base.value?.title}`)
-    } catch (e: any) {
-      message.error(await extractSdkResponseErrorMsg(e))
-    }
-  }
-
-  const { copy } = useCopy(true)
-
-  async function copyProjectInfo() {
-    try {
-      if (
-        await copy(
-          Object.entries(await getProjectMetaInfo(base.value.id!)!)
-            .map(([k, v]) => `${k}: **${v}**`)
-            .join('\n'),
-        )
-      ) {
-        // Copied to clipboard
-        message.info(t('msg.info.copiedToClipboard'))
-      }
-    } catch (e: any) {
-      console.error(e)
-      message.error(e.message)
-    }
-  }
-
   defineExpose({
     enableEditMode,
   })
-
-  async function setIcon(icon: string, base: BaseType) {
-    try {
-      const meta = {
-        ...((base.meta as object) || {}),
-        icon,
-      }
-
-      basesStore.updateProject(base.id!, { meta: JSON.stringify(meta) })
-
-      $e('a:base:icon:navdraw', { icon })
-    } catch (e: any) {
-      message.error(await extractSdkResponseErrorMsg(e))
-    }
-  }
 
   function openTableCreateDialog(sourceIndex?: number | undefined) {
     const isOpen = ref(true)
@@ -338,31 +270,18 @@
     }
   })
 
-  const isDuplicateDlgOpen = ref(false)
-  const selectedProjectToDuplicate = ref()
-
-  function duplicateProject(base: BaseType) {
-    selectedProjectToDuplicate.value = base
-    isDuplicateDlgOpen.value = true
-  }
-
   function tableDelete() {
     isTableDeleteDialogVisible.value = true
     $e('c:table:delete')
   }
 
-  function projectDelete() {
-    isProjectDeleteDialogVisible.value = true
-    $e('c:project:delete')
-  }
-
   onMounted(() => { base.value.isExpanded = true })
   const isUIAclModalOpen = ref(false)
-  const activedSourceId = ref('')
+  const activedSource = ref<SourceType>()
 
-  function openAcl(sourceId: string | undefined) {
-    if (!sourceId) { return; }
-    activedSourceId.value = sourceId
+  function openAcl(source: SourceType) {
+    if (!source?.id) { return; }
+    activedSource.value = source;
     isUIAclModalOpen.value = true
   }
 
@@ -392,22 +311,13 @@
           <a-spin v-if="base.isLoading"
                   class="!ml-1.25 !flex !flex-row !items-center !my-0.5 w-8"
                   :indicator="indicator" />
-          <svg xmlns="http://www.w3.org/2000/svg"
-               height="18"
-               width="18"
-               viewBox="0 0 512 512">
-            <path class="fa-secondary"
-                  opacity="0.4"
-                  fill="currentColor"
-                  d="M336.4 12.9C400.2 34 453 79.5 483.5 138.4c5.2 10.1-2.5 21.6-13.8 21.6H265.2c-12.3 0-20-13.3-13.9-24l67-116c3.6-6.3 11.1-9.4 18-7.1zM0 256c0-50.9 14.9-98.3 40.5-138.2c6.1-9.5 19.9-8.6 25.6 1.2L168.2 296c6.2 10.7-1.5 24-13.9 24H20.5c-7.3 0-13.7-4.9-15.2-12.1C1.8 291.2 0 273.8 0 256zM256 512c-4 0-7.9-.1-11.9-.3c-11.3-.5-17.5-12.9-11.8-22.8L334.5 312c6.2-10.7 21.6-10.7 27.7 0l66.9 115.9c3.6 6.3 2.6 14.3-2.9 19.2C381.1 487.5 321.4 512 256 512z" />
-            <path class="fa-primary"
-                  opacity="1"
-                  fill="currentColor"
-                  d="M256 0c4 0 7.9 .1 11.9 .3c11.3 .5 17.4 12.9 11.8 22.8L177.5 200c-6.2 10.7-21.6 10.7-27.7 0L82.8 84.1c-3.6-6.3-2.6-14.3 2.9-19.2C130.9 24.5 190.6 0 256 0zM193.6 492c-3.6 6.3-11.1 9.4-18 7.1C111.8 478 59 432.5 28.5 373.6C23.3 363.5 31 352 42.3 352H246.8c12.3 0 20 13.3 13.9 24l-67 116zm277.9-97.8c-6.1 9.5-19.9 8.6-25.6-1.2L343.8 216c-6.2-10.7 1.5-24 13.9-24H491.5c7.3 0 13.7 4.9 15.2 12.1c3.5 16.8 5.3 34.1 5.3 51.9c0 50.9-14.9 98.3-40.5 138.2z" />
-          </svg>
+          <GeneralWsFolderHomeIcon :size="18" />
         </div>
 
-        <div class="pl-2 flex-grow">{{ $t("title.workspaceHome") }} (<span>{{ (base?.sources?.length || 1) - 1 }}</span>)</div>
+        <div class="pl-2 flex-grow">
+          {{ $t("title.workspaceHome") }} (<span>{{ (base?.sources?.length || 1) - 1 }}</span>)
+        </div>
+        <DashboardTreeViewFolderCreateWs v-if="isUIAllowed('tableCreate', { roles: baseRole })" />
         <svg xmlns="http://www.w3.org/2000/svg"
              width="20"
              height="20"
@@ -473,7 +383,8 @@
                                  stroke-linecap="round"
                                  stroke-linejoin="round"
                                  stroke-width="2">
-                                <path d="m6 14l1.45-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.55 6a2 2 0 0 1-1.94 1.5H4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2h3.93a2 2 0 0 1 1.66.9l.82 1.2a2 2 0 0 0 1.66.9H18a2 2 0 0 1 2 2v2" />
+                                <path
+                                      d="m6 14l1.45-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.55 6a2 2 0 0 1-1.94 1.5H4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2h3.93a2 2 0 0 1 1.66.9l.82 1.2a2 2 0 0 0 1.66.9H18a2 2 0 0 1 2 2v2" />
                                 <circle cx="14"
                                         cy="15"
                                         r="1" />
@@ -489,7 +400,8 @@
                                  stroke-linecap="round"
                                  stroke-linejoin="round"
                                  stroke-width="2">
-                                <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                                <path
+                                      d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
                                 <circle cx="12"
                                         cy="13"
                                         r="2" />
@@ -559,7 +471,7 @@
                                   <NcDivider v-if="isUIAllowed('tableCreate', { roles: baseRole })" />
                                   <NcMenuItem v-if="isUIAllowed('tableCreate', { roles: baseRole })"
                                               key="privilegesMgmt"
-                                              @click="openAcl(source.id)">
+                                              @click="openAcl(source)">
                                     <div v-e="['c:source:erd']"
                                          class="flex gap-2 items-center">
                                       <GeneralIcon icon="acl" />
@@ -645,7 +557,8 @@
                 @update:visible="atUpdateModalVis">
     <div v-if="isUIAclModalOpen"
          class="p-6">
-      <DashboardSettingsFolderUiAcl :source-id="activedSourceId"
+      <DashboardSettingsFolderUiAcl :source-id="activedSource?.id"
+                                    :source-name="activedSource?.alias"
                                     @close="isUIAclModalOpen = false" />
     </div>
   </GeneralModal>
@@ -653,7 +566,7 @@
 
 <style lang="scss" scoped>
 :deep(.ant-collapse-header) {
-  @apply !mx-0 !xs:(pl-5.5) !pr-0.5 !py-0.5 hover:bg-slate-100/80 xs:(hover:bg-slate-50) !rounded-md;
+  @apply !mx-0 !xs: (pl-5.5) !pr-0.5 !py-0.5 hover:bg-slate-100/80 xs:(hover:bg-slate-50) !rounded-md;
 }
 
 :deep(.ant-collapse-item-active .ant-collapse-header) {

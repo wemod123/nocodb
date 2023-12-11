@@ -20,7 +20,7 @@ definePageMeta({
 
 const route = useRoute()
 
-const { signIn: _signIn, appInfo , signOut} = useGlobal()
+const { signIn: _signIn, appInfo , signOut, entryConfig} = useGlobal()
 
 const { api, isLoading, error } = useApi({ useGlobalInstance: true })
 
@@ -91,6 +91,10 @@ function navigateForgotPassword() {
 }
 
 onMounted(()=>{ signOut() })
+
+function runReload(){
+  entryConfig.value?.parentFrame?.reload()
+}
 </script>
 
 <template>
@@ -102,7 +106,7 @@ onMounted(()=>{ signOut() })
       <div class="py-3 text-slate-400">
         {{ $t('msg.notAuthorized') }}
       </div>
-      <button class="scaling-btn bg-opacity-100">
+      <button class="scaling-btn bg-opacity-100" @click="runReload()">
         <span class="flex items-center gap-2">
           <component :is="iconMap.reload" />
           {{ $t('general.reload') }}

@@ -19,7 +19,8 @@
   type Role = 'editor' | 'commenter' | 'viewer'
 
   const props = defineProps<{
-    sourceId: string
+    sourceId: string,
+    sourceName: string
   }>()
 
   const { t } = useI18n()
@@ -145,7 +146,7 @@
 <template>
   <div class="flex flex-row w-full items-center justify-center">
     <div class="flex flex-col w-[900px]">
-      <span class="mb-4 first-letter:capital font-bold text-xl text-slate-600"> {{ $t("title.privilegesMgmt") }}: {{ base.title }} </span>
+      <span class="mb-4 first-letter:capital font-bold text-xl text-slate-600"> {{ $t("title.privilegesMgmt") }}: {{ props.sourceName }} </span>
       <div class="flex flex-row items-center w-full mb-4 gap-2 justify-between">
         <a-input v-model:value="searchInput"
                  :placeholder="$t('placeholder.searchModels')"

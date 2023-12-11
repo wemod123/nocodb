@@ -497,8 +497,8 @@ onMounted(() => {
   }
 
   .nc-input {
-    @apply appearance-none w-full rounded px-2 py-2 my-2 border-solid border-1 border-primary border-opacity-50;
-
+    @apply appearance-none !bg-white w-full rounded px-2 py-2 my-2 border-solid border-1 border-primary border-opacity-50;
+ 
     &.nc-cell-checkbox {
       > * {
         @apply justify-center flex items-center;
@@ -506,7 +506,7 @@ onMounted(() => {
     }
 
     input {
-      @apply !py-1 !px-1;
+      @apply !py-1 !px-1 !bg-white;
     }
   }
 }
