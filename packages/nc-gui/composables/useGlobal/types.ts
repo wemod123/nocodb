@@ -54,7 +54,6 @@ export interface StoredState {
 }
 
 export interface EntryConfig {
-  parentFrame: any
   context?: string
   entryToken: string
   lang: string
@@ -64,10 +63,13 @@ export interface EntryConfig {
   theme: string
   actorToken: string
   entryKey: string[]
-  subInfo: { [key: string]: any }
+  ws: number
+  rs: number
+  services: { [key: string]: any }
 }
 
 export type State = ToRefs<Omit<StoredState, 'token'>> & {
+  pF: any
   entryConfig: Ref<EntryConfig | null>
   storage: Ref<StoredState>
   user: Ref<User | null>
@@ -87,7 +89,7 @@ export interface Getters {
 export interface Actions {
   signOut: (skipRedirect?: boolean) => void
   drySignOut: () => void
-  signIn: (token: string, entryConfig?: any) => void
+  signIn: (token: string, entryConfig?: any, pF?: any) => void
   refreshToken: () => void
   loadAppInfo: () => void
   setIsMobileMode: (isMobileMode: boolean) => void

@@ -63,14 +63,14 @@
          'min-w-4 min-h-4 w-4 h-4': size === 'small',
          'min-w-6 min-h-6 w-6 h-6': size === 'medium',
          'min-w-8 min-h-8 w-8 h-8 !text-md': size === 'base',
-         'min-w-20 min-h-12 w-12 h-12 !text-2xl': size === 'large',
-         'min-w-20 min-h-20 w-20 h-20 !text-3xl': size === 'xlarge',
+         'min-w-12 min-h-12 w-12 h-12 !text-2xl': size === 'large',
+         'min-w-12 min-h-20 w-20 h-20 !text-3xl': size === 'xlarge',
          'text-white': isColorDark(backgroundColor),
          'text-black': !isColorDark(backgroundColor),
        }"
        :style="{ backgroundColor }">
     <NuxtImg v-if="avatar || isSys"
-             :src="isSys ? '~/assets/img/sys-avatar-md.png' : avatar"
+             :src="isSys ? '/img/sys-avatar-md.png' : avatar"
              fit="cover" />
     <NuxtImg v-else-if="theUser?.avatar?.startsWith('https://')"
              :src="theUser.avatar"

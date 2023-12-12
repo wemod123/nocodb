@@ -20,7 +20,7 @@ definePageMeta({
 
 const route = useRoute()
 
-const { signIn: _signIn, appInfo , signOut, entryConfig} = useGlobal()
+const { signIn: _signIn, pF, signOut, entryConfig} = useGlobal()
 
 const { api, isLoading, error } = useApi({ useGlobalInstance: true })
 
@@ -93,7 +93,7 @@ function navigateForgotPassword() {
 onMounted(()=>{ signOut() })
 
 function runReload(){
-  entryConfig.value?.parentFrame?.reload()
+  pF.value?.reload()
 }
 </script>
 

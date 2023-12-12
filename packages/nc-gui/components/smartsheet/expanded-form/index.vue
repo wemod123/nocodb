@@ -783,7 +783,7 @@ export default {
                   >
                     <div data-testid="nc-expanded-form-delete">
                       <component :is="iconMap.delete" class="cursor-pointer nc-delete-row" />
-                      Delete record
+                      {{ $t("activity.deleteRow") }}
                     </div>
                   </NcMenuItem>
                 </NcMenu>
@@ -799,7 +799,7 @@ export default {
                 class="nc-expand-form-save-btn !xs:(text-base)"
                 @click="onClose"
               >
-                <div class="px-1">Close</div>
+                <div class="px-1">{{ $t("general.cancel") }}</div>
               </NcButton>
               <NcButton
                 v-e="['c:row-expand:save']"

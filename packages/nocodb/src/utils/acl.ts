@@ -237,8 +237,7 @@ const rolePermissions:
       pluginRead: true,
       pluginUpdate: true,
       isPluginActive: true,
-      createBase: true,
-      baseRename: true
+      createBase: true
     },
   },
   [OrgUserRoles.VIEWER]: {

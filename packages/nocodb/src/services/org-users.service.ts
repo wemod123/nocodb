@@ -42,7 +42,7 @@ export class OrgUsersService {
   }) {
     validatePayload('swagger.json#/components/schemas/OrgUserReq', param.user);
 
-    const updateBody = extractProps(param.user, ['roles']);
+    const updateBody = extractProps(param.user, ['roles', 'display_name', 'tid', 'avatar']);
 
     const user = await User.get(param.userId);
 
@@ -50,10 +50,12 @@ export class OrgUsersService {
       NcError.badRequest('Cannot update super admin roles');
     }
 
-    return await User.update(param.userId, {
+    const payload = updateBody.roles ? {
       ...updateBody,
-      token_version: randomTokenString(),
-    });
+      token_version: randomTokenString()
+    } : updateBody
+
+    return await User.update(param.userId, payload);
   }
 
   async userDelete(param: { userId: string }) {

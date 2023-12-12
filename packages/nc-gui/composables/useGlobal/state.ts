@@ -132,7 +132,10 @@ export function useGlobalState(storageKey = 'nocodb-gui-v2'): State {
     },
   })
 
+  const pF = ref<any>()
+
   return {
+    pF,
     ...toRefs(storage.value),
     entryConfig,
     storage,

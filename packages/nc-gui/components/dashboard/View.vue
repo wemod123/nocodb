@@ -140,7 +140,7 @@ function onResize(widthPercent: any) {
 
   const widthRem = width / fontSize
 
-  if (widthRem < 19.5) {
+  if (widthRem < 19.9) {
     sideBarSize.value.old = ((20 * fontSize) / viewportWidth.value) * 100
     if (isLeftSidebarOpen.value) sideBarSize.value.current = sideBarSize.value.old
     return

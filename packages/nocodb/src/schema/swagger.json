@@ -20612,6 +20612,12 @@
           },
           "uid": {
             "type": "string"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
           }
         },
         "title": "Organisation User Request Model",

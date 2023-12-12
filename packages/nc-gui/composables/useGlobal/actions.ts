@@ -44,7 +44,7 @@ export function useGlobalActions(state: State): Actions {
   }
 
   /** Sign in by setting the token in localStorage */
-  const signIn: Actions['signIn'] = async (newToken, entryConfig) => {
+  const signIn: Actions['signIn'] = async (newToken, entryConfig, pf?: any) => {
     state.token.value = newToken
 
     if (state.jwtPayload.value) {
@@ -58,6 +58,8 @@ export function useGlobalActions(state: State): Actions {
       }
 
       state.entryConfig.value = entryConfig || null
+
+      state.pF.value = pf
     }
   }
 

@@ -12,7 +12,7 @@
   })
 
   const route = useRoute()
-  const { signIn, drySignOut, lang, refreshToken } = useGlobal()
+  const { signIn, drySignOut, lang } = useGlobal()
   const { api } = useApi({ useGlobalInstance: true })
 
   const hasError = ref('');
@@ -47,10 +47,7 @@
               parent.event('initialized');
 
               if (token) {
-                signIn(token!, {
-                  ...params,
-                  parentFrame: parent
-                });
+                signIn(token!, params, parent);
 
                 await navigateTo({
                   path: '/',
@@ -74,7 +71,7 @@
         .catch((err: Error) => {
           hasError.value = err.toString()
         })
-        .finally(()=>{
+        .finally(() => {
           parentFrame && parentFrame.event('initialized');
         })
     });
@@ -96,7 +93,7 @@
         {{ $t('msg.notAuthorized') }}
       </div>
       <button class="scaling-btn bg-opacity-100"
-              @click="parentFrame.reload();">
+              @click="parentFrame?.reload();">
         <span class="flex items-center gap-2">
           <component :is="iconMap.reload" />
           {{ $t('general.reload') }}

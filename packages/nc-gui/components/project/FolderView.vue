@@ -72,7 +72,7 @@
       <div class="flex flex-row items-center gap-x-3 w-full">
         <GeneralOpenLeftSidebarBtn />
         <div class="flex flex-row items-center h-full gap-x-2.5 w-full">
-          <GeneralWsFolderHomeIcon :size="22" />
+          <GeneralWsFolderHomeIcon :size="22" class="text-slate-500" />
           <div class="flex font-medium text-lg text-slate-500 capitalize">
             {{ $t("title.workspaceHome") }}
           </div>
@@ -83,16 +83,23 @@
             </div>
             <template #overlay>
               <div class="rounded max-w-[400px] shadow-lg p-5 bg-white border-1 text-slate-500 border-slate-200">
-                <div class="font-bold text-lg">✨ {{ $t("title.aboutWorkspace") }}</div>
-                <div>
+                <div class="flex items-center">
+                  <div class="font-bold text-lg flex-grow">
+                    ✨ {{ $t("title.aboutWorkspace") }}
+                  </div>
+                  <div class="flex items-center justify-center w-7 h-7 rounded cursor-pointer hover:bg-slate-100"> 
+                    <GeneralIcon icon="close" />
+                  </div>
+                </div>
+                <div class="pt-2">
                   {{ $t("title.aboutWorkspaceMsg") }}
                 </div>
                 <div class="font-bold text-lg pt-5">✨ {{ $t("title.tables") }}</div>
-                <div>
+                <div class="pt-2">
                   {{ $t("title.aboutTablesMsg") }}
                 </div>
                 <div class="font-bold text-lg pt-5">✨ {{ $t("objects.views") }}</div>
-                <div>
+                <div class="pt-2">
                   {{ $t("title.aboutViewsMsg") }}
                 </div>
               </div>
