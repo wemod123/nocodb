@@ -192,7 +192,7 @@ function openDeleteDialog() {
       >
         {{ activeView?.is_default ? $t('title.defaultView') : activeView?.title }}
       </span>
-      <GeneralIcon v-if="isSuper ? true : activeView?.type !== ViewTypes.FORM" icon="arrowDown" class="ml-1" />
+      <GeneralIcon v-if="isMobileMode ? false : (isSuper ? true : activeView?.type !== ViewTypes.FORM)" icon="arrowDown" class="ml-1" />
     </div>
     <template #overlay>
       <SmartsheetToolbarViewActionMenu

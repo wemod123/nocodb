@@ -14,7 +14,7 @@
   }
 
   const canCreateWs = computed(() => {
-    return true || entryConfig.value?.ws! === base.value.sources?.length! - 1
+    return entryConfig.value?.ws! > base.value.sources?.length! - 1
   })
 
   const createWs = async () => {

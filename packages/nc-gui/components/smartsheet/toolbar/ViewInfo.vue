@@ -8,19 +8,23 @@ const { activeView } = storeToRefs(useViewsStore())
 const { base, isSharedBase } = storeToRefs(useBase())
 const { baseUrl } = useBase()
 
+const { openTable } = useTableNew({ baseId: base.value.id! })
+
 const { activeTable } = storeToRefs(useTablesStore())
-const { tableUrl } = useTablesStore()
 
 const { isLeftSidebarOpen } = storeToRefs(useSidebarStore())
 
-const openedBaseUrl = computed(() => {
-  if (!base.value) return ''
-
-  return `${window.location.origin}/#${baseUrl({
+const openedBaseUrl = async () =>{
+  await navigateTo(baseUrl({
     id: base.value.id!,
     type: 'database',
-  })}`
-})
+  }))
+}
+
+const _openTable = async () =>{
+  await openTable(activeTable.value!)
+}
+
 </script>
 
 <template>
@@ -41,7 +45,7 @@ const openedBaseUrl = computed(() => {
           '!text-gray-500': activeTable,
           '!text-gray-700': !activeTable,
         }"
-        :to="openedBaseUrl"
+        @click="openedBaseUrl()"
       >
         <NcTooltip class="!text-inherit">
           <template #title>
@@ -118,7 +122,7 @@ const openedBaseUrl = computed(() => {
             <NuxtLink
               v-else
               class="!text-inherit !underline-transparent !hover:(text-black underline-gray-600)"
-              :to="tableUrl({ table: activeTable, completeUrl: true })"
+              @click="_openTable()"
             >
               {{ activeTable?.title }}
             </NuxtLink>

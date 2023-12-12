@@ -393,8 +393,8 @@ const onFormItemClick = (element: any) => {
 <template>
   <template v-if="isMobileMode">
     <div class="pl-6 pr-[120px] py-6 bg-white flex-col justify-start items-start gap-2.5 inline-flex">
-      <div class="text-gray-500 text-5xl font-semibold leading-16">
-        {{ $t('general.available') }}<br />{{ $t('title.inDesktop') }}
+      <div class="text-gray-500 text-3xl font-semibold leading-16">
+        {{ $t("general.availableOnDesktop")}}
       </div>
       <div class="text-gray-500 text-base font-medium leading-normal">{{ $t('msg.formViewNotSupportedOnMobile') }}</div>
     </div>
@@ -568,7 +568,7 @@ const onFormItemClick = (element: any) => {
                       'max-height': '250px',
                       'resize': 'vertical',
                     }"
-                    autosize
+                    autoSize
                     size="large"
                     hide-details
                     :disabled="isLocked"
@@ -595,7 +595,7 @@ const onFormItemClick = (element: any) => {
                       'resize': 'vertical',
                     }"
                     size="large"
-                    autosize
+                    autoSize
                     hide-details
                     :placeholder="$t('msg.info.formDesc')"
                     :bordered="false"
