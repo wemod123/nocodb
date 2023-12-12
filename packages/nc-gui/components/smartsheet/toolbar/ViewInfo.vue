@@ -31,8 +31,6 @@ const _openTable = async () =>{
   <div
     class="ml-0.25 flex flex-row font-normal items-center border-gray-50 transition-all duration-100"
     :class="{
-      'min-w-36/100 max-w-50/100': !isMobileMode && isLeftSidebarOpen,
-      'min-w-39/100 max-w-50/100': !isMobileMode && !isLeftSidebarOpen,
       'w-2/3 text-base ml-1.5': isMobileMode,
       '!max-w-3/4': isSharedBase && !isMobileMode,
     }"
@@ -94,11 +92,6 @@ const _openTable = async () =>{
       </LazyGeneralEmojiPicker>
       <div
         v-if="activeTable"
-        :class="{
-          'max-w-1/2': isMobileMode || activeView?.is_default,
-          'max-w-20/100': !isSharedBase && !isMobileMode && !activeView?.is_default,
-          'max-w-none': isSharedBase && !isMobileMode,
-        }"
       >
         <NcTooltip class="truncate nc-active-table-title max-w-full">
           <template #title>

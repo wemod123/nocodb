@@ -243,4 +243,12 @@ export default defineNuxtConfig({
       { name: 'storeToRefs', from: 'pinia' },
     ],
   },
+
+  nitro: {
+    prerender: {
+      routes: [
+        '/_ipx/fit_cover/img/sys-avatar-md.png'
+      ]
+    }
+  }
 })
