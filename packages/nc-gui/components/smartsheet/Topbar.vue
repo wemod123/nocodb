@@ -44,7 +44,7 @@ const isSharedBase = computed(() => route.value.params.typeOrId === 'base')
       />
 
       <LazyGeneralLanguage
-        v-if="isSharedBase && !appInfo.ee"
+        v-if="false && isSharedBase && !appInfo.ee"
         class="cursor-pointer text-lg hover:(text-black bg-gray-200) mr-0 p-1.5 rounded-md"
       />
     </template>

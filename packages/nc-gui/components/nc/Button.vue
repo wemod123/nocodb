@@ -139,16 +139,6 @@ useEventListener(NcButton, 'mousedown', () => {
   outline: none;
 }
 
-.desktop {
-  .nc-button.ant-btn.focused {
-    box-shadow: 0px 0px 0px 2px #fff, 0px 0px 0px 4px #6366f1;
-  }
-
-  .nc-button.ant-btn-text.focused {
-    @apply text-violet-500;
-  }
-}
-
 .nc-button.ant-btn {
   @apply rounded-lg;
 }

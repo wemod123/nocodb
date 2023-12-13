@@ -22,6 +22,8 @@ const { isUIAllowed } = useRoles()
 
 const route = useRoute()
 
+const { view: _view } = useSmartsheetStoreOrThrow()
+
 useEventListener(document, 'keydown', async (e: KeyboardEvent) => {
   const cmdOrCtrl = isMac() ? e.metaKey : e.ctrlKey
   if (e.altKey && !e.shiftKey && !cmdOrCtrl) {
@@ -64,7 +66,7 @@ const copySharedBase = async () => {
       @click="showShareModal = true"
     >
       <div v-if="!isMobileMode" class="flex flex-row items-center w-full gap-x-1">
-        <MaterialSymbolsPublic v-if="visibility === 'public'" class="h-3.5" />
+        <MaterialSymbolsPublic v-if="!!_view?.uuid" class="h-3.5" />
         <MaterialSymbolsLockOutline v-else-if="visibility === 'private'" class="h-3.5" />
         <div class="flex">{{ $t('activity.share') }}</div>
       </div>
