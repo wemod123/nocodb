@@ -69,12 +69,12 @@
          'text-black': !isColorDark(backgroundColor),
        }"
        :style="{ backgroundColor }">
-    <NuxtImg v-if="avatar || isSys"
-             :src="isSys ? '/img/sys-avatar-md.png' : avatar"
-             fit="cover" />
-    <NuxtImg v-else-if="theUser?.avatar?.startsWith('https://')"
-             :src="theUser.avatar"
-             fit="cover" />
+    <img v-if="avatar || isSys"
+         :src="isSys ? '/img/sys-avatar-md.png' : avatar"
+         style="object-fit:cover" />
+    <img v-else-if="theUser?.avatar?.startsWith('https://')"
+         :src="theUser.avatar"
+         style="object-fit:cover" />
     <span v-else-if="!(avatar || isSys)"> {{ usernameInitials }}</span>
   </div>
 </template>
