@@ -200,9 +200,14 @@ onMounted(async () => {
             >
               <div class="flex gap-3 items-center users-email-grid">
                 <GeneralUserIcon size="base" :email="collab.email" />
-                <span class="truncate">
-                  {{ collab.email }}
-                </span>
+                <div class="h-9">
+                  <div class="truncate font-bold">
+                    {{ collab.display_name || collab.email }}
+                  </div>
+                  <div class="truncate text-slate-400 text-xs leading-none">
+                    {{ collab.email }}
+                  </div>
+                </div>
               </div>
               <div class="date-joined-grid">{{ timeAgo(collab.created_at) }}</div>
               <div class="user-access-grid">
