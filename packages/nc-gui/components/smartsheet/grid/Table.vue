@@ -1331,9 +1331,6 @@ const checkMouseMove = (evt: MouseEvent)=>{
                     'width': gridViewCols[col.id]?.width || '200px',
                   }"
                   class="nc-grid-column-header"
-                  :class="{
-                    '!border-r-blue-400 !border-r-3': toBeDroppedColId === col.id,
-                  }"
                   @xcstartresizing="onXcStartResizing(col.id, $event)"
                   @xcresize="onresize(col.id, $event)"
                   @xcresizing="onXcResizing(col.id, $event)"
@@ -1559,8 +1556,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                         'readonly':
                           (isLookup(columnObj) || isRollup(columnObj) || isFormula(columnObj)) &&
                           hasEditPermission &&
-                          isCellSelected(rowIndex, colIndex),
-                        '!border-r-blue-400 !border-r-3': toBeDroppedColId === columnObj.id,
+                          isCellSelected(rowIndex, colIndex)
                       }"
                       :style="{
                         'min-width': gridViewCols[columnObj.id]?.width || '200px',

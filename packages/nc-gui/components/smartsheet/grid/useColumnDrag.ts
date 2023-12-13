@@ -138,6 +138,8 @@ export const useColumnDrag = ({
         gridWrapper.value!.scrollLeft += 2.5
       }, 250)
     }
+
+    draggedCol.value = null
   }
 
   return {
