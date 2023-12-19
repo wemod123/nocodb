@@ -318,6 +318,10 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "canNotDeleteSysTable": "Cannot delete sys table",
+    "sysTable": "System table",
+    "unMarkSysTable": "Un-mark sys table",
+    "markAsSysTable": "Mark as sys table",
     "aboutViewsMsg": "Based on the entity table, multiple views can be created to customize the way data is displayed.",
     "aboutTablesMsg": "The entity table is the fundamental table for storing data.",
     "aboutWorkspaceMsg": "The workspace contains multiple tables, and the data between the tables can be interconnected. The data in different workspaces are isolated datasets and cannot be interconnected.",

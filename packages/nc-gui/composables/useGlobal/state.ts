@@ -132,9 +132,12 @@ export function useGlobalState(storageKey = 'nocodb-gui-v2'): State {
     },
   })
 
+  const isSysM = computed(() => entryConfig?.value?.actorSource === 'lxLx4B0RsS9XRwBs')
+
   const pF = ref<any>()
 
   return {
+    isSysM,
     pF,
     ...toRefs(storage.value),
     entryConfig,

@@ -28,7 +28,7 @@
 
   const { isUIAllowed } = useRoles()
 
-  const { isMobileMode } = useGlobal()
+  const { isMobileMode, isSysM } = useGlobal()
 
   const tabStore = useTabs()
   const { updateTab } = tabStore
@@ -42,7 +42,7 @@
   const baseRole = inject(ProjectRoleInj)
   provide(SidebarTableInj, table)
 
-  const { setMenuContext, openRenameTableDialog, duplicateTable } = inject(TreeViewInj)!
+  const { openRenameTableDialog, duplicateTable } = inject(TreeViewInj)!
 
   const { loadViews: _loadViews } = useViewsStore()
   const { activeView, activeViewTitleOrId } = storeToRefs(useViewsStore())
@@ -139,6 +139,23 @@
   const isTableOpened = computed(() => {
     return openedTableId.value === table.value?.id && (activeView.value?.is_default || !activeViewTitleOrId.value)
   })
+
+  const markPinned = async (table: TableType) => {
+    try {
+      table.meta = {
+        ...((table.meta as object) || {}),
+        markAsSys: !Boolean(table.meta?.markAsSys),
+      }
+
+      tables.value.splice(tables.value.indexOf(table), 1, { ...table })
+
+      await $api.dbTable.update(table.id as string, {
+        meta: table.meta
+      })
+    } catch (e) {
+      message.error(await extractSdkResponseErrorMsg(e))
+    }
+  }
 </script>
 
 <template>
@@ -160,7 +177,6 @@
       <div v-e="['a:table:open']"
            class="table-context flex items-center gap-1 h-full pr-2"
            :data-testid="`nc-tbl-side-node-${table.title}`"
-           @contextmenu="setMenuContext('table', table)"
            @click="onOpenTable">
         <div class="flex flex-row h-full items-center pl-3">
           <NcButton v-e="['c:table:toggle-expand']"
@@ -231,10 +247,20 @@
         <NcTooltip class="flex"
                    placement="topLeft">
           <template #title>
-            {{ $t('msg.tableEntityMsg', { table: table.title }) }}
+            <div>{{ $t('msg.tableEntityMsg', { table: table.title }) }}</div>
+            <div v-if="table.meta?.markAsSys"
+                 class="py-1 text-yellow-300">
+              🔒 {{ $t("title.sysTable") }}
+            </div>
           </template>
-          <GeneralIcon icon="table"
-                       class="!text-gray-400 hover:!text-primary mr-1 opacity-0 group-hover:opacity-100" />
+          <GeneralIconsTableLock v-if="table.meta?.markAsSys"
+                                 class="!text-rose-400 hover:!text-rose-500 mr-1 opacity-0 group-hover:opacity-100"
+                                 :class="{ 'opacity-100': openDropdown }"
+                                 size="18" />
+          <GeneralIcon v-else
+                       icon="table"
+                       class="!text-gray-400 hover:!text-primary mr-1 opacity-0 group-hover:opacity-100"
+                       :class="{ 'opacity-100': openDropdown }" />
         </NcTooltip>
         <div class="flex flex-row items-center">
           <div v-if="!isSharedBase &&
@@ -252,6 +278,16 @@
               <template #overlay>
                 <NcMenu class="!px-1"
                         :style="{ minWidth: '140px' }">
+
+                  <NcMenuItem v-if="isSysM"
+                              :data-testid="`sidebar-table-rename-${table.title}`"
+                              @click="markPinned(table)">
+                    <div class="flex gap-2 items-center">
+                      {{ table.meta?.markAsSys ? '🟠' : '🔘' }}
+                      {{ $t(`title.${table.meta?.markAsSys ? 'unMarkSysTable' : 'markAsSysTable'}`) }}
+                    </div>
+                  </NcMenuItem>
+
                   <NcMenuItem v-if="isUIAllowed('tableRename', { roles: baseRole })"
                               :data-testid="`sidebar-table-rename-${table.title}`"
                               @click="openRenameTableDialog(table, base.sources[sourceIndex].id)">
@@ -279,12 +315,14 @@
 
                   <NcMenuItem v-if="isUIAllowed('tableDelete', { roles: baseRole })"
                               :data-testid="`sidebar-table-delete-${table.title}`"
-                              class="!text-red-500 !hover:bg-red-50"
+                              class="!hover:bg-red-50"
+                              :class="[table.meta?.markAsSys ? '!text-slate-400' : '!text-red-500']"
+                              :disabled="table.meta?.markAsSys"
                               @click="isTableDeleteDialogVisible = true">
                     <div v-e="['c:table:delete']"
                          class="flex gap-2 items-center">
                       <GeneralIcon icon="delete" />
-                      {{ $t('general.delete') }}
+                      {{ table.meta?.markAsSys ? $t('title.canNotDeleteSysTable') : $t('general.delete') }}
                     </div>
                   </NcMenuItem>
                 </NcMenu>

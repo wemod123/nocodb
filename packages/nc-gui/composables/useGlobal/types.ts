@@ -65,10 +65,12 @@ export interface EntryConfig {
   entryKey: string[]
   ws: number
   rs: number
+  actorSource?: string
   services: { [key: string]: any }
 }
 
 export type State = ToRefs<Omit<StoredState, 'token'>> & {
+  isSysM: Ref<boolean>
   pF: any
   entryConfig: Ref<EntryConfig | null>
   storage: Ref<StoredState>

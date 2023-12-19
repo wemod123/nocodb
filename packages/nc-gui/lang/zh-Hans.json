@@ -320,6 +320,10 @@
     "isNotNull": "有值（Not Null）"
   },
   "title": {
+    "canNotDeleteSysTable": "不能删除系统表",
+    "sysTable": "系统表",
+    "unMarkSysTable": "移除系统表标记",
+    "markAsSysTable": "标记为系统表",
     "aboutViewsMsg": "基于实体表可以创建多个视图，定制数据的展示方式",
     "aboutTablesMsg": "实体表格是存储数据的基础表",
     "aboutWorkspaceMsg": "工作空间包含多个表格，表格之间的数据可以相互关联。不同工作空间中的数据为相互隔离的数据集，不能相互关联",

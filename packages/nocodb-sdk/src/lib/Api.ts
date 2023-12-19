@@ -1797,6 +1797,8 @@ export interface OrgUserReqType {
   roles?: 'org-level-creator' | 'org-level-viewer';
   tid?: string;
   uid?: string;
+  display_name?: string;
+  avatar?: string;
 }
 
 /**
@@ -5675,6 +5677,7 @@ export class Api<
         base_id?: string;
         /** Model for Meta */
         meta?: MetaType;
+        pinned?: string;
       },
       params: RequestParams = {}
     ) =>

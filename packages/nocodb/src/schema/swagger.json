@@ -4436,6 +4436,9 @@
                   },
                   "meta": {
                     "$ref": "#/components/schemas/Meta"
+                  },
+                  "pinned":{
+                    "type": "string"
                   }
                 }
               },
