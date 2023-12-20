@@ -318,6 +318,14 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "linked": "Linked",
+    "searchInText": "Search in {text}",
+    "xRecordsLinked": "{x} records linked",
+    "databaseTableNameIs": "Database table name: {name}",
+    "updateDbTableName": "Update Table name",
+    "displayName": "Display name",
+    "updateDisplayName": "Update display name",
+    "databaseTableName": "Database table name",
     "canNotDeleteSysTable": "Cannot delete sys table",
     "sysTable": "System table",
     "unMarkSysTable": "Un-mark sys table",
@@ -982,6 +990,7 @@
     "key": "Key"
   },
   "msg": {
+    "updateDbTableMsg": "Changing the database table name is restricted to designated professional users only. This operation may result in data loss, so please proceed with caution.",
     "workspaceLimitReachInfo": "Workspace limit reached with current subscription, upgrade subscription to create more workspace",
     "upgradeSubscription": "Upgrade subscription",
     "viewMode": "Collabrate Mode",
@@ -1082,6 +1091,7 @@
     "noRecordsAreLinkedFromTable": "No records are linked from table",
     "noRecordsLinked": "No records linked",
     "recordsLinked": "records linked",
+    "xRecordsLinked": "{x} records linked",
     "acceptOnlyValid": "Accepts only",
     "apiTokenCreate": "Create personal API tokens to use in automation or external apps.",
     "selectFieldToSort": "Select Field to Sort",

@@ -46,9 +46,9 @@ loadRelatedTableMeta()
 
 const textVal = computed(() => {
   if (isForm?.value || isNew.value) {
-    return state.value?.[colTitle.value]?.length
-      ? `${+state.value?.[colTitle.value]?.length} ${t('msg.recordsLinked')}`
-      : t('msg.noRecordsLinked')
+    return state.value?.[colTitle.value]?.length ? 
+    t('msg.xRecordsLinked', { x: +state.value?.[colTitle.value]?.length }): 
+    t('msg.noRecordsLinked')
   }
 
   const parsedValue = +value?.value || 0

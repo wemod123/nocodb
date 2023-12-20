@@ -114,7 +114,7 @@ const attachments: ComputedRef<Attachment[]> = computed(() => {
             }"
           >
             <LinkIcon class="w-4 h-4" />
-            Linked
+            {{ $t("title.linked") }}
           </div>
           <MdiLoading
             v-else-if="isLoading"

@@ -156,6 +156,10 @@
       message.error(await extractSdkResponseErrorMsg(e))
     }
   }
+
+  const updateTable = (table: TableType) => {
+    tables.value.splice(tables.value.indexOf(table), 1, { ...table })
+  }
 </script>
 
 <template>
@@ -241,26 +245,29 @@
               }"
               :data-testid="`nc-tbl-title-${table.title}`"
               :style="{ wordBreak: 'keep-all', whiteSpace: 'nowrap', display: 'inline' }">
-          {{ table.title }}
+          {{ table.title || table.table_name }}
         </span>
         <div class="flex flex-grow h-full"></div>
         <NcTooltip class="flex"
                    placement="topLeft">
           <template #title>
-            <div>{{ $t('msg.tableEntityMsg', { table: table.title }) }}</div>
+            <div class="px-1.5 pt-1">{{ $t('msg.tableEntityMsg', { table: table.title || table.table_name }) }}</div>
             <div v-if="table.meta?.markAsSys"
-                 class="py-1 text-yellow-300">
-              🔒 {{ $t("title.sysTable") }}
+                 class="py-1 text-yellow-300 flex items-center">
+              <div class="flex items-center justify-center w-5">
+                <GeneralIcon icon="lock" />
+              </div>
+              <span>{{ $t("title.sysTable") }}</span>
             </div>
           </template>
           <GeneralIconsTableLock v-if="table.meta?.markAsSys"
                                  class="!text-rose-400 hover:!text-rose-500 mr-1 opacity-0 group-hover:opacity-100"
-                                 :class="{ 'opacity-100': openDropdown }"
+                                 :class="{ 'opacity-100': openDropdown === true }"
                                  size="18" />
           <GeneralIcon v-else
                        icon="table"
                        class="!text-gray-400 hover:!text-primary mr-1 opacity-0 group-hover:opacity-100"
-                       :class="{ 'opacity-100': openDropdown }" />
+                       :class="{ 'opacity-100': openDropdown === true }" />
         </NcTooltip>
         <div class="flex flex-row items-center">
           <div v-if="!isSharedBase &&
@@ -270,7 +277,7 @@
             <NcDropdown :trigger="['click']"
                         class="nc-sidebar-node-btn"
                         @click.stop
-                        @update:visible="openDropdown = $event">
+                        @update:visible="openDropdown = !!$event">
               <MdiDotsHorizontal data-testid="nc-sidebar-table-context-menu"
                                  :class="{ '!opacity-100': openDropdown }"
                                  class="min-w-5.75 min-h-5.75 mt-0.2 mr-0.25 px-0.5 !text-gray-600 transition-opacity opacity-0 group-hover:opacity-100 nc-tbl-context-menu outline-0 rounded-md hover:(bg-gray-500 bg-opacity-15 !text-black)" />
@@ -290,12 +297,12 @@
 
                   <NcMenuItem v-if="isUIAllowed('tableRename', { roles: baseRole })"
                               :data-testid="`sidebar-table-rename-${table.title}`"
+                              :disabled="table.meta?.markAsSys"
+                              :class="[table.meta?.markAsSys ? '!text-slate-400' : '!text-slate-600']"
                               @click="openRenameTableDialog(table, base.sources[sourceIndex].id)">
-                    <div v-e="['c:table:rename']"
-                         class="flex gap-2 items-center">
-                      <GeneralIcon icon="edit"
-                                   class="text-gray-700" />
-                      {{ $t('general.rename') }}
+                    <GeneralIconsDbEdit size="18" />
+                    <div>
+                      {{ $t(`title.updateDbTableName`) }}
                     </div>
                   </NcMenuItem>
 
@@ -334,7 +341,8 @@
       <DlgTableDelete v-if="table.id && base?.id"
                       v-model:visible="isTableDeleteDialogVisible"
                       :table-id="table.id"
-                      :base-id="base.id" />
+                      :base-id="base.id"
+                      @update:visible="openDropdown = false" />
     </GeneralTooltip>
     <DashboardTreeViewFolderViewsList v-if="isExpanded"
                                       :table-id="table.id"

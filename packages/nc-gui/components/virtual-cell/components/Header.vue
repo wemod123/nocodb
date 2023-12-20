@@ -74,7 +74,7 @@ const relationMeta = computed(() => {
           class="w-7 h-7 p-1 rounded-md"
           :class="{
             '!bg-orange-500': relation === 'hm',
-            '!bg-pink-500': relation === 'mm',
+            '!bg-purple-500': relation === 'mm',
             '!bg-blue-500': relation === 'bt',
           }"
         />
@@ -84,7 +84,7 @@ const relationMeta = computed(() => {
           class="flex rounded-md max-w-full flex-shrink-0 gap-1 items-center px-2 py-1 xs:w-full overflow-hidden"
           :class="{
             '!bg-orange-50 !text-orange-500': relation === 'hm',
-            '!bg-pink-50 !text-pink-500': relation === 'mm',
+            '!bg-purple-50 !text-purple-500': relation === 'mm',
             '!bg-blue-50 !text-blue-500': relation === 'bt',
           }"
         >
@@ -92,7 +92,7 @@ const relationMeta = computed(() => {
             class="w-4 h-4 min-w-4"
             :class="{
               '!text-orange-500': relation === 'hm',
-              '!text-pink-500': relation === 'mm',
+              '!text-purple-500': relation === 'mm',
               '!text-blue-500': relation === 'bt',
             }"
           />

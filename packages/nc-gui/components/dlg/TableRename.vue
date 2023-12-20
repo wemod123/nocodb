@@ -194,7 +194,7 @@ const renameTable = async (undo = false, disableTitleDiffCheck?: boolean | undef
     <template #header>
       <div class="flex flex-row items-center gap-x-2">
         <GeneralIcon icon="table" />
-        {{ $t('activity.renameTable') }}
+        {{ $t('title.updateDbTableName') }}
       </div>
     </template>
     <div class="mt-2">
@@ -223,8 +223,8 @@ const renameTable = async (undo = false, disableTitleDiffCheck?: boolean | undef
           :loading="loading"
           @click="() => renameTable()"
         >
-          {{ $t('title.renameTable') }}
-          <template #loading> {{ $t('title.renamingTable') }}</template>
+          {{ $t('title.updateDbTableName') }}
+          <template #loading> {{ $t('title.updateDbTableName') }}</template>
         </NcButton>
       </div>
     </div>

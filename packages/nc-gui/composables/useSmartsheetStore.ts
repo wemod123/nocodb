@@ -105,7 +105,7 @@ export { useProvideSmartsheetStore }
 export function useSmartsheetStoreOrThrow() {
   const state = useSmartsheetStore()
 
-  if (!state) throw new Error('Please call `useProvideSmartsheetStore` on the appropriate parent component')
+  if (!state) return {} // throw new Error('Please call `useProvideSmartsheetStore` on the appropriate parent component')
 
   return state
 }

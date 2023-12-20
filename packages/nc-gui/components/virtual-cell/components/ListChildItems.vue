@@ -206,7 +206,7 @@ const linkOrUnLink = (rowRef: Record<string, string>, id: string) => {
         <a-input
           ref="filterQueryRef"
           v-model:value="childrenListPagination.query"
-          :placeholder="`Search in ${relatedTableMeta?.title}`"
+          :placeholder="$t('title.searchInText', { text: relatedTableMeta?.title })"
           class="w-full !sm:rounded-md xs:min-h-8 !xs:rounded-xl"
           size="small"
           :bordered="false"
@@ -298,15 +298,11 @@ const linkOrUnLink = (rowRef: Record<string, string>, id: string) => {
 
     <div class="flex flex-row justify-between bg-white relative pt-1">
       <div v-if="!isForm" class="flex items-center justify-center px-2 rounded-md text-gray-500 bg-brand-50">
-        {{ totalItemsToShow || 0 }} {{ !isMobileMode ? $t('objects.records') : '' }}
-        {{ !isMobileMode && totalItemsToShow !== 0 ? $t('general.are') : '' }}
-        {{ $t('general.linked') }}
+        {{ $t(`title.xRecordsLinked`, { x: totalItemsToShow || 0 }) }}
       </div>
       <div v-else class="flex items-center justify-center px-2 rounded-md text-gray-500 bg-brand-50">
         <span class="">
-          {{ state?.[colTitle]?.length || 0 }} {{ $t('objects.records') }}
-          {{ state?.[colTitle]?.length !== 0 ? $t('general.are') : '' }}
-          {{ $t('general.linked') }}
+          {{ $t(`title.xRecordsLinked`, { x: state?.[colTitle]?.length || 0 }) }}
         </span>
       </div>
       <div class="!xs:hidden flex absolute -mt-0.75 items-center py-2 justify-center w-full">
