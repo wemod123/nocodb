@@ -318,6 +318,15 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "setSysColumnLabel": "Set system column label",
+    "sysColumnLabel": "System column label",
+    "updateSystemTableKey": "Update system table key",
+    "sysTableKey": "System table key",
+    "actionLinkRecord": "link record",
+    "actionUnlinkRecord": "unlink record",
+    "clickToAction": "Click to {action}",
+    "linkToXtable1Items": "1 {table}",
+    "linkToXtableyItems": "{y} {table}",
     "linked": "Linked",
     "searchInText": "Search in {text}",
     "xRecordsLinked": "{x} records linked",

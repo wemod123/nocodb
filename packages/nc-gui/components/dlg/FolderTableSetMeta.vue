@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import type { TableType } from 'nocodb-sdk'
-  import type { ComponentPublicInstance } from '@vue/runtime-core'
   import {
     nextTick,
     useNuxtApp,
@@ -10,26 +9,26 @@
   } from '#imports'
 
   const { tableMeta, ...props } = defineProps<{
-    visible?: boolean
+    modelValue?: boolean
     tableMeta: TableType
   }>()
 
-  const emits = defineEmits(['update:visible', 'change'])
+  const emits = defineEmits(['update:modelValue', 'change'])
 
   const { $api } = useNuxtApp()
 
-  const dialogShow = useVModel(props, 'visible', emits)
+  const dialogShow = useVModel(props, 'modelValue', emits)
 
   const inputEl = ref()
 
   const loading = ref(false)
 
-  const displayName = ref('')
+  const sysTableKey = ref('')
 
   watchEffect(
     () => {
-      if (tableMeta?.meta?.displayName) {
-        displayName.value = `${tableMeta.meta.displayName}`
+      if (tableMeta?.meta?.sysTableKey) {
+        sysTableKey.value = `${tableMeta.meta.sysTableKey}`
       }
     },
     { flush: 'post' },
@@ -39,7 +38,7 @@
     if (dialogShow.value) {
       nextTick(() => {
         if (inputEl.value) {
-          inputEl.value.setSelectionRange(0, displayName.value.length)
+          inputEl.value.setSelectionRange(0, sysTableKey.value.length)
           inputEl.value.focus()
         }
       })
@@ -47,12 +46,13 @@
   })
 
   const cancel = () => {
-    dialogShow.value = false
+    dialogShow.value = false;
+    emits('update:modelValue', false)
   }
 
   const { updateTab } = useTabs()
 
-  const updateDisplayName = async () => {
+  const updateSysTableKey = async () => {
     try {
       if (!tableMeta) {
         dialogShow.value = false
@@ -60,7 +60,7 @@
       }
       tableMeta.meta = {
         ...((tableMeta.meta as object) || {}),
-        displayName: displayName.value,
+        sysTableKey: sysTableKey.value,
       }
 
       updateTab({ id: tableMeta.id }, { meta: tableMeta.meta })
@@ -84,28 +84,28 @@
     <template #header>
       <div class="flex flex-row items-center gap-x-2">
         <GeneralIcon icon="table" />
-        {{ $t('title.updateDisplayName') }}
+        {{ $t('title.updateSystemTableKey') }}
       </div>
     </template>
     <div class="mt-2">
       <a-input ref="inputEl"
-               v-model:value="displayName"
+               v-model:value="sysTableKey"
                class="nc-input-md"
                hide-details
                size="large"
-               :placeholder="$t('title.displayName')"
-               @keydown.enter="() => updateDisplayName()" />
+               :placeholder="$t('title.sysTableKey')"
+               @keydown.enter="() => updateSysTableKey()" />
       <div class="flex flex-row justify-end gap-x-2 mt-6">
         <NcButton type="secondary"
                   @click="cancel()">{{ $t('general.cancel') }}</NcButton>
         <NcButton key="submit"
                   type="primary"
-                  :disabled="!displayName || displayName === tableMeta?.meta?.displayName"
+                  :disabled="!sysTableKey || sysTableKey === tableMeta?.meta?.sysTableKey"
                   label="Rename Table"
                   loading-label="Renaming Table"
                   :loading="loading"
-                  @click="updateDisplayName()">
-          {{ $t('title.updateDisplayName') }}
+                  @click="updateSysTableKey()">
+          {{ $t('title.updateSystemTableKey') }}
         </NcButton>
       </div>
     </div>

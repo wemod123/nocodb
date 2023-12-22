@@ -56,9 +56,9 @@ const textVal = computed(() => {
   if (!parsedValue) {
     return t('msg.noRecordsLinked')
   } else if (parsedValue === 1) {
-    return `1 ${column.value?.meta?.singular || t('general.link')}`
+    return t('title.linkToXtable1Items', { table: column.value?.meta?.singular })
   } else {
-    return `${parsedValue} ${column.value?.meta?.plural || t('general.links')}`
+    return t('title.linkToXtableyItems',{ table: column.value?.meta?.plural, y: parsedValue  })
   }
 })
 
@@ -114,9 +114,7 @@ const openListDlg = () => {
         class="text-center nc-datatype-link underline-transparent"
         :class="{ '!text-gray-300': !textVal }"
         @click.stop.prevent="openChildList"
-      >
-        {{ textVal }}
-      </component>
+        v-html="textVal" />
     </div>
     <div class="flex-grow" />
 

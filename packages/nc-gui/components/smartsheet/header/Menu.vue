@@ -292,9 +292,9 @@ const onInsertAfter = () => {
     </div>
     <template #overlay>
       <a-menu class="shadow bg-white nc-column-options">
-        <a-menu-item @click="onEditPress">
-          <div class="nc-column-edit nc-header-menu-item">
-            <component :is="iconMap.edit" class="text-gray-700 mx-0.65 my-0.75" />
+        <a-menu-item :disabled="meta?.meta?.markAsSys === true" @click="onEditPress">
+          <div class="nc-column-edit nc-header-menu-item" :class="{ '!text-slate-400': meta?.meta?.markAsSys === true }">
+            <component :is="iconMap.edit" class="text-gray-700 mx-0.65 my-0.75" :class="{ '!text-slate-400': meta?.meta?.markAsSys === true }"/>
             <!-- Edit -->
             {{ $t('general.edit') }}
           </div>
@@ -368,7 +368,7 @@ const onInsertAfter = () => {
         </a-menu-item>
         <a-divider class="!my-0" />
 
-        <a-menu-item v-if="!column?.pv" class="!hover:bg-red-50" @click="handleDelete">
+        <a-menu-item v-if="!column?.pv" class="!hover:bg-red-50" :class="{'!opacity-50': meta?.meta?.markAsSys === true}" :disabled="meta?.meta?.markAsSys === true" @click="handleDelete">
           <div class="nc-column-delete nc-header-menu-item my-0.75 text-red-600">
             <component :is="iconMap.delete" class="ml-0.75 mr-1" />
             <!-- Delete -->

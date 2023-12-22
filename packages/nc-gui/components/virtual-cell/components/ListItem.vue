@@ -26,6 +26,8 @@ const props = defineProps<{
   isLinked: boolean
 }>()
 
+const { isMobileMode } = useGlobal()
+
 defineEmits(['expand'])
 
 provide(IsExpandedFormOpenInj, ref(true))
@@ -71,6 +73,10 @@ const attachments: ComputedRef<Attachment[]> = computed(() => {
 </script>
 
 <template>
+  <NcTooltip class="z-10" placement="top" :disabled="isMobileMode">
+    <template #title>
+      {{ $t("title.clickToAction",{ action: isLinked ? $t("title.actionUnlinkRecord"): $t("title.actionLinkRecord")}) }}
+    </template>
   <a-card
     class="!border-1 group transition-all !rounded-xl relative !mb-2 !border-gray-200 hover:bg-gray-50"
     :class="{
@@ -171,6 +177,7 @@ const attachments: ComputedRef<Attachment[]> = computed(() => {
       <MaximizeIcon class="w-4 h-4" />
     </NcButton>
   </a-card>
+  </NcTooltip>
 </template>
 
 <style lang="scss" scoped>

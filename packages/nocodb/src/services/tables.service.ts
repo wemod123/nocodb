@@ -37,7 +37,7 @@ export class TablesService {
     protected readonly metaDiffService: MetaDiffsService,
     protected readonly appHooksService: AppHooksService,
     protected readonly columnsService: ColumnsService,
-  ) {}
+  ) { }
 
   async tableUpdate(param: {
     tableId: any;
@@ -329,6 +329,7 @@ export class TablesService {
     sourceId: string;
     includeM2M?: boolean;
     roles: Record<string, boolean>;
+    isSuper?: boolean
   }) {
     const viewList = await this.xcVisibilityMetaGet(param.baseId);
 
@@ -352,9 +353,13 @@ export class TablesService {
       })
     ).filter((t) => tableViewMapping[t.id]);
 
-    return param.includeM2M
+    const resList = param.includeM2M
       ? tableList
       : (tableList.filter((t) => !t.mm) as Model[]);
+
+    return param.isSuper ? resList : (
+      resList.filter((t) => !t.table_name.includes('__conf_x_meta__RMPrbsLJAa')) as Model[]
+    );
   }
 
   async tableCreate(param: {

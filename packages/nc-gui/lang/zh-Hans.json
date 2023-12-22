@@ -320,6 +320,15 @@
     "isNotNull": "有值（Not Null）"
   },
   "title": {
+    "setSysColumnKey": "设置系统字段 Key",
+    "sysColumnKey": "系统字段 Key",
+    "updateSystemTableKey": "更行系统表 Key",
+    "sysTableKey": "系统表 Key",
+    "actionLinkRecord": "关联数据",
+    "actionUnlinkRecord": "取消关联",
+    "clickToAction": "点击以{action}",
+    "linkToXtable1Items": "<span class='link-num-tag'>1</span>个{table}",
+    "linkToXtableyItems": "<span class='link-num-tag'>{y}</span>个{table}",
     "linked": "已关联",
     "searchInText": "在 {text} 中搜索",
     "xRecordsLinked": "已关联{x}条记录",

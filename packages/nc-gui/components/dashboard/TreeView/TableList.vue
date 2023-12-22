@@ -25,6 +25,8 @@ const { isMobileMode } = useGlobal()
 
 const {isSuper} = useRoles()
 
+const { loadProjectTables } = useTablesStore()
+
 const { baseTables } = storeToRefs(useTablesStore())
 const tables = computed(() => baseTables.value.get(base.value.id!) ?? [])
 
@@ -86,19 +88,21 @@ const initSortable = (el: Element) => {
       }
 
       // update the order of the moved item
-      tables.value?.splice(newIndex + offset, 0, ...tables.value?.splice(oldIndex + offset, 1))
+      // tables.value?.splice(newIndex + offset, 0, ...tables.value?.splice(oldIndex + offset, 1))
 
-      // force re-render the list
-      if (keys.value[source_id]) {
-        keys.value[source_id] = keys.value[source_id] + 1
-      } else {
-        keys.value[source_id] = 1
-      }
+      // // force re-render the list
+      // if (keys.value[source_id]) {
+      //   keys.value[source_id] = keys.value[source_id] + 1
+      // } else {
+      //   keys.value[source_id] = 1
+      // }
 
       // update the item order
       await $api.dbTable.reorder(item.id as string, {
         order: item.order,
       })
+
+      await loadProjectTables(base.value.id!)
     },
     animation: 150,
     setData(dataTransfer, dragEl) {

@@ -4,7 +4,7 @@
   import { message } from 'ant-design-vue'
   import { storeToRefs } from 'pinia'
 
-  import { ProjectRoleInj, TreeViewInj, useNuxtApp, useRoles, useTabs } from '#imports'
+  import { ProjectRoleInj, TreeViewInj, useNuxtApp, useRoles, useTabs, useMetas } from '#imports'
   import type { SidebarTableNode } from '~/lib'
 
   const props = withDefaults(
@@ -15,6 +15,8 @@
     }>(),
     { sourceIndex: 0 },
   )
+
+  const { getMeta } = useMetas()
 
   const base = toRef(props, 'base')
   const table = toRef(props, 'table')
@@ -43,6 +45,21 @@
   provide(SidebarTableInj, table)
 
   const { openRenameTableDialog, duplicateTable } = inject(TreeViewInj)!
+
+  const openSetMetaDialog = () => {
+    const isOpenSetMetaDialog = ref(true)
+    const { close } = useDialog(resolveComponent('DlgFolderTableSetMeta'), {
+      'modelValue': isOpenSetMetaDialog,
+      'tableMeta': table,
+      'onUpdate:modelValue': closeDialog,
+    })
+
+    function closeDialog() {
+      isOpenSetMetaDialog.value = false;
+
+      close(1000);
+    }
+  }
 
   const { loadViews: _loadViews } = useViewsStore()
   const { activeView, activeViewTitleOrId } = storeToRefs(useViewsStore())
@@ -140,7 +157,7 @@
     return openedTableId.value === table.value?.id && (activeView.value?.is_default || !activeViewTitleOrId.value)
   })
 
-  const markPinned = async (table: TableType) => {
+  const setMarkAsSys = async (table: TableType) => {
     try {
       table.meta = {
         ...((table.meta as object) || {}),
@@ -152,13 +169,13 @@
       await $api.dbTable.update(table.id as string, {
         meta: table.meta
       })
+
+      // Force Update Meta
+      await getMeta(table.id!, true)
+
     } catch (e) {
       message.error(await extractSdkResponseErrorMsg(e))
     }
-  }
-
-  const updateTable = (table: TableType) => {
-    tables.value.splice(tables.value.indexOf(table), 1, { ...table })
   }
 </script>
 
@@ -287,11 +304,20 @@
                         :style="{ minWidth: '140px' }">
 
                   <NcMenuItem v-if="isSysM"
-                              :data-testid="`sidebar-table-rename-${table.title}`"
-                              @click="markPinned(table)">
+                              @click="setMarkAsSys(table)">
                     <div class="flex gap-2 items-center">
                       {{ table.meta?.markAsSys ? '🟠' : '🔘' }}
                       {{ $t(`title.${table.meta?.markAsSys ? 'unMarkSysTable' : 'markAsSysTable'}`) }}
+                    </div>
+                  </NcMenuItem>
+
+                  <NcMenuItem v-if="isSysM"
+                              @click="openSetMetaDialog(table)">
+                    <div>
+                      <div class="flex gap-2 leading-4 items-center">
+                        🗝️ {{ $t("title.updateSystemTableKey") }}
+                      </div>
+                      <div class="text-xs leading-4 pl-6 text-slate-400">{{ table.meta?.sysTableKey || '-' }}</div>
                     </div>
                   </NcMenuItem>
 
