@@ -61,6 +61,21 @@
     }
   }
 
+  const openColumnKeyMapsDlg = () => {
+    const isOpenColumnKeyMapConf = ref(true)
+    const { close } = useDialog(resolveComponent('DlgFoldermetaConf'), {
+      'modelValue': isOpenColumnKeyMapConf,
+      'table': table,
+      'onUpdate:modelValue': closeDialog,
+    })
+
+    function closeDialog() {
+      isOpenColumnKeyMapConf.value = false;
+
+      close(1000);
+    }
+  }
+
   const { loadViews: _loadViews } = useViewsStore()
   const { activeView, activeViewTitleOrId } = storeToRefs(useViewsStore())
   const { isLeftSidebarOpen } = storeToRefs(useSidebarStore())
@@ -318,6 +333,15 @@
                         🗝️ {{ $t("title.updateSystemTableKey") }}
                       </div>
                       <div class="text-xs leading-4 pl-6 text-slate-400">{{ table.meta?.sysTableKey || '-' }}</div>
+                    </div>
+                  </NcMenuItem>
+
+                  <NcMenuItem v-if="isSysM"
+                              @click="openColumnKeyMapsDlg(table)">
+                    <div>
+                      <div class="flex gap-2 leading-4 items-center">
+                        🔁 {{ $t("title.columnKeyMaps") }}
+                      </div>
                     </div>
                   </NcMenuItem>
 

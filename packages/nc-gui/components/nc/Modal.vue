@@ -3,7 +3,7 @@ const props = withDefaults(
   defineProps<{
     visible: boolean
     width?: string | number
-    size?: 'small' | 'medium' | 'large'
+    size?: 'small' | 'medium' | 'large' | 'slarge'
     destroyOnClose?: boolean
     maskClosable?: boolean
   }>(),
@@ -35,6 +35,10 @@ const width = computed(() => {
 
   if (props.size === 'medium') {
     return '40rem'
+  }
+  
+  if (props.size === 'slarge') {
+    return '60rem'
   }
 
   if (props.size === 'large') {

@@ -320,6 +320,7 @@
     "isNotNull": "有值（Not Null）"
   },
   "title": {
+    "columnKeyMaps": "列-键值映射",
     "setSysColumnKey": "设置系统字段 Key",
     "sysColumnKey": "系统字段 Key",
     "updateSystemTableKey": "更行系统表 Key",

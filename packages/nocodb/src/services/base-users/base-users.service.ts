@@ -56,6 +56,31 @@ export class BaseUsersService {
     return 1
   }
 
+  async getUserMetaCacheStore(param: {
+    baseId: string,
+    metaCategory: string,
+    cacheKey: string
+  }) {
+    const cache = await NocoStore.get(
+      `{userStore}:${param.baseId}:${param.metaCategory}:${param.cacheKey}`,
+      CacheGetType.TYPE_OBJECT
+    )
+    return cache || {}
+  }
+
+  async setUserMetaCacheStore(param: {
+    baseId: string,
+    metaCategory: string,
+    cacheKey: string,
+    payload: any
+  }) {
+    await NocoStore.set(
+      `{userStore}:${param.baseId}:${param.metaCategory}:${param.cacheKey}`,
+      param.payload
+    )
+    return 1
+  }
+
   async userList(param: { baseId: string; query: any }) {
     const base = await Base.get(param.baseId);
 

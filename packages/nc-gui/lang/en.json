@@ -318,6 +318,7 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "columnKeyMaps": "Column Key Maps",
     "setSysColumnLabel": "Set system column label",
     "sysColumnLabel": "System column label",
     "updateSystemTableKey": "Update system table key",

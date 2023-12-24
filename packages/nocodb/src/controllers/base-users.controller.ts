@@ -173,4 +173,32 @@ export class BaseUsersController {
     });
   }
 
+  @Get(['/api/v1/user/store/projects/:baseId/category/:category/key/:cacheKey'])
+  async getUserStoreMetaCache(
+    @Param('baseId') baseId: string,
+    @Param('metaCategory') metaCategory: string,
+    @Param('cacheKey') cacheKey: string,
+  ): Promise<any> {
+    return await this.baseUsersService.getUserMetaCacheStore({
+      baseId,
+      metaCategory,
+      cacheKey
+    });
+  }
+
+  @Patch(['/api/v1/user/store/projects/:baseId/category/:category/key/:cacheKey'])
+  async setUserStoreMetaCache(
+    @Param('baseId') baseId: string,
+    @Param('metaCategory') metaCategory: string,
+    @Param('cacheKey') cacheKey: string,
+    @Body() body: ProjectUserReqType,
+  ): Promise<any> {
+    return await this.baseUsersService.setUserMetaCacheStore({
+      baseId,
+      metaCategory,
+      cacheKey,
+      payload: body
+    });
+  }
+
 }
