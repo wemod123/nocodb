@@ -4449,8 +4449,8 @@ class BaseModelSqlv2 {
     const btMap: Record<string, boolean> = {};
 
     modelColumns.forEach((col) => {
-      idToAliasMap[col.id] = col.title;
-      if (col.colOptions?.type === 'bt') {
+      idToAliasMap[col.id] = col?.title;
+      if (col?.colOptions?.type === 'bt') {
         btMap[col.id] = true;
         const btData = Object.values(data).find(
           (d) => d[col.id] && Object.keys(d[col.id]),
@@ -4460,7 +4460,7 @@ class BaseModelSqlv2 {
             const btAlias = idToAliasMap[k];
             if (!btAlias) {
               idToAliasPromiseMap[k] = Column.get({ colId: k }).then((col) => {
-                return col.title;
+                return col?.title;
               });
             }
           }

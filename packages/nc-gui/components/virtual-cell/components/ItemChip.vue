@@ -61,8 +61,12 @@ export default {
 <template>
   <div
     v-e="['c:row-expand:open']"
-    class="chip group mr-1 my-1 flex items-center rounded-[2px] flex-row"
-    :class="{ active, 'border-1 py-1 px-2': isAttachment(column) }"
+    class="chip group mr-1 my-1 flex items-center rounded flex-row"
+    :class="{ active, 
+      'border-1 py-1 px-2': isAttachment(column),
+      'border-gray-200 border-1':
+          border && ![UITypes.Attachment, UITypes.MultiSelect, UITypes.SingleSelect].includes(column.uidt)
+      }"
     @click="openExpandedForm"
   >
     <span class="name">
@@ -83,11 +87,7 @@ export default {
         <template v-else>
           <div
             class="min-w-max"
-            :class="{
-              'px-1 rounded-full flex-1': !isAttachment(column),
-              'border-gray-200 rounded border-1':
-                border && ![UITypes.Attachment, UITypes.MultiSelect, UITypes.SingleSelect].includes(column.uidt),
-            }"
+            :class="{ 'px-1 bg-slate-50 flex-1 rounded': !isAttachment(column) }"
           >
             <LazySmartsheetCell :model-value="value" :column="column" :edit-enabled="false" :virtual="true" :read-only="true" />
           </div>
@@ -98,7 +98,7 @@ export default {
     <div v-show="active || isForm" v-if="showUnlinkButton && !readOnly && isUIAllowed('dataEdit')" class="flex items-center">
       <component
         :is="iconMap.closeThick"
-        class="nc-icon unlink-icon text-xs text-gray-500/50 group-hover:text-gray-500"
+        class="nc-icon unlink-icon px-1 rounded-r text-xs text-gray-500/50 group-hover:text-gray-500"
         @click.stop="emit('unlink')"
       />
     </div>
