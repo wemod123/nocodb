@@ -31,7 +31,7 @@
       /** Get Embed Config */
       parent.getEmbedConfig()
         .then(async (params: EntryConfig) => {
-          console.log('///////', params)
+
           if (params.lang) {
             await setI18nLanguage(params.lang)
             lang.value = params.lang
