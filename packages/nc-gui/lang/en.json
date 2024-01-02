@@ -318,6 +318,7 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "qrCodeScanMsg": "Use mobile browser scan code to open the link, otherwise if using other app scan code, should re-opened with 'open in browser'",
     "columnKeyMaps": "Column Key Maps",
     "setSysColumnLabel": "Set system column label",
     "sysColumnLabel": "System column label",

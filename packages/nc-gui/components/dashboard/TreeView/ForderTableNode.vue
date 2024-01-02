@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  import { get } from 'lodash-es'
   import type { BaseType, TableType } from 'nocodb-sdk'
   import { toRef } from '@vue/reactivity'
   import { message } from 'ant-design-vue'
@@ -30,7 +31,11 @@
 
   const { isUIAllowed } = useRoles()
 
-  const { isMobileMode, isSysM } = useGlobal()
+  const { isMobileMode, isSysM, entryConfig } = useGlobal()
+
+  const tableQrLink = computed(() => {
+    return get(entryConfig.value, ['services', 'qUrls', table.value?.meta?.sysTableKey])
+  })
 
   const tabStore = useTabs()
   const { updateTab } = tabStore
@@ -71,6 +76,21 @@
 
     function closeDialog() {
       isOpenColumnKeyMapConf.value = false;
+
+      close(1000);
+    }
+  }
+
+  const openLinkQRCodeDialog = (qrLink: any) => {
+    const isOpenQrLink = ref(true)
+    const { close } = useDialog(resolveComponent('DlgFoldermetaQrLink'), {
+      'modelValue': isOpenQrLink,
+      qrLink,
+      'onUpdate:modelValue': closeDialog,
+    })
+
+    function closeDialog() {
+      isOpenQrLink.value = false;
 
       close(1000);
     }
@@ -356,6 +376,17 @@
                     </div>
                   </NcMenuItem>
 
+                  <NcMenuItem v-if="isUIAllowed('tableRename', { roles: baseRole }) && !!tableQrLink"
+                              @click="openLinkQRCodeDialog(tableQrLink)">
+                    <div class="w-[18px] h-[18px] flex items-center justify-center">
+                      <GeneralIcon icon="qrCode"
+                                   style="font-size:18px" />
+                    </div>
+                    <div>
+                      {{ tableQrLink.title }}
+                    </div>
+                  </NcMenuItem>
+                  <!-- 
                   <NcMenuItem v-if="isUIAllowed('tableDuplicate') &&
                     base.sources?.[sourceIndex] &&
                     (base.sources[sourceIndex].is_meta || base.sources[sourceIndex].is_local)
@@ -368,7 +399,7 @@
                                    class="text-gray-700" />
                       {{ $t('general.duplicate') }}
                     </div>
-                  </NcMenuItem>
+                  </NcMenuItem> -->
 
                   <NcMenuItem v-if="isUIAllowed('tableDelete', { roles: baseRole })"
                               :data-testid="`sidebar-table-delete-${table.title}`"

@@ -14,6 +14,8 @@ import PurgeIcons from 'vite-plugin-purge-icons'
 export default defineNuxtConfig({
   devServer: { port: process.env.NODE_ENV === 'development' ? 3001 : 3000 },
 
+  telemetry: false,
+
   modules: ['@vueuse/nuxt', 'nuxt-windicss', '@nuxt/image-edge', '@pinia/nuxt'],
 
   ssr: false,

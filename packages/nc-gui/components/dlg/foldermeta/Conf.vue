@@ -1,18 +1,9 @@
 
-import type { Meta } from 'nuxt/dist/head/runtime/components';
-
-import type { Table } from 'ant-design-vue';
-
-import type { divIcon } from 'leaflet';
 <script setup lang="ts">
-  import { isEmpty, find } from 'lodash-es'
   import type { TableType } from 'nocodb-sdk'
   import {
-    nextTick,
     useNuxtApp,
     useVModel,
-    watchEffect,
-    useTabs,
     useMetas
   } from '#imports'
 
@@ -37,8 +28,6 @@ import type { divIcon } from 'leaflet';
     { title: 'DataBase Column (auto)', name: 'column_name', dataIndex: 'column_name', key: 'column_name' },
     { title: 'Map To System Key', key: 'mapKey', },
   ]
-
-  const sysTableKey = ref('')
 
   const cancel = () => {
     dialogShow.value = false;
