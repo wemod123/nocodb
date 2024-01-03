@@ -70,7 +70,7 @@ function openRenameTableDialog(table: TableType, _ = false) {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 
@@ -91,7 +91,7 @@ function openTableCreateDialog(sourceId?: string, baseId?: string) {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 
@@ -111,7 +111,7 @@ const duplicateTable = async (table: TableType) => {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 

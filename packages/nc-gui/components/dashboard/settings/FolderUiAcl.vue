@@ -179,7 +179,7 @@
         </div>
       </div>
 
-      <div class="max-h-600px overflow-y-auto">
+      <div class="max-h-480px overflow-y-auto">
         <a-table class="w-full"
                  size="small"
                  :data-source="filteredTables"

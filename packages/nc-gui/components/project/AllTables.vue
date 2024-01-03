@@ -65,7 +65,7 @@ function openTableCreateDialog(baseIndex?: number | undefined) {
       newTableDom?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 1000)
 
-    close(1000)
+    close(480)
   }
 }
 

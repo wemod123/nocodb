@@ -98,7 +98,7 @@ function openKeyboardShortcutDialog() {
 
   function closeDialog() {
     isOpen.value = false
-    close(1000)
+    close(480)
   }
 }
 

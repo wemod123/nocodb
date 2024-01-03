@@ -149,7 +149,7 @@ if (!newTableDom) return;
 newTableDom?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }, 1000);
 
-close(1000);
+close(480);
 }
 }
 
@@ -172,7 +172,7 @@ const { close } = useDialog(resolveComponent('DlgWsRename'), {
 function closeDialog() {
 isOpen.value = false;
 
-close(1000);
+close(480);
 }
 }
 
@@ -227,7 +227,7 @@ const { close } = useDialog(resolveComponent('DlgProjectErd'), {
 function closeDialog() {
 isOpen.value = false;
 
-close(1000);
+close(480);
 }
 }
 

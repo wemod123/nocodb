@@ -37,7 +37,7 @@ interface UseDialogOptions {
  *     isOpen.value = false
  *
  *     // debounce destroying the component, so the modal transition can finish
- *     close(1000)
+ *     close(480)
  *   }
  * }
  */

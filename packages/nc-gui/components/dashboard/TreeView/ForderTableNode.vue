@@ -62,7 +62,7 @@
     function closeDialog() {
       isOpenSetMetaDialog.value = false;
 
-      close(1000);
+      close(200);
     }
   }
 
@@ -77,7 +77,7 @@
     function closeDialog() {
       isOpenColumnKeyMapConf.value = false;
 
-      close(1000);
+      close(200);
     }
   }
 
@@ -92,7 +92,7 @@
     function closeDialog() {
       isOpenQrLink.value = false;
 
-      close(1000);
+      close(200);
     }
   }
 

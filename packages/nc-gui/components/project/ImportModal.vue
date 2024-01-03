@@ -31,7 +31,7 @@ function openAirtableImportDialog(baseId?: string, sourceId?: string) {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 
@@ -52,7 +52,7 @@ function openQuickImportDialog(type: 'csv' | 'excel' | 'json') {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 

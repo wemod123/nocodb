@@ -136,7 +136,7 @@ function openDeleteDialog() {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 </script>

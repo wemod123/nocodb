@@ -219,7 +219,7 @@ function openTableCreateDialog(sourceIndex?: number | undefined) {
       newTableDom?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 1000)
 
-    close(1000)
+    close(480)
   }
 }
 
@@ -304,7 +304,7 @@ function openErdView(source: SourceType) {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 

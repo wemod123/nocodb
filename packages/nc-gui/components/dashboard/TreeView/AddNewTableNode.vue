@@ -48,7 +48,7 @@ function openSchemaMagicDialog(sourceId?: string) {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 
@@ -69,7 +69,7 @@ function openQuickImportDialog(type: string, sourceId?: string) {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 
@@ -90,7 +90,7 @@ function openAirtableImportDialog(baseId?: string, sourceId?: string) {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 
@@ -110,7 +110,7 @@ function openTableCreateMagicDialog(sourceId?: string) {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 </script>

@@ -304,7 +304,7 @@ function openDeleteDialog(view: ViewType) {
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 
@@ -372,7 +372,7 @@ function onOpenModal({
   function closeDialog() {
     isOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 </script>

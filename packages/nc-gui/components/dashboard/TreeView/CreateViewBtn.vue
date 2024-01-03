@@ -94,7 +94,7 @@ async function onOpenModal({
     isOpen.value = false
     isDlgOpen.value = false
 
-    close(1000)
+    close(480)
   }
 }
 </script>
