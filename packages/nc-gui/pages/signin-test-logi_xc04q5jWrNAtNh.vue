@@ -96,7 +96,7 @@
     <div data-testid="nc-form-signin"
          class="md:bg-primary bg-opacity-5 signin h-full min-h-[600px] flex flex-col justify-center items-center nc-form-signin">
       <div class="bg-white mt-[60px] relative flex flex-col justify-center gap-2 w-full max-w-[500px] mx-auto p-8 md:(rounded-lg border-1 border-gray-200 shadow-xl)">
-        <LazyGeneralNocoIcon class="color-transition hover:(ring ring-accent ring-opacity-100)"
+        <LazyGeneralNocoIcon class="-top-20 left-[calc(50%_-_32px)] color-transition hover:(ring ring-accent ring-opacity-100) w-16 h-16"
                              :animate="isLoading" />
 
         <h1 class="prose-2xl font-bold self-center my-4">{{ $t('general.signIn') }}</h1>

@@ -1,7 +1,9 @@
 <script lang="ts" setup>
   import type { WorkspaceUserRoles } from 'nocodb-sdk'
   import { OrderedProjectRoles, OrgUserRoles, ProjectRoles, WorkspaceRolesToProjectRoles, extractRolesObj } from 'nocodb-sdk'
-  import { isEeUI, storeToRefs, timeAgo, message, Empty } from '#imports'
+  import { isEeUI, storeToRefs, useProfile, message, Empty } from '#imports'
+
+  const { mapEmail } = useProfile()
 
   const basesStore = useBases()
   const { getProjectUsers, createProjectUser, updateProjectUser, removeProjectUser } = basesStore
@@ -183,10 +185,10 @@
                                  :user="collab" />
                 <div class="h-9">
                   <div class="truncate font-bold">
-                    {{ collab.display_name || collab.email }}
+                    {{ collab.display_name || mapEmail(collab) }}
                   </div>
                   <div class="truncate text-slate-400 text-xs leading-none">
-                    {{ collab.email }}
+                    {{ mapEmail(collab) }}
                   </div>
                 </div>
               </div>
@@ -195,8 +197,8 @@
                   <RolesSelector :role="collab.roles"
                                  :roles="accessibleRoles"
                                  :inherit="isEeUI && collab.workspace_roles && WorkspaceRolesToProjectRoles[collab.workspace_roles]
-                                     ? WorkspaceRolesToProjectRoles[collab.workspace_roles]
-                                     : null
+                                   ? WorkspaceRolesToProjectRoles[collab.workspace_roles]
+                                   : null
                                    "
                                  :description="false"
                                  :on-role-change="(role: ProjectRoles) => updateCollaborator(collab, role)" />
@@ -245,4 +247,5 @@
 
 .user-row:last-child {
   @apply border-b-0;
-}</style>
+}
+</style>

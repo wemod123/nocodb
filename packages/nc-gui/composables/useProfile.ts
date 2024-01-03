@@ -59,7 +59,18 @@ export function useProfile() {
     }
   }
 
+  const mapEmail = (user: any) => {
+    if (user?.email?.includes('_|_')) {
+      const [lead, tail] = user.email.split('_|_');
+      const [sLead, sTail] = tail ? tail.split('@') : [];
+      return `${lead}@${sTail}`
+    } else {
+      return user?.email
+    }
+  }
+
   return {
+    mapEmail,
     loadProfile,
     profile,
     followUser,
