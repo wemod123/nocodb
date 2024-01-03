@@ -23,8 +23,8 @@ export class AuthService {
 
     if (pass.length > 50 && pass.startsWith('__token__')) {
       const pwPayload = verifyPWJwt(pass.replace('__token__', ''), Noco.getConfig());
-      if (pwPayload?.uid) {
-        const user = await this.usersService.findOneByUid(pwPayload.uid);
+      if (pwPayload?.uid && pwPayload?.tid) {
+        const user = await this.usersService.findOneByUidAndTid(pwPayload.uid, pwPayload.tid);
         return user && omit(user, ['password', 'salt'])
       }
     }

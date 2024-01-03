@@ -56,9 +56,10 @@ export class UsersService {
     return user;
   }
 
-  async findOneByUid(uid: string) {
+  async findOneByUidAndTid(uid: string, tid: string) {
     return await this.metaService.metaGet(null, null, MetaTable.USERS, {
       uid,
+      tid
     });
   }
 
