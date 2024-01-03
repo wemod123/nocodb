@@ -318,6 +318,7 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "columnsConfRefrence": "Columns config refrence",
     "qrCodeScanMsg": "Use mobile browser scan code to open the link, otherwise if using other app scan code, should re-opened with 'open in browser'",
     "columnKeyMaps": "Column Key Maps",
     "setSysColumnLabel": "Set system column label",
@@ -1001,6 +1002,7 @@
     "key": "Key"
   },
   "msg": {
+    "errorPleaseTryLater": "Error, please try later",
     "updateDbTableMsg": "Changing the database table name is restricted to designated professional users only. This operation may result in data loss, so please proceed with caution.",
     "workspaceLimitReachInfo": "Workspace limit reached with current subscription, upgrade subscription to create more workspace",
     "upgradeSubscription": "Upgrade subscription",

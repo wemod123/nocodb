@@ -25,6 +25,8 @@
     dialogShow.value = false;
     emits('update:modelValue', false)
   }
+
+  const clickUp = ref(1)
 </script>
 
 <template>
@@ -46,11 +48,16 @@
       <div class="pt-4 leading-5">
         💡 {{ $t("title.qrCodeScanMsg") }}
       </div>
-      <div class="flex flex-row justify-end gap-x-2">
+      <div class="flex flex-row justify-end gap-x-2"
+           @click="clickUp++">
         <a :href="qrCodeLarge"
            :download="`${qrLink.title}.png`">
           {{ $t("general.download") }}
         </a>
+      </div>
+      <div v-if="clickUp % 5 === 0"
+           class="pt-2">
+        {{ qrLink?.url }}
       </div>
     </div>
   </NcModal>

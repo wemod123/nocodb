@@ -3,11 +3,13 @@ const props = withDefaults(
   defineProps<{
     visible: boolean
     width?: string | number
+    noPadding?: boolean
     size?: 'small' | 'medium' | 'large' | 'slarge'
     destroyOnClose?: boolean
     maskClosable?: boolean
   }>(),
   {
+    noPadding: false,
     size: 'medium',
     destroyOnClose: true,
     maskClosable: true,
@@ -87,7 +89,7 @@ const slots = useSlots()
     @keydown.esc="visible = false"
   >
     <div
-      class="flex flex-col nc-modal p-6 h-full"
+      :class="['flex flex-col nc-modal h-full', noPadding ? 'p-0' : 'p-6']"
       :style="{
         maxHeight: height,
       }"

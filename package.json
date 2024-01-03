@@ -2,7 +2,7 @@
   "name": "nocodb-root",
   "description": "NocoDB Root",
   "private": true,
-  "version":"v0.202.40",
+  "version":"v0.202.41",
   "author": {
     "name": "NocoDB Inc",
     "url": "https://nocodb.com/"

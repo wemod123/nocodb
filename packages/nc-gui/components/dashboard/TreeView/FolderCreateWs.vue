@@ -20,7 +20,7 @@
   const createWs = async () => {
     if (entryConfig.value?.services && wsName.value) {
       loading.value = true;
-      await $fetch(`${entryConfig.value.services?.baseURL}${entryConfig.value.services?.createWsPath}`, {
+      await $fetch(`${entryConfig.value.services?.baseApi?.baseURL}${entryConfig.value.services?.baseApi?.createWsPath}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${entryConfig.value?.entryToken?.replace('__token__', '')}` },
         body: { alias: wsName.value },

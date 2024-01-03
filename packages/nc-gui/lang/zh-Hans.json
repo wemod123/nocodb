@@ -320,6 +320,7 @@
     "isNotNull": "有值（Not Null）"
   },
   "title": {
+    "columnsConfRefrence": "列键值配置参考",
     "qrCodeScanMsg": "请使用浏览器扫码，如果使用其他软件扫码，需要跳转到在浏览器中打开链接",
     "columnKeyMaps": "列-键值映射",
     "setSysColumnKey": "设置系统字段 Key",
@@ -1003,6 +1004,7 @@
     "key": "键"
   },
   "msg": {
+    "errorPleaseTryLater": "错误，请稍后重试",
     "updateDbTableMsg": "修改数据库表名仅限于指定专业用户，此操作可能引起数据丢失，请谨慎操作",
     "workspaceLimitReachInfo": "当前工作空间数量已达到上限，升级订阅以创建更多工作空间",
     "upgradeSubscription": "升级订阅",
