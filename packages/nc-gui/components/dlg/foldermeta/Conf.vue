@@ -61,7 +61,7 @@
     try {
       tableColumnsConfRef.value = await $fetch(`${entryConfig.value?.services?.inteApis?.baseURL}${entryConfig.value?.services?.inteApis?.columnsMapRefPath}/${tableKey}`, {
         method: 'GET',
-        headers: { 'Authorization': `Bearer ${entryConfig.value?.entryToken?.replace('__token__', '')}` },
+        headers: { 'Authorization': entryConfig.value?.entryToken?.replace('__token__', '')! },
       }).then()
     } catch (err) { }
   }

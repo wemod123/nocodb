@@ -429,7 +429,7 @@ onBeforeUnmount(() => {
             >
               <template v-for="compOp of comparisonOpList(getColumn(filter)?.uidt)" :key="compOp.value">
                 <a-select-option v-if="isComparisonOpAllowed(filter, compOp)" :value="compOp.value">
-                  {{ compOp.text }}
+                  {{ $t(`compOp.${compOp.text}`) }}
                 </a-select-option>
               </template>
             </NcSelect>
@@ -452,7 +452,7 @@ onBeforeUnmount(() => {
             >
               <template v-for="compSubOp of comparisonSubOpList(filter.comparison_op)" :key="compSubOp.value">
                 <a-select-option v-if="isComparisonSubOpAllowed(filter, compSubOp)" :value="compSubOp.value">
-                  {{ compSubOp.text }}
+                  {{ $t(`compOp.${compSubOp.text}`) }}
                 </a-select-option>
               </template>
             </NcSelect>
