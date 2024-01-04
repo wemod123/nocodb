@@ -27,8 +27,8 @@
   const columns = [
     { title: 'ID', name: 'id', dataIndex: 'id', key: 'id' },
     { title: 'Display Title', name: 'title', dataIndex: 'title', key: 'title' },
-    { title: 'DataBase Column (auto)', name: 'column_name', dataIndex: 'column_name', key: 'column_name' },
-    { title: 'Map To System Key', key: 'mapKey', },
+    { title: 'Real DataBase Column', name: 'column_name', dataIndex: 'column_name', key: 'column_name' },
+    { title: 'Uniq System Key(:guess)', key: 'mapKey', },
   ]
 
   const cancel = () => {
@@ -63,7 +63,8 @@
         method: 'GET',
         headers: { 'Authorization': entryConfig.value?.entryToken?.replace('__token__', '')! },
       }).then()
-    } catch (err) { }
+    } catch (err) {
+    }
   }
 
   const loadData = async () => {
@@ -116,10 +117,10 @@
                  class="border-1 rounded overflow-hidden"
                  :data-source="metas[table.id].columns">
           <template #bodyCell="{ column, record }">
-            <template v-if="column.key === 'mapKey'">
+            <template v-if="record && record.id && column.key === 'mapKey'">
               <div class="w-full -mt-1 -mb-1">
-                <a-input v-model:value="tableColumnsKeyMap[record.id]"
-                         placeholder="Map To Sys Key" />
+                <a-input v-model:value="tableColumnsKeyMap[record && record.id ? record.id : -1]"
+                         :placeholder="tableColumnsConfRef?.[record?.column_name] ? `: ${record?.column_name}` : 'Map To Sys Key'" />
               </div>
             </template>
           </template>
@@ -150,15 +151,15 @@
             🟡 {{ $t("msg.errorPleaseTryLater") }}
           </div>
           <template v-else>
-            <div v-for="conf in tableColumnsConfRef"
+            <div v-for="(v, k) in tableColumnsConfRef"
                  style="font-family: monospace;"
                  class="px-2 mt-1 rounded w-full flex items-center"
-                 :class="{ 'bg-slate-200/80': Object.values(tableColumnsKeyMap).includes(conf.key) }">
+                 :class="{ 'bg-slate-200/80': Object.values(tableColumnsKeyMap).includes(k) }">
               <span class="flex-grow"
-                    :title="conf.desc">
-                {{ conf.key }}
+                    :title="v">
+                {{ k }}
               </span>
-              <span v-if="Object.values(tableColumnsKeyMap).includes(conf.key)"
+              <span v-if="Object.values(tableColumnsKeyMap).includes(k)"
                     class="text-xs">✔️</span>
             </div>
           </template>
