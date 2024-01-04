@@ -57,9 +57,11 @@
   }
 
   const tableColumnsConfRef = ref<any>()
-  const getTableColumnsConfRef = async (tableKey: string) => {
+  const getTableColumnsConfRef = async (forceRefresh = false) => {
     try {
-      tableColumnsConfRef.value = await $fetch(`${entryConfig.value?.services?.inteApis?.baseURL}${entryConfig.value?.services?.inteApis?.columnsMapRefPath}/${tableKey}`, {
+      const tableKey = table?.meta?.sysTableKey;
+      const qStr = forceRefresh ? '?f=Y' : '';
+      tableColumnsConfRef.value = await $fetch(`${entryConfig.value?.services?.inteApis?.baseURL}${entryConfig.value?.services?.inteApis?.columnsMapRefPath}/${tableKey}${qStr}`, {
         method: 'GET',
         headers: { 'Authorization': entryConfig.value?.entryToken?.replace('__token__', '')! },
       }).then()
@@ -72,8 +74,8 @@
 
     loading.value = true;
     await getMeta(table.id);
-    await getTableColumnsKeyMap(table.id);
-    await getTableColumnsConfRef(table.meta.sysTableKey)
+    await getTableColumnsKeyMap();
+    await getTableColumnsConfRef()
     loading.value = false;
   }
 
@@ -86,6 +88,16 @@
   onMounted(async () => {
     loadData();
   })
+
+  const triggerForceRefresh = ref(2)
+
+  const clickTriggerFR = async () => {
+    triggerForceRefresh.value++;
+
+    if (triggerForceRefresh.value % 5 === 1) {
+      await getTableColumnsConfRef(true)
+    }
+  }
 </script>
 
 <template>
@@ -140,7 +152,14 @@
       </div>
       <div class="ml-4 border-1 bg-slate-50 rounded-r-2xl"
            style="width:240px;">
-        <div class="px-5 flex items-center border-b pt-2 h-10">{{ $t("title.columnsConfRefrence") }}</div>
+        <div class="px-5 flex items-center cursor-pointer border-b pt-2 h-10 text-ellipsis truncate"
+             style="max-width:200px"
+             @click="clickTriggerFR()">
+          {{ $t("title.columnsConfRefrence") }}
+          <span class="text--accent">
+            {{ new Array(triggerForceRefresh - 2).fill('»').join('') }}
+          </span>
+        </div>
         <div class="overflow-y-auto nc-scrollbar-md p-3"
              style="max-height:580px">
           <div v-if="loading">
