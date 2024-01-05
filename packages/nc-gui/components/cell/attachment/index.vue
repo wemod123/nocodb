@@ -187,7 +187,7 @@ const onImageClick = (item: any) => {
     class="nc-attachment-cell relative flex color-transition flex items-center w-full xs:(min-h-12 max-h-32)"
     :class="{ 'justify-center': !active, 'justify-between': active }"
   >
-    <LazyCellAttachmentCarousel />
+    <LazyCellAttachmentCarousel v-if="selectedImage"/>
 
     <template v-if="isSharedForm || (!isReadonly && !dragging && !!currentCellRef)">
       <general-overlay

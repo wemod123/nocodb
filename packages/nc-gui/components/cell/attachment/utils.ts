@@ -202,7 +202,8 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
         message.error(e.message || t('msg.error.internalError'))
       }
 
-      updateModelValue(JSON.stringify([...attachments.value, ...newAttachments]))
+      attachments.value = [...attachments.value, ...newAttachments];
+      updateModelValue(JSON.stringify(attachments.value))
     }
 
     async function renameFile(attachment: AttachmentType, idx: number) {

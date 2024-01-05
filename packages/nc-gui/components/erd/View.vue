@@ -131,11 +131,11 @@ watch(
   >
     <div class="relative h-full">
       <LazyErdFlow :tables="filteredTables" :config="config">
-        <GeneralOverlay v-model="isLoading" inline class="bg-gray-300/50">
+        <!-- <GeneralOverlay v-model="isLoading" inline class="bg-gray-300/50">
           <div class="h-full w-full flex flex-col justify-center items-center">
             <a-spin size="large" />
           </div>
-        </GeneralOverlay>
+        </GeneralOverlay> -->
 
         <ErdFullScreenToggle :config="config" @toggle-full-screen="toggleFullScreen" />
         <ErdConfigPanel :config="config" />
