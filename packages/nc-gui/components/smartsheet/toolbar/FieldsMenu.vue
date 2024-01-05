@@ -21,7 +21,10 @@
     useUndoRedo,
     useViewColumnsOrThrow,
     watch,
+    useViewsStore
   } from '#imports'
+
+  const { loadViews } = useViewsStore()
 
   const activeView = inject(ActiveViewInj, ref())
 
@@ -286,7 +289,14 @@
   useMenuCloseOnEsc(open)
 
   const theViewImageStyle = ref();
-  try { theViewImageStyle.value = JSON.parse(activeView.value?.view?.meta!) } catch(e) {}
+  try { 
+    theViewImageStyle.value = activeView.value?.view?.meta ? 
+    (
+      typeof activeView.value?.view?.meta === 'object' ? 
+        activeView.value?.view?.meta : 
+        JSON.parse(activeView.value?.view?.meta!)
+    ) : {}
+    } catch(e) {}
     
   const togleCoverImage = async () => {
     if (
@@ -328,9 +338,13 @@
           theViewImageStyle.value = JSON.parse(upatedView.meta!)
         }
       }
-     
-      reloadViewMetaHook?.trigger()
-      reloadViewDataHook?.trigger()
+
+      setTimeout(async () => {
+        await loadViews({
+          tableId: activeView.value.fk_model_id!,
+          force: true
+        })
+      }, 500);      
     }
   }
 </script>
@@ -394,9 +408,10 @@
           <div class="flex text-sm items-center select-none">
             <span class="flex-1">{{ $t("title.selectCoverImgField") }}</span>
             <a-switch :checked-value="theViewImageStyle?.imageStyle === 'contain'" 
-                      size="small"
+                      :checked-children="$t(`title.imageStyle_cover`)"
+                      :class="{'!bg-sky-500': theViewImageStyle?.imageStyle === 'contain'}"
+                      :un-checked-children="$t(`title.imageStyle_contain`)"
                       @update:checked="togleCoverImage" />
-            <span class="pl-1">{{ $t(`title.imageStyle_${theViewImageStyle?.imageStyle || 'cover'}`) }}</span>
           </div>
 
           <a-select v-model:value="coverImageColumnId"
