@@ -45,7 +45,6 @@
               email: params.email,
               password: params.entryToken
             }).then(async ({ token }) => {
-              parent.event('initialized');
 
               if (token) {
                 signIn(token!, params, parent);
@@ -64,6 +63,9 @@
               } else {
                 hasError.value = 'unAuthed'
               }
+
+              parent.event('initialized');
+              
             }).catch(err => {
               hasError.value = 'unAuthed';
             })

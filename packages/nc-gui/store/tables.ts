@@ -4,7 +4,7 @@ import { useTitle } from '@vueuse/core'
 import type { SidebarTableNode } from '~/lib'
 
 export const useTablesStore = defineStore('tablesStore', () => {
-  const { includeM2M, ncNavigateTo } = useGlobal()
+  const { includeM2M, ncNavigateTo, pF } = useGlobal()
   const { api } = useApi()
   const { $e, $api, $state } = useNuxtApp()
   const { addUndo, defineProjectScope } = useUndoRedo()
@@ -106,6 +106,8 @@ export const useTablesStore = defineStore('tablesStore', () => {
     })
 
     baseTables.value.set(baseId, tables.list || [])
+
+    pF?.value?.event('resize-container')
 
     await loadTablesPins(baseId)
   }

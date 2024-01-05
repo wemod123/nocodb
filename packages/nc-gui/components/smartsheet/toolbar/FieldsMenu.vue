@@ -284,6 +284,55 @@
   })
 
   useMenuCloseOnEsc(open)
+
+  const theViewImageStyle = ref();
+  try { theViewImageStyle.value = JSON.parse(activeView.value?.view?.meta!) } catch(e) {}
+    
+  const togleCoverImage = async () => {
+    if (
+      (activeView.value?.type === ViewTypes.GALLERY || activeView.value?.type === ViewTypes.KANBAN) &&
+      activeView.value?.id &&
+      activeView.value?.view &&
+      theViewImageStyle.value &&
+      (typeof theViewImageStyle.value === 'object')
+    ) {
+
+      if(activeView.value?.type === ViewTypes.GALLERY){
+        await $api.dbView.galleryUpdate(activeView.value?.id, {
+          meta: {
+            ...theViewImageStyle.value,
+            imageStyle: theViewImageStyle.value.imageStyle === 'contain' ? 
+              'cover' :
+              'contain',
+          }
+        })
+
+        const upatedView = await $api.dbView.galleryRead(activeView.value?.id)
+
+        if(upatedView?.meta){
+          theViewImageStyle.value = JSON.parse(upatedView.meta!)
+        }
+      }else if(activeView.value?.type === ViewTypes.KANBAN){
+        await $api.dbView.kanbanUpdate(activeView.value?.id, {
+          meta: {
+            ...theViewImageStyle.value,
+            imageStyle: theViewImageStyle.value.imageStyle === 'contain' ? 
+              'cover' :
+              'contain',
+          }
+        })
+
+        const upatedView = await $api.dbView.kanbanRead(activeView.value?.id)
+
+        if(upatedView?.meta){
+          theViewImageStyle.value = JSON.parse(upatedView.meta!)
+        }
+      }
+     
+      reloadViewMetaHook?.trigger()
+      reloadViewDataHook?.trigger()
+    }
+  }
 </script>
 
 <template>
@@ -341,7 +390,15 @@
            @click.stop>
         <div v-if="!filterQuery && !isPublic && (activeView?.type === ViewTypes.GALLERY || activeView?.type === ViewTypes.KANBAN)"
              class="flex flex-col gap-y-2 pr-4 mb-6">
-          <div class="flex text-sm select-none">Select cover image field</div>
+
+          <div class="flex text-sm items-center select-none">
+            <span class="flex-1">{{ $t("title.selectCoverImgField") }}</span>
+            <a-switch :checked-value="theViewImageStyle?.imageStyle === 'contain'" 
+                      size="small"
+                      @update:checked="togleCoverImage" />
+            <span class="pl-1">{{ $t(`title.imageStyle_${theViewImageStyle?.imageStyle || 'cover'}`) }}</span>
+          </div>
+
           <a-select v-model:value="coverImageColumnId"
                     class="w-full"
                     :options="coverOptions"

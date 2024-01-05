@@ -369,6 +369,9 @@
     "isNotNull": "有值（Not Null）"
   },
   "title": {
+    "imageStyle_contain": "显示全图",
+    "imageStyle_cover": "覆盖封面",
+    "selectCoverImgField": "选择封面图片字段",
     "enterAValue": "输入值",
     "columnsConfRefrence": "列键值配置参考",
     "qrCodeScanMsg": "请使用浏览器扫码，如果使用其他软件扫码，需要跳转到在浏览器中打开链接",

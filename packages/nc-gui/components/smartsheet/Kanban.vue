@@ -392,6 +392,10 @@ const getRowId = (row: RowType) => {
 }
 
 const isKanbanView = computed(() => route.value.fullPath.includes('/nc/kanban'))
+
+const gImageStyle = computed(()=>{
+  return kanbanMetaData.value?.meta ? JSON.parse(kanbanMetaData.value.meta) : { }
+})
 </script>
 
 <template>
@@ -580,7 +584,7 @@ const isKanbanView = computed(() => route.value.fullPath.includes('/nc/kanban'))
                                         <LazyCellAttachmentImage
                                           v-if="isImage(attachment.title, attachment.mimetype ?? attachment.type)"
                                           :key="attachment.path"
-                                          class="h-52 object-cover"
+                                          :class="['h-52', gImageStyle.imageStyle === 'contain'? '!object-contain' : '']"
                                           :srcs="getPossibleAttachmentSrc(attachment)"
                                         />
                                       </template>

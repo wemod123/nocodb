@@ -367,6 +367,9 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "imageStyle_contain": "Image-Contain",
+    "imageStyle_cover": "Image-Cover",
+    "selectCoverImgField": "Select cover image field",
     "enterAValue": "Enter a value",
     "columnsConfRefrence": "Columns config refrence",
     "qrCodeScanMsg": "Use mobile browser scan code to open the link, otherwise if using other app scan code, should re-opened with 'open in browser'",
