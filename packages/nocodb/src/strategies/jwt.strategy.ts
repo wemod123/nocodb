@@ -47,6 +47,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       });
     }
 
+    if ((req.headers['xc-tokenkind'] || 'N-U-L-L') === process.env.NC_MGT_TOKEN_PREDEST) {
+      return User.getWithRoles(user.id, {
+        user,
+        baseId: req.ncProjectId,
+      });
+    }
+
     if (
       !user.token_version ||
       !jwtPayload.token_version ||
