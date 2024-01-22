@@ -124,16 +124,16 @@ watch(editEnabled, () => {
 useSelectedCellKeyupListener(active, (e) => {
   switch (e.key) {
     case 'Enter':
-      e.stopPropagation()
-      if (e.shiftKey) {
-        return true
-      }
-      if (editEnabled.value) {
-        onSave()
-      } else {
-        editEnabled.value = true
-      }
-      break
+      // e.stopPropagation()
+      // if (e.shiftKey) {
+      //   return true
+      // }
+      // if (editEnabled.value) {
+      //   onSave()
+      // } else {
+      //   editEnabled.value = true
+      // }
+      // break
   }
 })
 

@@ -138,6 +138,19 @@ watch(
 const isTableOpened = computed(() => {
   return openedTableId.value === table.value?.id && (activeView.value?.is_default || !activeViewTitleOrId.value)
 })
+
+const isCopiedId = ref('');
+const copyId = (id: string = '') => {
+  navigator?.clipboard?.writeText(id).then(
+    () => {
+      isCopiedId.value = id;
+      setTimeout(() => {
+        isCopiedId.value = ''
+      }, 2000);
+    },
+    () => { }
+  )
+}
 </script>
 
 <template>
@@ -264,6 +277,18 @@ const isTableOpened = computed(() => {
 
               <template #overlay>
                 <NcMenu>
+
+                  <NcMenuItem @click="copyId(table?.id)">
+                    <div class="flex items-center text-xs">
+                      <span class="flex-1 mr-2">ID: {{ table?.id }}</span>
+                      <span v-if="isCopiedId === table?.id">✅</span>
+                      <component v-else
+                                 :is="iconMap.copy" />
+                    </div>
+                  </NcMenuItem>
+
+                  <a-divider class="!my-1" />
+
                   <NcMenuItem
                     v-if="isUIAllowed('tableRename', { roles: baseRole })"
                     :data-testid="`sidebar-table-rename-${table.title}`"

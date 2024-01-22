@@ -362,6 +362,19 @@ function projectDelete() {
   isProjectDeleteDialogVisible.value = true
   $e('c:project:delete')
 }
+
+const isCopiedId = ref('');
+const copyId = (id: string = '') => {
+  navigator?.clipboard?.writeText(id).then(
+    () => {
+      isCopiedId.value = id;
+      setTimeout(() => {
+        isCopiedId.value = ''
+      }, 2000);
+    },
+    () => { }
+  )
+}
 </script>
 
 <template>
@@ -458,6 +471,17 @@ function projectDelete() {
                 @click="isOptionsOpen = false"
               >
                 <template v-if="!isSharedBase">
+                  <NcMenuItem @click="copyId(base?.id)">
+                    <div class="flex items-center text-xs">
+                      <span class="flex-1 mr-2">ID: {{ base?.id }}</span>
+                      <span v-if="isCopiedId === base?.id">✅</span>
+                      <component v-else
+                                  :is="iconMap.copy" />
+                    </div>
+                  </NcMenuItem>
+
+                  <a-divider class="!my-1" />
+
                   <NcMenuItem v-if="isUIAllowed('baseRename')" data-testid="nc-sidebar-project-rename" @click="enableEditMode">
                     <div v-e="['c:base:rename']" class="flex gap-2 items-center">
                       <GeneralIcon icon="edit" class="group-hover:text-black" />

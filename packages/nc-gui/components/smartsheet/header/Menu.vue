@@ -17,6 +17,7 @@ import {
   useNuxtApp,
   useSmartsheetStoreOrThrow,
   useUndoRedo,
+  useRoles
 } from '#imports'
 
 const props = defineProps<{ virtual?: boolean; isOpen: boolean }>()
@@ -42,6 +43,8 @@ const { insertSort } = useViewSorts(view, () => reloadDataHook?.trigger())
 const isLocked = inject(IsLockedInj)
 
 const { $api, $e } = useNuxtApp()
+
+const { isSuper } = useRoles()
 
 const { t } = useI18n()
 
@@ -276,6 +279,18 @@ const onInsertAfter = () => {
   isOpen.value = false
   addColumn()
 }
+
+const isCopiedId = ref('');
+const copyId = (id:string) => {
+  navigator?.clipboard?.writeText(id).then(
+    ()=>{ 
+      isCopiedId.value = id; 
+      setTimeout(() => {
+        isCopiedId.value = ''
+      }, 2000); },
+    ()=>{}
+  )
+}
 </script>
 
 <template>
@@ -292,6 +307,15 @@ const onInsertAfter = () => {
     </div>
     <template #overlay>
       <a-menu class="shadow bg-white nc-column-options">
+        <a-menu-item v-if="isSuper" @click="copyId(meta?.id)">
+          <div class="nc-column-edit text-xs nc-header-menu-item" :class="{ '!text-slate-400': meta?.meta?.markAsSys === true }">
+            <span class="flex-1">ID: {{ meta?.id }}</span>
+            <span v-if="isCopiedId === meta?.id">✅</span>
+            <component v-else :is="iconMap.copy" />
+          </div>
+        </a-menu-item>
+        <a-divider v-if="isSuper" class="!my-0" />
+
         <a-menu-item :disabled="meta?.meta?.markAsSys === true" @click="onEditPress">
           <div class="nc-column-edit nc-header-menu-item" :class="{ '!text-slate-400': meta?.meta?.markAsSys === true }">
             <component :is="iconMap.edit" class="text-gray-700 mx-0.65 my-0.75" :class="{ '!text-slate-400': meta?.meta?.markAsSys === true }"/>
