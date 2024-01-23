@@ -281,13 +281,13 @@ const onInsertAfter = () => {
 }
 
 const isCopiedId = ref('');
-const copyId = (id:string) => {
+const copyId = (id: string | any) => {
   navigator?.clipboard?.writeText(id).then(
     ()=>{ 
       isCopiedId.value = id; 
       setTimeout(() => {
         isCopiedId.value = ''
-      }, 2000); },
+      }, 1500); },
     ()=>{}
   )
 }
@@ -307,11 +307,11 @@ const copyId = (id:string) => {
     </div>
     <template #overlay>
       <a-menu class="shadow bg-white nc-column-options">
-        <a-menu-item v-if="isSuper" @click="copyId(meta?.id)">
+        <a-menu-item v-if="isSuper" @click="copyId(column?.id)">
           <div class="nc-column-edit text-xs nc-header-menu-item" :class="{ '!text-slate-400': meta?.meta?.markAsSys === true }">
-            <span class="flex-1">ID: {{ meta?.id }}</span>
-            <span v-if="isCopiedId === meta?.id">✅</span>
-            <component v-else :is="iconMap.copy" />
+            <span class="flex-1">ID: {{ column?.id }}</span>
+            <span v-if="isCopiedId === column?.id" class="min-w-5">✅</span>
+            <component v-else :is="iconMap.copy" class="min-w-5"/>
           </div>
         </a-menu-item>
         <a-divider v-if="isSuper" class="!my-0" />

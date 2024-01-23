@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FunctionalComponent, SVGAttributes } from 'vue'
 import Misc from './Misc.vue'
+import RobotApiToken from './FolderToken.vue'
 import { DataSourcesSubTab, iconMap, useNuxtApp, useVModel, watch } from '#imports'
 
 interface Props {
@@ -93,21 +94,6 @@ const tabsInfo: TabGroup = {
   //     $e('c:settings:data-sources')
   //   },
   // },
-  // audit: {
-  //   // Audit
-  //   title: t('title.audit'),
-  //   icon: iconMap.book,
-  //   subTabs: {
-  //     audit: {
-  //       // Audit
-  //       title: t('title.audit'),
-  //       body: resolveComponent('DashboardSettingsAuditTab'),
-  //     },
-  //   },
-  //   onClick: () => {
-  //     $e('c:settings:audit')
-  //   },
-  // },
   baseSettings: {
     // Base Settings
     title: t('labels.projectSettings'),
@@ -124,6 +110,17 @@ const tabsInfo: TabGroup = {
       $e('c:settings:base-settings')
     },
   },
+  robotApiToken: {
+    title: t('title.robotApiToken'),
+    icon: iconMap.key,
+    subTabs: {
+      token: {
+        // Audit
+        title: t('title.token'),
+        body: RobotApiToken,
+      },
+    }
+  }
 }
 const firstKeyOfObject = (obj: object) => Object.keys(obj)[0]
 

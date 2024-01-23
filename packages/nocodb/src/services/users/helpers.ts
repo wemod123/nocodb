@@ -4,6 +4,10 @@ import type User from '~/models/User';
 import type { NcConfig } from '~/interface/config';
 import type { Response } from 'express';
 
+export function signRobotApiToken(id: string, config: NcConfig) {
+  return jwt.sign({ id }, config.auth.jwt.secret)
+}
+
 export function genJwt(user: User, config: NcConfig) {
   return jwt.sign(
     {

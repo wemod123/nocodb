@@ -369,6 +369,8 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "token": "Token",
+    "robotApiToken": "Robot API Token",
     "imageStyle_contain": "Image-Contain",
     "imageStyle_cover": "Image-Cover",
     "selectCoverImgField": "Select cover image field",

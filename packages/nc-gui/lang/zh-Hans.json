@@ -371,6 +371,8 @@
     "isNotNull": "有值（Not Null）"
   },
   "title": {
+    "token": "密钥",
+    "robotApiToken": "自动化API密钥",
     "imageStyle_contain": "显示全图",
     "imageStyle_cover": "覆盖封面",
     "selectCoverImgField": "选择封面图片字段",

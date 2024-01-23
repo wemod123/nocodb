@@ -123,6 +123,20 @@ export class AuthController {
     // google strategy will take care the request
   }
 
+  @Get(['/api/v1/auth/robot/apitoken/:tid'])
+  @UseGuards(GlobalGuard)
+  async robotToken(@Req() req: Request, @Param('tid') tid: string) {
+    const roles = typeof req.user?.roles === 'string' ?
+      { super: false } :
+      (req.user?.roles as { [key: string]: boolean });
+
+    if (roles?.super === true) {
+      return await this.usersService.signRobotToken(tid)
+    } else {
+      return 'Invalid request'
+    }
+  }
+
   @Get(['/auth/user/me', '/api/v1/db/auth/user/me', '/api/v1/auth/user/me'])
   @UseGuards(MetaApiLimiterGuard, GlobalGuard)
   async me(@Req() req: Request) {

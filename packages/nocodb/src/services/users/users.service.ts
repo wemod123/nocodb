@@ -27,6 +27,7 @@ import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
 import { NcError } from '~/helpers/catchError';
 import { BasesService } from '~/services/bases.service';
 import { extractProps } from '~/helpers/extractProps';
+import { signRobotApiToken } from './helpers';
 
 @Injectable()
 export class UsersService {
@@ -54,6 +55,12 @@ export class UsersService {
     });
 
     return user;
+  }
+
+  async signRobotToken(tid: string): Promise<string> {
+    const robotUser = await User.list({ query: `${tid}@robot.services`, tid });
+    const id = robotUser?.[0]?.id;
+    return id ? signRobotApiToken(id, Noco.getConfig()) : 'Invalid request'
   }
 
   async findOneByUidAndTid(uid: string, tid: string) {

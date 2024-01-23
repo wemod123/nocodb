@@ -247,13 +247,17 @@ export default class User implements UserType {
       );
 
     if (uid || tid) {
-      
+
       if (uid) {
         queryBuilder.where('uid', uid);
       }
 
       if (tid) {
         queryBuilder.where('tid', tid);
+      }
+
+      if (query) {
+        queryBuilder.where('email', 'like', `%${query.toLowerCase?.()}%`);
       }
 
     } else if (query) {
