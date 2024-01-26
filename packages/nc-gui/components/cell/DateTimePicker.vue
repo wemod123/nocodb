@@ -7,12 +7,10 @@ import {
   ColumnInj,
   EditColumnInj,
   ReadonlyInj,
-  dateFormats,
   inject,
   isDrawerOrModalExist,
   parseProp,
   ref,
-  timeFormats,
   useBase,
   useSelectedCellKeyupListener,
   watch,
@@ -46,15 +44,20 @@ const column = inject(ColumnInj)!
 const isDateInvalid = ref(false)
 
 const dateTimeFormat = computed(() => {
-  const dateFormat = parseProp(column?.value?.meta)?.date_format ?? dateFormats[0]
-  const timeFormat = parseProp(column?.value?.meta)?.time_format ?? timeFormats[0]
+  const dateFormat = parseProp(column?.value?.meta)?.date_format ?? 'YYYY-MM-DD'
+  const timeFormat = parseProp(column?.value?.meta)?.time_format ?? 'HH:mm'
   return `${dateFormat} ${timeFormat}`
 })
 
 let localModelValue = modelValue ? dayjs(modelValue).utc().local() : undefined
 
+const tempLocalValue = ref<dayjs.Dayjs>()
+
 const localState = computed({
   get() {
+    if (!modelValue && tempLocalValue.value) {
+      return tempLocalValue.value
+    }
     if (!modelValue) {
       return undefined
     }
@@ -133,8 +136,13 @@ watch(
   (next) => {
     if (next) {
       onClickOutside(document.querySelector(`.${randomClass}`)! as HTMLDivElement, () => (open.value = false))
+
+      if (!modelValue) {
+        tempLocalValue.value = dayjs(new Date())
+      }
     } else {
       editable.value = false
+      tempLocalValue.value = undefined
     }
   },
   { flush: 'post' },
@@ -242,6 +250,22 @@ const cellClickHook = inject(CellClickHookInj, null)
 const cellClickHandler = () => {
   open.value = (active.value || editable.value) && !open.value
 }
+
+function okHandler(val: dayjs.Dayjs | string) {
+  if (!val) {
+    emit('update:modelValue', null)
+    return
+  }
+
+  if (dayjs(val).isValid()) {
+    // setting localModelValue to cater NOW function in date picker
+    localModelValue = dayjs(val)
+    // send the payload in UTC format
+    emit('update:modelValue', dayjs(val).utc().format('YYYY-MM-DD HH:mm:ssZ'))
+  }
+
+  open.value = !open.value
+}
 onMounted(() => {
   cellClickHook?.on(cellClickHandler)
 })
@@ -263,7 +287,7 @@ const isColDisabled = computed(() => {
 
 <template>
   <a-date-picker
-    v-model:value="localState"
+    :value="localModelValue"
     :disabled="isColDisabled"
     :show-time="true"
     :bordered="false"
@@ -273,10 +297,10 @@ const isColDisabled = computed(() => {
     :placeholder="placeholder"
     :allow-clear="!readOnly && !localState && !isPk"
     :input-read-only="true"
-    :dropdown-class-name="`${randomClass} nc-picker-datetime ${open ? 'active' : ''}`"
+    :dropdown-class-name="`${randomClass} nc-picker-datetime children:border-1 children:border-gray-200 ${open ? 'active' : ''}`"
     :open="isOpen"
     @click="clickHandler"
-    @ok="open = !open"
+    @ok="okHandler"
   >
     <template #suffixIcon></template>
   </a-date-picker>
