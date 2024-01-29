@@ -287,7 +287,7 @@ const isColDisabled = computed(() => {
 
 <template>
   <a-date-picker
-    :value="localModelValue"
+    :value="localModelValue || localState"
     :disabled="isColDisabled"
     :show-time="true"
     :bordered="false"

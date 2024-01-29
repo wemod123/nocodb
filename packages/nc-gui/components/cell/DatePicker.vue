@@ -24,6 +24,8 @@ interface Props {
 const { modelValue, isPk } = defineProps<Props>()
 const emit = defineEmits(['update:modelValue'])
 
+const localModelValue = ref()
+
 const { t } = useI18n()
 
 const { showNull } = useGlobal()
@@ -56,6 +58,7 @@ const localState = computed({
     return /^\d+$/.test(modelValue) ? dayjs(+modelValue) : dayjs(modelValue)
   },
   set(val?: dayjs.Dayjs) {
+    localModelValue.value = val;
     if (!val) {
       emit('update:modelValue', null)
       return
@@ -217,7 +220,7 @@ const clickHandler = () => {
 
 <template>
   <a-date-picker
-    v-model:value="localState"
+    :value="localModelValue || localState"
     :bordered="false"
     class="!w-full !px-1 !border-none"
     :class="{ 'nc-null': modelValue === null && showNull }"
@@ -227,6 +230,7 @@ const clickHandler = () => {
     :input-read-only="true"
     :dropdown-class-name="`${randomClass} nc-picker-date ${open ? 'active' : ''}`"
     :open="isOpen"
+    @update:value="localState = $event"
     @click="clickHandler"
     @update:open="updateOpen"
   >

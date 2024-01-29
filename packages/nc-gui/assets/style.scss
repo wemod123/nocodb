@@ -67,7 +67,7 @@ main {
 }
 
 .nc-scrollbar-md {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin !important;
 
@@ -119,7 +119,7 @@ main {
 }
 
 .nc-scrollbar-dark-md {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin !important;
 
