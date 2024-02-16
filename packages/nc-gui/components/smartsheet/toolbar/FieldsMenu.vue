@@ -146,7 +146,7 @@
         .map((field) => {
           return {
             value: field.fk_column_id,
-            label: field.title,
+            label: field?.title,
           }
         }) ?? []
     return [{ value: null, label: 'No Image' }, ...filterFields]
@@ -442,7 +442,7 @@
 
         <div class="flex flex-col my-1.5 nc-scrollbar-md max-h-[47.5vh] pr-3">
           <div class="nc-fields-list">
-            <div v-if="!fields?.filter((el) => el.title.toLowerCase().includes(filterQuery.toLowerCase())).length"
+            <div v-if="!fields?.filter((el) => el?.title.toLowerCase().includes(filterQuery.toLowerCase())).length"
                  class="px-0.5 py-2 text-gray-500">
               {{ $t('title.noFieldsFound') }}
             </div>
@@ -451,12 +451,12 @@
                        @change="onMove($event)">
               <template #item="{ element: field }">
                 <div v-if="filteredFieldList
-                  .filter((el) => el !== gridDisplayValueField && el.title.toLowerCase().includes(filterQuery.toLowerCase()))
+                  .filter((el) => el !== gridDisplayValueField && el?.title.toLowerCase().includes(filterQuery.toLowerCase()))
                   .includes(field)
                   "
                      :key="field.id"
                      class="px-2 py-2 flex flex-row items-center first:border-t-1 border-b-1 border-x-1 first:rounded-t-lg last:rounded-b-lg border-gray-200"
-                     :data-testid="`nc-fields-menu-${field.title}`"
+                     :data-testid="`nc-fields-menu-${field?.title}`"
                      @click.stop>
                   <component :is="iconMap.drag"
                              class="cursor-move !h-3.75 text-gray-600 mr-1" />
@@ -469,11 +469,11 @@
                          ">
                     <div class="flex items-center -ml-0.75">
                       <component :is="getIcon(metaColumnById[field.fk_column_id])" />
-                      <NcTooltip :disabled="field.title.length < 30">
+                      <NcTooltip :disabled="field?.length < 30">
                         <template #title>
-                          {{ field.title }}
+                          {{ field?.title }}
                         </template>
-                        <span class="mx-0.65 break-all line-clamp-1">{{ field.title }}</span>
+                        <span class="mx-0.65 break-all line-clamp-1">{{ field?.title }}</span>
                       </NcTooltip>
                     </div>
 
@@ -487,14 +487,14 @@
               </template>
               <template v-if="activeView?.type === ViewTypes.GRID"
                         #header>
-                <div v-if="gridDisplayValueField && filteredFieldList[0].title.toLowerCase().includes(filterQuery.toLowerCase())"
+                <div v-if="gridDisplayValueField && filteredFieldList[0]?.title.toLowerCase().includes(filterQuery.toLowerCase())"
                      :key="`pv-${gridDisplayValueField.id}`"
                      class="pl-7.5 pr-2.1 py-2 flex flex-row items-center border-1 border-gray-200"
                      :class="{
                        'rounded-t-lg': filteredFieldList.length > 1,
                        'rounded-lg': filteredFieldList.length === 1,
                      }"
-                     :data-testid="`nc-fields-menu-${gridDisplayValueField.title}`"
+                     :data-testid="`nc-fields-menu-${gridDisplayValueField?.title}`"
                      @click.stop>
                   <div class="flex flex-row items-center justify-between w-full">
                     <div class="flex items">
@@ -507,7 +507,7 @@
                       <div class="flex items-center">
                         <component :is="getIcon(metaColumnById[filteredFieldList[0].fk_column_id as string])" />
 
-                        <span>{{ filteredFieldList[0].title }}</span>
+                        <span>{{ filteredFieldList[0]?.title }}</span>
                       </div>
                     </div>
                     <NcSwitch v-e="['a:fields:show-hide']"

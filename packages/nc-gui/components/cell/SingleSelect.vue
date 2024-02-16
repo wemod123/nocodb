@@ -217,7 +217,14 @@ const onKeydown = (e: KeyboardEvent) => {
   }
 }
 
-const onSelect = () => {
+// const onSelect = (v) => {
+//   tempSelectedOptState.value = v
+//   isOpen.value = false
+//   isEditable.value = false
+// }
+
+const onChange = (v) =>{
+  tempSelectedOptState.value = v ?? null
   isOpen.value = false
   isEditable.value = false
 }
@@ -293,7 +300,7 @@ const selectedOpt = computed(() => {
       :show-arrow="hasEditRoles && !readOnly && active && vModel === null"
       :dropdown-class-name="`nc-dropdown-single-select-cell ${isOpen && active ? 'active' : ''}`"
       :show-search="!isMobileMode && isOpen && active"
-      @select="onSelect"
+      @change="onChange"
       @keydown="onKeydown($event)"
       @search="search"
     >

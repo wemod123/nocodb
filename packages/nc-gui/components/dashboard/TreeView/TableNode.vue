@@ -151,6 +151,59 @@ const copyId = (id: string = '') => {
     () => { }
   )
 }
+
+const openSetMetaDialog = () => {
+    const isOpenSetMetaDialog = ref(true)
+    const { close } = useDialog(resolveComponent('DlgFolderTableSetMeta'), {
+      'modelValue': isOpenSetMetaDialog,
+      'tableMeta': table,
+      'onUpdate:modelValue': closeDialog,
+    })
+
+    function closeDialog() {
+      isOpenSetMetaDialog.value = false;
+
+      close(200);
+    }
+  }
+
+  const openColumnKeyMapsDlg = () => {
+    const isOpenColumnKeyMapConf = ref(true)
+    const { close } = useDialog(resolveComponent('DlgFoldermetaConf'), {
+      'modelValue': isOpenColumnKeyMapConf,
+      'table': table,
+      'onUpdate:modelValue': closeDialog,
+    })
+
+    function closeDialog() {
+      isOpenColumnKeyMapConf.value = false;
+
+      close(200);
+    }
+  }
+
+  const { getMeta } = useMetas()
+  
+  const setMarkAsSys = async (table: TableType) => {
+    try {
+      table.meta = {
+        ...((table.meta as object) || {}),
+        markAsSys: !Boolean(table.meta?.markAsSys),
+      }
+
+      tables.value.splice(tables.value.indexOf(table), 1, { ...table })
+
+      await $api.dbTable.update(table.id as string, {
+        meta: table.meta
+      })
+
+      // Force Update Meta
+      await getMeta(table.id!, true)
+
+    } catch (e) {
+      message.error(await extractSdkResponseErrorMsg(e))
+    }
+  }
 </script>
 
 <template>
@@ -288,6 +341,30 @@ const copyId = (id: string = '') => {
                   </NcMenuItem>
 
                   <a-divider class="!my-1" />
+
+                  <NcMenuItem @click="setMarkAsSys(table)">
+                    <div class="flex gap-2 items-center">
+                      {{ table.meta?.markAsSys ? '🟠' : '🔘' }}
+                      {{ $t(`title.${table.meta?.markAsSys ? 'unMarkSysTable' : 'markAsSysTable'}`) }}
+                    </div>
+                  </NcMenuItem>
+
+                  <NcMenuItem @click="openSetMetaDialog(table)">
+                    <div>
+                      <div class="flex gap-2 leading-4 items-center">
+                        🗝️ {{ $t("title.updateSystemTableKey") }}
+                      </div>
+                      <div class="text-xs leading-4 pl-6 text-slate-400">{{ table.meta?.sysTableKey || '-' }}</div>
+                    </div>
+                  </NcMenuItem>
+
+                  <NcMenuItem @click="openColumnKeyMapsDlg(table)">
+                    <div>
+                      <div class="flex gap-2 leading-4 items-center">
+                        🔁 {{ $t("title.columnKeyMaps") }}
+                      </div>
+                    </div>
+                  </NcMenuItem>
 
                   <NcMenuItem
                     v-if="isUIAllowed('tableRename', { roles: baseRole })"

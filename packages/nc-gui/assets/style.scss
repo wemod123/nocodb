@@ -121,17 +121,18 @@ main {
 .nc-scrollbar-dark-md {
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-width: thin !important;
+  // scrollbar-width: thin !important;
 
 
   &::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
   }
 
   &::-webkit-scrollbar-track {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    @apply bg-gray-100;
   }
   &::-webkit-scrollbar-track-piece {
     width: 0px;
@@ -140,10 +141,10 @@ main {
     @apply bg-transparent;
   }
   &::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 4px!important;
+    border-radius: 4px!important;
 
-    width: 4px;
+    width: 4px!important;
     @apply bg-gray-300;
   }
   &::-webkit-scrollbar-thumb:hover {
