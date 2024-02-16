@@ -222,9 +222,9 @@ const onKeydown = (e: KeyboardEvent) => {
 //   isEditable.value = false
 // }
 
-const localValue = ref();
+const localValue = ref()
 
-const onChange = (v: string | null) =>{
+const onChange = (v: string | null) => {
   tempSelectedOptState.value = v || null;
   localValue.value = v || ''
   emit('update:modelValue', v || null)
@@ -267,7 +267,8 @@ const handleClose = (e: MouseEvent) => {
 useEventListener(document, 'click', handleClose, true)
 
 const selectedOpt = computed(() => {
-  return options.value.find((o) => o.value === (localValue.value !== undefined ? localValue.value : false) || vModel.value || o.value === vModel.value?.trim())
+  const fValue = localValue.value !== undefined ? localValue.value : vModel.value
+  return options.value.find((o) => o.value === fValue || o.value === fValue?.trim())
 })
 </script>
 

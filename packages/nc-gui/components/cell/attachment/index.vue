@@ -282,7 +282,7 @@ const onImageClick = (item: any) => {
       </div>
 
       <div
-        v-if="active || (isForm && visibleItems.length)"
+        v-if="!isReadonly && (active || (isForm && visibleItems.length))"
         class="xs:hidden h-6 w-5 group cursor-pointer flex gap-1 items-center rounded border-none p-1 hover:(bg-primary bg-opacity-10)"
       >
         <component :is="iconMap.reload" v-if="isLoading" :class="{ 'animate-infinite animate-spin': isLoading }" />
