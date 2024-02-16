@@ -126,7 +126,7 @@ const vModel = computed({
     if (isOptionMissing.value && val.length && val[val.length - 1] === searchVal.value) {
       return addIfMissingAndSave()
     }
-    emit('update:modelValue', val.length === 0 ? null : val.join(','))
+    // emit('update:modelValue', val.length === 0 ? null : val.join(','))
   },
 })
 
@@ -333,7 +333,7 @@ const handleClose = (e: MouseEvent) => {
 useEventListener(document, 'click', handleClose, true)
 
 const selectedOpts = computed(() => {
-  return vModel.value.reduce<SelectOptionType[]>((selectedOptions, option) => {
+  return (localValue.value || vModel.value).reduce<SelectOptionType[]>((selectedOptions, option) => {
     const selectedOption = options.value.find((o) => o.value === option)
     if (selectedOption) {
       selectedOptions.push(selectedOption)
@@ -341,6 +341,13 @@ const selectedOpts = computed(() => {
     return selectedOptions
   }, [])
 })
+
+const localValue = ref()
+
+const onChange = (v) =>{
+  emit('update:modelValue', v.length === 0 ? null : v.join(','));
+  localValue.value = v
+}
 </script>
 
 <template>
@@ -376,7 +383,7 @@ const selectedOpts = computed(() => {
     <a-select
       v-else
       ref="aselect"
-      v-model:value="vModel"
+      :value="localValue || vModel"
       mode="multiple"
       class="w-full overflow-hidden"
       :placeholder="isEditColumn ? $t('labels.optional') : ''"
@@ -389,6 +396,7 @@ const selectedOpts = computed(() => {
       :class="{ 'caret-transparent': !hasEditRoles }"
       :dropdown-class-name="`nc-dropdown-multi-select-cell ${isOpen ? 'active' : ''}`"
       @search="search"
+      @change="onChange"
       @keydown.stop
     >
       <template #suffixIcon>

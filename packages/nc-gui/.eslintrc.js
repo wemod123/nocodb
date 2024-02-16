@@ -8,7 +8,13 @@ const baseRules = {
     'error',
     { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
   ],
-  'prettier/prettier': ['error', {}, { usePrettierrc: false }],
+  'prettier/prettier': [
+    'error',
+    {
+      endOfLine: 'auto',
+      indent: 'off',
+    },
+  ],
 }
 
 module.exports = {

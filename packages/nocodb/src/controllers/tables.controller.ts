@@ -42,7 +42,7 @@ export class TablesController {
         sourceId,
         includeM2M: includeM2M === 'true',
         roles: extractRolesObj(req.user.base_roles),
-        isSuper: req.user?.roles?.super === true
+        isSuper: req.user?.roles?.super === true,
       }),
     );
   }
@@ -77,6 +77,34 @@ export class TablesController {
     const table = await this.tablesService.getTableWithAccessibleViews({
       tableId: req.params.tableId,
       user: req.user,
+    });
+
+    return table;
+  }
+
+  @Get(['/api/v1/db/meta/tables/conf/b/:baseId/s/:sourceId/t/:tableName'])
+  @Acl('tableGet')
+  async getConfTable(
+    @Param('baseId') baseId: string,
+    @Param('sourceId') sourceId: string,
+    @Param('tableName') tableName: string,
+  ) {
+    const table = await this.tablesService.getConfBaseTableByName({
+      baseId,
+      sourceId,
+      tableName,
+    });
+
+    return table;
+  }
+
+  @Get(['/api/v1/db/meta/tables/conf/QrPYZWnu/DAmVCTSX/xHpKZ80eKh/:tableName'])
+  @Acl('tableGet')
+  async getConfTableWithHash(@Param('tableName') tableName: string) {
+    const table = await this.tablesService.getConfBaseTableByName({
+      baseId: process.env.NC_CORE_CONF_BASE_ID,
+      sourceId: process.env.NC_CORE_CONF_SOURCE_ID,
+      tableName,
     });
 
     return table;

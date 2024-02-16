@@ -33,6 +33,12 @@ module.exports = {
     WebAssembly: true,
   },
   rules: {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      },
+    ],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'eslint-comments/disable-enable-pair': [
       'error',

@@ -75,7 +75,7 @@ const { isPg, isMysql } = useBase()
 
 // a variable to keep newly created option value
 // temporary until it's add the option to column meta
-const tempSelectedOptState = ref<string>()
+const tempSelectedOptState = ref<string | null>()
 
 const isNewOptionCreateEnabled = computed(() => !isPublic.value && !disableOptionCreation && isUIAllowed('fieldEdit'))
 
@@ -108,7 +108,6 @@ const vModel = computed({
       tempSelectedOptState.value = val
       return addIfMissingAndSave()
     }
-    emit('update:modelValue', val || null)
   },
 })
 
@@ -223,8 +222,12 @@ const onKeydown = (e: KeyboardEvent) => {
 //   isEditable.value = false
 // }
 
-const onChange = (v) =>{
-  tempSelectedOptState.value = v ?? null
+const localValue = ref();
+
+const onChange = (v: string | null) =>{
+  tempSelectedOptState.value = v || null;
+  localValue.value = v || ''
+  emit('update:modelValue', v || null)
   isOpen.value = false
   isEditable.value = false
 }
@@ -264,7 +267,7 @@ const handleClose = (e: MouseEvent) => {
 useEventListener(document, 'click', handleClose, true)
 
 const selectedOpt = computed(() => {
-  return options.value.find((o) => o.value === vModel.value || o.value === vModel.value?.trim())
+  return options.value.find((o) => o.value === (localValue.value !== undefined ? localValue.value : false) || vModel.value || o.value === vModel.value?.trim())
 })
 </script>
 
@@ -289,7 +292,7 @@ const selectedOpt = computed(() => {
     <a-select
       v-else
       ref="aselect"
-      v-model:value="vModel"
+      :value="localValue !== undefined ? localValue : vModel"
       class="w-full overflow-hidden xs:min-h-12"
       :class="{ 'caret-transparent': !hasEditRoles }"
       :placeholder="isEditColumn ? $t('labels.optional') : ''"

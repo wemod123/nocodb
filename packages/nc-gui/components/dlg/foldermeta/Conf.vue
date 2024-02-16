@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/indent */
 <script setup lang="ts">
   import type { TableType } from 'nocodb-sdk'
   import {
@@ -20,7 +20,7 @@
 
   const loading = ref(false)
 
-  const { $api } = useNuxtApp()
+  const { $api, $state } = useNuxtApp()
 
   const dialogShow = useVModel(props, 'modelValue', emits)
 
@@ -61,10 +61,20 @@
     try {
       const tableKey = table?.meta?.sysTableKey;
       const qStr = forceRefresh ? '?f=Y' : '';
-      tableColumnsConfRef.value = await $fetch(`${entryConfig.value?.services?.inteApis?.baseURL}${entryConfig.value?.services?.inteApis?.columnsMapRefPath}/${tableKey}${qStr}`, {
-        method: 'GET',
-        headers: { 'Authorization': entryConfig.value?.entryToken?.replace('__token__', '')! },
-      }).then()
+      if (entryConfig.value?.services?.inteApis?.baseURL) {
+
+        tableColumnsConfRef.value = await $fetch(`${entryConfig.value?.services?.inteApis?.baseURL}${entryConfig.value?.services?.inteApis?.columnsMapRefPath}/${tableKey}${qStr}`, {
+          method: 'GET',
+          headers: { 'Authorization': entryConfig.value?.entryToken?.replace('__token__', '')! },
+        })
+
+      } else {
+        tableColumnsConfRef.value = await $fetch(`/api/v1/db/meta/tables/conf/QrPYZWnu/DAmVCTSX/xHpKZ80eKh/${tableKey}`, {
+          baseURL: $api.instance.defaults.baseURL,
+          method: 'GET',
+          headers: { 'xc-auth': $state.token.value as string }
+        })
+      }
     } catch (err) {
     }
   }

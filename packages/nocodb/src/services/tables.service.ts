@@ -37,7 +37,7 @@ export class TablesService {
     protected readonly metaDiffService: MetaDiffsService,
     protected readonly appHooksService: AppHooksService,
     protected readonly columnsService: ColumnsService,
-  ) { }
+  ) {}
 
   async tableUpdate(param: {
     tableId: any;
@@ -329,7 +329,7 @@ export class TablesService {
     sourceId: string;
     includeM2M?: boolean;
     roles: Record<string, boolean>;
-    isSuper?: boolean
+    isSuper?: boolean;
   }) {
     const viewList = await this.xcVisibilityMetaGet(param.baseId);
 
@@ -357,9 +357,11 @@ export class TablesService {
       ? tableList
       : (tableList.filter((t) => !t.mm) as Model[]);
 
-    return param.isSuper ? resList : (
-      resList.filter((t) => !t.table_name.includes('__conf_x_meta__RMPrbsLJAa')) as Model[]
-    );
+    return param.isSuper
+      ? resList
+      : (resList.filter(
+          (t) => !t.table_name.includes('__conf_x_meta__RMPrbsLJAa'),
+        ) as Model[]);
   }
 
   async tableCreate(param: {
@@ -551,5 +553,32 @@ export class TablesService {
     });
 
     return result;
+  }
+
+  async getConfBaseTableByName(param: {
+    baseId: string;
+    sourceId: string;
+    tableName: string;
+  }) {
+    if (!(param.baseId && param.sourceId && param.tableName)) {
+      return null;
+    }
+    // const base = await Base.getWithInfo(param.baseId);
+    const table = await Model.getByIdOrName({
+      base_id: param.baseId,
+      source_id: param.sourceId,
+      table_name: param.tableName,
+    });
+
+    const tableWInfo =
+      table &&
+      (await Model.getWithInfo({
+        id: table.id,
+      }));
+
+    return tableWInfo?.columns?.reduce((cumu: any, column) => {
+      cumu[column.title] = column.uidt;
+      return cumu;
+    }, {});
   }
 }
