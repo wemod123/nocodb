@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 <script setup lang="ts">
+  import pickBy from 'lodash/pickBy'
+  import some from 'lodash/some'
   import type { TableType } from 'nocodb-sdk'
   import {
     useNuxtApp,
@@ -19,6 +21,7 @@
   const { metas, getMeta } = useMetas()
 
   const loading = ref(false)
+  const isError = ref(false)
 
   const { $api, $state } = useNuxtApp()
 
@@ -39,14 +42,27 @@
   const tableColumnsKeyMap = ref<{ [key: string]: string }>({})
 
   const getTableColumnsKeyMap = async () => {
-    const { base_id, source_id, id } = metas.value[table.id];
+    if (!metas.value?.[table?.id]) {
+      isError.value = true;
+      return
+    }
+    isError.value = false;
+    const { base_id, source_id, id } = metas.value?.[table.id];
     if (!(base_id && source_id && id)) { return }
-    tableColumnsKeyMap.value = await $api.instance.get(`/api/v1/user/store/projects/${base_id}/category/${source_id}_tableColumnsMap/key/${table.id}`)
+    const getMapConf = await $api.instance.get(`/api/v1/user/store/projects/${base_id}/category/${source_id}_tableColumnsMap/key/${table.id}`)
       .then(v => v.data).catch(err => { })
+
+    tableColumnsKeyMap.value = pickBy(getMapConf, (v: string, k: string) => {
+      return some(metas.value?.[table.id]?.columns, { id: k })
+    })
   }
 
   const setTableColumnsKeyMap = async () => {
-    const { base_id, source_id, id } = metas.value[table.id];
+    if (!metas.value?.[table?.id]) {
+      return
+    }
+
+    const { base_id, source_id, id } = metas.value?.[table.id];
     if (!(base_id && source_id && id)) { return }
     await $api.instance.patch(
       `/api/v1/user/store/projects/${base_id}/category/${source_id}_tableColumnsMap/key/${table.id}`,
@@ -132,6 +148,10 @@
         <div v-if="loading"
              class="py-30 w-120 flex justify-center">
           <a-spin />
+        </div>
+        <div v-else-if="isError"
+             class="py-30 w-120 flex justify-center">
+          Get Config Meta Error, pelase check table confKey
         </div>
         <a-table v-else-if="!!metas[table.id]"
                  :columns="columns"

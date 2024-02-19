@@ -203,25 +203,6 @@ onMounted(() => {
         </NcMenu>
       </template>
     </NcDropdown>
-
-    <template v-if="isMobileMode"></template>
-    <div v-else-if="appInfo.ee" class="text-gray-500 text-xs pl-3">© 2023 NocoDB. Inc</div>
-    <div v-else-if="isMounted" class="flex flex-row justify-between pt-1 truncate">
-      <div class="flex flex-wrap mb-1">
-        <GithubButton
-          class="px-2 mb-1"
-          href="https://github.com/nocodb/nocodb"
-          data-icon="octicon-star"
-          data-show-count="true"
-          data-size="large"
-        >
-          Star
-        </GithubButton>
-        <div>
-          <GeneralJoinCloud class="color-transition px-2 text-gray-500 cursor-pointer select-none hover:text-accent" />
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
