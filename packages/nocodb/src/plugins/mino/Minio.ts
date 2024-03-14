@@ -37,7 +37,8 @@ export default class Minio implements IStorageAdapterV2 {
         .putObject(this.input?.bucket, key, fileStream, metaData)
         .then(() => {
           resolve(
-            `http${this.input.useSSL ? 's' : ''}://${this.input.endPoint}:${this.input.port
+            `http${this.input.useSSL ? 's' : ''}://${this.input.endPoint}:${
+              this.input.port
             }/${this.input.bucket}/${key}`,
           );
         })
@@ -64,15 +65,22 @@ export default class Minio implements IStorageAdapterV2 {
   }
 
   public async getSignedUrl(url: string, expiresInSeconds = 7200) {
-    const prefix = url.split(`/${this.input.bucket}/`)[1];
+    const [_host, bucket, ...theObject] = url.replace('://', '').split('/');
+    // const prefix = url.split(`/${this.input.bucket}/`)[1];
     return new Promise((resolve) => {
-      this.minioClient.presignedUrl('GET', this.input.bucket, prefix, expiresInSeconds, function (err, presignedUrl) {
-        if (err) {
-          return resolve(url)
-        }
-        resolve(presignedUrl)
-      })
-    })
+      this.minioClient.presignedUrl(
+        'GET',
+        bucket,
+        theObject.join('/'),
+        expiresInSeconds,
+        function (err, presignedUrl) {
+          if (err) {
+            return resolve(url);
+          }
+          resolve(presignedUrl);
+        },
+      );
+    });
   }
 
   public async init(): Promise<any> {
@@ -130,7 +138,8 @@ export default class Minio implements IStorageAdapterV2 {
             .putObject(this.input?.bucket, key, response.data, metaData)
             .then(() => {
               resolve(
-                `http${this.input.useSSL ? 's' : ''}://${this.input.endPoint}:${this.input.port
+                `http${this.input.useSSL ? 's' : ''}://${this.input.endPoint}:${
+                  this.input.port
                 }/${this.input.bucket}/${key}`,
               );
             })
