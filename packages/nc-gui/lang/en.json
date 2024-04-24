@@ -369,6 +369,10 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "noCoverImage": "No cover image",
+    "selectFieldToStack": "Select a field to stack records by",
+    "uncategorized": "Uncategorized",
+    "workSpaceTables": "Workspace tables",
     "token": "Token",
     "robotApiToken": "Robot API Token",
     "imageStyle_contain": "Image-Contain",

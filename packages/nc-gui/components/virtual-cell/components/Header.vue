@@ -56,8 +56,8 @@ const relationMeta = computed(() => {
     <div v-if="!isMobileMode" class="flex text-base font-bold justify-start items-center min-w-36">
       {{ header ?? '' }}
     </div>
-    <div class="flex flex-row sm:w-[calc(100%-16rem)] xs:w-full items-center justify-center gap-2 xs:(h-full)">
-      <div class="flex sm:justify-end w-[calc(50%-1.5rem)] xs:(w-[calc(50%-1.5rem)] h-full)">
+    <div class="flex flex-row w-full items-center justify-center gap-2 xs:(h-full)">
+      <div class="flex justify-end h-full)">
         <div
           class="flex max-w-full xs:w-full flex-shrink-0 xs:(h-full) rounded-md gap-1 text-gray-700 items-center bg-gray-100 px-2 py-1"
         >
@@ -100,7 +100,7 @@ const relationMeta = computed(() => {
         </div>
       </div>
     </div>
-    <div v-if="!isMobileMode" class="flex flex-row justify-end w-36">
+    <div v-if="false && !isMobileMode" class="flex flex-row justify-end w-36">
       <NcTooltip class="z-10" placement="bottom">
         <template #title>
           <div class="p-1">

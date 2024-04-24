@@ -21,10 +21,10 @@ export const useSidebarStore = defineStore('sidebarStore', () => {
 
   const isRightSidebarOpen = ref(true)
 
-  const leftSidebarWidthPercent = ref(isViewPortMobile() ? 0 : 20)
+  const leftSidebarWidthPercent = ref(isViewPortMobile() ? 0 : 18)
 
   const leftSideBarSize = ref({
-    old: 20,
+    old: 18,
     current: leftSidebarWidthPercent.value,
   })
 

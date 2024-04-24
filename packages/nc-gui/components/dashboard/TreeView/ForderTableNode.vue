@@ -40,7 +40,7 @@
   const tabStore = useTabs()
   const { updateTab } = tabStore
 
-  const { $e, $api } = useNuxtApp()
+  const { $e, $api, $state } = useNuxtApp()
 
   useTableNew({
     baseId: base.value.id!,
@@ -118,9 +118,16 @@
 
       updateTab({ id: table.id }, { meta: table.meta })
 
-      await $api.dbTable.update(table.id as string, {
-        meta: table.meta,
-      })
+      // await $api.dbTable.update(table.id as string, {
+      //   meta: table.meta,
+      // })
+
+      await $fetch(`/api/v2/meta/tables/${table.id}/patch-meta`, {
+        baseURL: $api.instance.defaults.baseURL,
+        method: 'PATCH',
+        body: { meta: table.meta },
+        headers: { 'xc-auth': $state.token.value as string }
+      }) as string;
 
       $e('a:table:icon:navdraw', { icon })
     } catch (e) {
@@ -212,6 +219,8 @@
       message.error(await extractSdkResponseErrorMsg(e))
     }
   }
+
+  console.log('///////', activeView.value)
 </script>
 
 <template>
@@ -238,14 +247,15 @@
           <NcButton v-e="['c:table:toggle-expand']"
                     type="text"
                     size="xxsmall"
-                    class="nc-sidebar-node-btn nc-sidebar-expand"
+                    class="nc-sidebar-node-btn nc-sidebar-expand hover:!bg-slate-300"
+                    :class="activeView?.fk_model_id === table.id ? '!bg-slate-200 !text-gray-900' : ''"
                     @click.stop="onExpand">
             <GeneralLoader v-if="table.isViewsLoading"
                            class="flex w-4 h-4 !text-gray-600 !mt-0.75" />
             <GeneralIcon v-else
                          icon="triangleFill"
                          class="group-hover:opacity-100 opacity-50 cursor-pointer transform transition-transform duration-500 h-2 w-2 rotate-90"
-                         :class="{ '!rotate-180': isExpanded }" />
+                         :class="{ '!rotate-180 !opacity-100 !text-purple-400': isExpanded }" />
           </NcButton>
 
           <div class="flex w-auto pl-0.5"
@@ -434,6 +444,23 @@
 <style scoped lang="scss">
 .nc-tree-item {
   @apply relative after:(pointer-events-none content-[''] rounded absolute top-0 left-0 w-full h-full right-0 !bg-current transition duration-200 opacity-0);
+}
+
+.nc-tree-item.nc-table-node-wrapper {
+  &:before {
+    content: "";
+    width: 2px;
+    left: 30px;
+    top: 30px;
+    z-index: 99;
+    position: absolute;
+    height: calc(100% - 48px);
+    display: block !important;
+    background-color: #DFE4EE;
+    background-size: 41px 41px;
+    background-position: 0px 32px;
+    background-image: repeating-linear-gradient(0deg, #9F2AF3, #9F2AF3 4px, #DFE4EE 4px, #DFE4EE);
+  }
 }
 
 .nc-tree-item svg {

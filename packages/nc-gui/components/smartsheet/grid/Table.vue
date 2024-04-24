@@ -1359,14 +1359,14 @@ const checkMouseMove = (evt: MouseEvent)=>{
                   }"
                   @click.stop="addColumnDropdown = true"
                 >
-                  <div class="absolute top-0 left-0 h-10.25 border-b-1 border-r-1 border-gray-200 nc-grid-add-edit-column group">
+                  <div class="absolute top-0 left-0 h-[36px] border-b-1 border-r-1 border-gray-200 nc-grid-add-edit-column group">
                     <a-dropdown
                       v-model:visible="addColumnDropdown"
                       :trigger="['click']"
                       overlay-class-name="nc-dropdown-grid-add-column"
                       @visible-change="persistMenu = altModifier"
                     >
-                      <div class="h-full w-[60px] flex items-center justify-center">
+                      <div class="h-[36px] w-[60px] flex items-center justify-center">
                         <GeneralIcon v-if="isEeUI && (altModifier || persistMenu)" icon="magic" class="text-sm text-orange-400" />
                         <component :is="iconMap.plus" class="text-base nc-column-add text-gray-500 !group-hover:text-black" />
                       </div>
@@ -1475,7 +1475,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                   <tr
                     v-show="!showSkeleton"
                     class="nc-grid-row !xs:h-14"
-                    :style="{ height: rowHeight ? `${rowHeight * 1.8}rem` : `1.8rem` }"
+                    :style="{ height: rowHeight ? `${rowHeight * 1.8}rem` : `1.5rem` }"
                     :data-testid="`grid-row-${rowIndex}`"
                   >
                     <td
@@ -1619,7 +1619,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                 @click="addEmptyRow()"
               >
                 <div
-                  class="h-10.5 border-b-1 border-gray-100 bg-white group-hover:bg-gray-50 absolute left-0 bottom-0 px-2 sticky z-40 w-full flex items-center text-gray-500"
+                  class="h-[36px] border-b-1 border-gray-100 bg-white group-hover:bg-gray-50 absolute left-0 bottom-0 px-2 sticky z-40 w-full flex items-center text-gray-500"
                 >
                   <component
                     :is="iconMap.plus"
@@ -1855,7 +1855,8 @@ const checkMouseMove = (evt: MouseEvent)=>{
         </div>
       </template>
     </LazySmartsheetPagination>
-    <div v-if="showTooltip" class="absolute right-[40%] bottom-15 bg-slate-700 text-slate-50 rounded-lg border-1 px-3 py-2">
+    <div v-if="showTooltip" 
+         class="absolute z-5 right-[40%] bottom-15 bg-slate-700 text-slate-50 rounded-lg border-1 px-3 py-2">
       {{ $t("msg.scrollHMsg") }}
     </div>
   </div>
@@ -1891,8 +1892,8 @@ const checkMouseMove = (evt: MouseEvent)=>{
   td,
   th {
     @apply border-gray-100 border-solid border-r bg-slate-100;
-    min-height: 41px !important;
-    height: 41px !important;
+    min-height: 36px !important;
+    height: 36px !important;
     position: relative;
   }
 

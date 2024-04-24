@@ -104,7 +104,7 @@ const attachments: ComputedRef<Attachment[]> = computed(() => {
         v-else-if="attachment"
         class="h-24 w-24 !min-h-24 !min-w-24 !max-h-24 !max-w-24 !flex flex-row items-center !rounded-l-xl justify-center"
       >
-        <GeneralIcon class="w-full h-full !text-6xl !leading-10 !text-transparent rounded-lg" icon="fileImage" />
+        <GeneralIcon class="w-full h-full !text-6xl !leading-10 !text-transparent rounded-l-xl" icon="fileImage" />
       </div>
 
       <div class="flex flex-col m-[.75rem] gap-1 flex-grow justify-center overflow-hidden">

@@ -122,20 +122,26 @@ const permissionScopes = {
     'baseApiTokenList',
     'baseApiTokenCreate',
     'baseApiTokenDelete',
+    'userListBasicInfo',
+    'tableMetaUpdate',
+    'viewMetaUpdate',
+    'galleryMetaUpdate',
+    'kanbanMetaUpdate',
   ],
 };
 
 const rolePermissions:
   | Record<
-    Exclude<OrgUserRoles, OrgUserRoles.SUPER_ADMIN> | ProjectRoles | 'guest',
-    { include?: Record<string, boolean>; exclude?: Record<string, boolean> }
-  >
+      Exclude<OrgUserRoles, OrgUserRoles.SUPER_ADMIN> | ProjectRoles | 'guest',
+      { include?: Record<string, boolean>; exclude?: Record<string, boolean> }
+    >
   | Record<OrgUserRoles.SUPER_ADMIN, string> = {
   guest: {},
   [OrgUserRoles.SUPER_ADMIN]: '*',
 
   [ProjectRoles.VIEWER]: {
     include: {
+      userListBasicInfo: true,
       formViewGet: true,
       // base
       baseGet: true,
@@ -190,6 +196,10 @@ const rolePermissions:
   },
   [ProjectRoles.EDITOR]: {
     include: {
+      viewMetaUpdate: true,
+      tableMetaUpdate: true,
+      galleryMetaUpdate: true,
+      kanbanMetaUpdate: true,
       hideAllColumns: true,
       showAllColumns: true,
       auditRowUpdate: true,
@@ -217,7 +227,7 @@ const rolePermissions:
       bulkDataDeleteAll: true,
       relationDataRemove: true,
       relationDataAdd: true,
-      filterChildrenList: true
+      filterChildrenList: true,
       // TODO add ACL with base scope
       // upload: true,
       // uploadViaURL: true,
@@ -227,8 +237,8 @@ const rolePermissions:
     exclude: {
       baseCreate: true,
       baseDelete: true,
-      baseUpdate: true
-    }
+      baseUpdate: true,
+    },
   },
   [ProjectRoles.OWNER]: {
     exclude: {
@@ -237,7 +247,7 @@ const rolePermissions:
       pluginRead: true,
       pluginUpdate: true,
       isPluginActive: true,
-      createBase: true
+      createBase: true,
     },
   },
   [OrgUserRoles.VIEWER]: {

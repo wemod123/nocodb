@@ -64,7 +64,6 @@ const rolePermissions = {
       webhook: true,
       fieldEdit: true,
       fieldAdd: true,
-      tableIconEdit: true,
       viewCreateOrEdit: true,
       viewShare: true,
       baseShare: true,
@@ -77,12 +76,13 @@ const rolePermissions = {
   },
   [ProjectRoles.EDITOR]: {
     include: {
+      tableIconEdit: true,
       dataInsert: true,
       dataEdit: true,
       sortSync: true,
       filterSync: true,
       filterChildrenRead: true,
-      viewFieldEdit: true,
+      // viewFieldEdit: true,
       csvTableImport: true,
       excelTableImport: true,
     },

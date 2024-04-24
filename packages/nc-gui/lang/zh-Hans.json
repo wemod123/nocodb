@@ -371,6 +371,10 @@
     "isNotNull": "有值（Not Null）"
   },
   "title": {
+    "noCoverImage": "没有封面图片",
+    "selectFieldToStack": "选择用于分类的字段",
+    "uncategorized": "未分类",
+    "workSpaceTables": "工作空间表格",
     "token": "密钥",
     "robotApiToken": "自动化API密钥",
     "imageStyle_contain": "显示全图",

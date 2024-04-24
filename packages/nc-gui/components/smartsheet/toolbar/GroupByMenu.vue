@@ -58,6 +58,8 @@
     const fields = meta.value?.columns || []
 
     return fields.filter((field) => {
+      if (field.system === 1) return false
+
       if (excludedGroupingUidt.includes(field.uidt as UITypes)) return false
 
       if (field.uidt === UITypes.Lookup) {
@@ -255,7 +257,7 @@
             </NcSelect>
 
             <a-tooltip placement="right"
-                       title="Remove">
+                       :title="$t('general.remove')">
               <NcButton v-e="['c:group-by:remove']"
                         class="nc-group-by-item-remove-btn"
                         size="small"
@@ -287,8 +289,10 @@
   </NcDropdown>
 </template>
 
-<style scoped>.group-by-grid {
+<style scoped>
+.group-by-grid {
   display: grid;
   grid-template-columns: auto 150px 22px;
   @apply gap-[12px];
-}</style>
+}
+</style>

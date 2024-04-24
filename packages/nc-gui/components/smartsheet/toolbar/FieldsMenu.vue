@@ -34,13 +34,15 @@
 
   const rootFields = inject(FieldsInj)
 
-  const { isMobileMode } = useGlobal()
+  const { isMobileMode, entryConfig } = useGlobal()
 
   const isLocked = inject(IsLockedInj, ref(false))
 
   const isPublic = inject(IsPublicInj, ref(false))
 
-  const { $api, $e } = useNuxtApp()
+  const { t } = useI18n();
+
+  const { $api, $e, $state } = useNuxtApp()
 
   const {
     showSystemFields,
@@ -149,7 +151,7 @@
             label: field?.title,
           }
         }) ?? []
-    return [{ value: null, label: 'No Image' }, ...filterFields]
+    return [{ value: null, label: t('title.noCoverImage') }, ...filterFields]
   })
 
   const updateCoverImage = async (val?: string | null) => {
@@ -289,15 +291,15 @@
   useMenuCloseOnEsc(open)
 
   const theViewImageStyle = ref();
-  try { 
-    theViewImageStyle.value = activeView.value?.view?.meta ? 
-    (
-      typeof activeView.value?.view?.meta === 'object' ? 
-        activeView.value?.view?.meta : 
-        JSON.parse(activeView.value?.view?.meta!)
-    ) : {}
-    } catch(e) {}
-    
+  try {
+    theViewImageStyle.value = activeView.value?.view?.meta ?
+      (
+        typeof activeView.value?.view?.meta === 'object' ?
+          activeView.value?.view?.meta :
+          JSON.parse(activeView.value?.view?.meta!)
+      ) : {}
+  } catch (e) { }
+
   const togleCoverImage = async () => {
     if (
       (activeView.value?.type === ViewTypes.GALLERY || activeView.value?.type === ViewTypes.KANBAN) &&
@@ -307,34 +309,62 @@
       (typeof theViewImageStyle.value === 'object')
     ) {
 
-      if(activeView.value?.type === ViewTypes.GALLERY){
-        await $api.dbView.galleryUpdate(activeView.value?.id, {
-          meta: {
-            ...theViewImageStyle.value,
-            imageStyle: theViewImageStyle.value.imageStyle === 'contain' ? 
-              'cover' :
-              'contain',
-          }
+      if (activeView.value?.type === ViewTypes.GALLERY) {
+        // await $api.dbView.galleryUpdate(activeView.value?.id, {
+        //   meta: {
+        //     ...theViewImageStyle.value,
+        //     imageStyle: theViewImageStyle.value.imageStyle === 'contain' ?
+        //       'cover' :
+        //       'contain',
+        //   }
+        // })
+
+        await $fetch(`/api/v2/meta/galleries/${activeView.value?.id}/patch-meta`, {
+          baseURL: $api.instance.defaults.baseURL,
+          method: 'PATCH',
+          body: {
+            meta: {
+              ...theViewImageStyle.value,
+              imageStyle: theViewImageStyle.value.imageStyle === 'contain' ?
+                'cover' :
+                'contain',
+            }
+          },
+          headers: { 'xc-auth': $state.token.value as string }
         })
 
         const upatedView = await $api.dbView.galleryRead(activeView.value?.id)
 
-        if(upatedView?.meta){
+        if (upatedView?.meta) {
           theViewImageStyle.value = JSON.parse(upatedView.meta!)
         }
-      }else if(activeView.value?.type === ViewTypes.KANBAN){
-        await $api.dbView.kanbanUpdate(activeView.value?.id, {
-          meta: {
-            ...theViewImageStyle.value,
-            imageStyle: theViewImageStyle.value.imageStyle === 'contain' ? 
-              'cover' :
-              'contain',
-          }
+      } else if (activeView.value?.type === ViewTypes.KANBAN) {
+        // await $api.dbView.kanbanUpdate(activeView.value?.id, {
+        //   meta: {
+        //     ...theViewImageStyle.value,
+        //     imageStyle: theViewImageStyle.value.imageStyle === 'contain' ?
+        //       'cover' :
+        //       'contain',
+        //   }
+        // })
+
+        await $fetch(`/api/v2/meta/kanbans/${activeView.value?.id}/patch-meta`, {
+          baseURL: $api.instance.defaults.baseURL,
+          method: 'PATCH',
+          body: {
+            meta: {
+              ...theViewImageStyle.value,
+              imageStyle: theViewImageStyle.value.imageStyle === 'contain' ?
+                'cover' :
+                'contain',
+            }
+          },
+          headers: { 'xc-auth': $state.token.value as string }
         })
 
         const upatedView = await $api.dbView.kanbanRead(activeView.value?.id)
 
-        if(upatedView?.meta){
+        if (upatedView?.meta) {
           theViewImageStyle.value = JSON.parse(upatedView.meta!)
         }
       }
@@ -344,7 +374,7 @@
           tableId: activeView.value.fk_model_id!,
           force: true
         })
-      }, 500);      
+      }, 500);
     }
   }
 </script>
@@ -407,9 +437,9 @@
 
           <div class="flex text-sm items-center select-none">
             <span class="flex-1">{{ $t("title.selectCoverImgField") }}</span>
-            <a-switch :checked-value="theViewImageStyle?.imageStyle === 'contain'" 
+            <a-switch :checked-value="theViewImageStyle?.imageStyle === 'contain'"
                       :checked-children="$t(`title.imageStyle_cover`)"
-                      :class="{'!bg-sky-500': theViewImageStyle?.imageStyle === 'contain'}"
+                      :class="{ '!bg-sky-500': theViewImageStyle?.imageStyle === 'contain' }"
                       :un-checked-children="$t(`title.imageStyle_contain`)"
                       @update:checked="togleCoverImage" />
           </div>
@@ -519,7 +549,8 @@
             </Draggable>
           </div>
         </div>
-        <div class="flex pr-4 mt-1 gap-2">
+        <div v-if="!entryConfig?.entryToken"
+             class="flex pr-4 mt-1 gap-2">
           <NcButton v-if="!filterQuery"
                     type="ghost"
                     size="sm"
@@ -534,15 +565,18 @@
                     @click="showSystemField = !showSystemField">
             {{ showSystemField ? $t('title.hideSystemFields') : $t('activity.showSystemFields') }}
           </NcButton>
+        </div>
       </div>
-    </div>
-  </template>
-</NcDropdown></template>
+    </template>
+  </NcDropdown>
+</template>
 
-<style scoped lang="scss">// :deep(.ant-checkbox-inner) {
+<style scoped lang="scss">
+// :deep(.ant-checkbox-inner) {
 //   @apply transform scale-60;
 // }
 
 // :deep(.ant-checkbox) {
 //   @apply top-auto;
-// }</style>
+// }
+</style>

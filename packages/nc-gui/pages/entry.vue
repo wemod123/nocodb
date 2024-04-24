@@ -22,19 +22,26 @@
     hasError.value = '';
     drySignOut();
 
-    const connection = connectToParent({ methods: {} });
+    const connection = connectToParent({
+      methods: {
+        goToRoute: (path: string, options: any) => navigateTo(path, options),
+      }
+    });
 
     connection.promise.then((parent: any) => {
       parentFrame = parent;
-      parent.event('mounted');
 
       /** Get Embed Config */
       parent.getEmbedConfig()
-        .then(async (params: EntryConfig) => {
+        .then(async (configs: string) => {
+          const params = JSON.parse(configs) as EntryConfig;
+
+          parent.event('mounted');
 
           if (params.lang) {
-            await setI18nLanguage(params.lang)
-            lang.value = params.lang
+            const setLang = params.lang.includes('zh') ? 'zh-Hans' : 'en';
+            await setI18nLanguage(setLang)
+            lang.value = setLang;
           }
 
           if (!(params.entryToken)) {
@@ -49,10 +56,14 @@
               if (token) {
                 signIn(token!, params, parent);
 
-                await navigateTo({
-                  path: '/',
-                  query: route.query,
-                })
+                if (params.scope?.paths && params.scope.paths.length > 0) {
+                  await navigateTo(params.targetRoute || params.scope.paths[0])
+                } else {
+                  await navigateTo({
+                    path: '/',
+                    query: route.query,
+                  })
+                }
 
                 try {
                   localStorage.setItem('nocodb-gui-v2', JSON.stringify({
@@ -65,17 +76,18 @@
               }
 
               parent.event('initialized');
-              
+
             }).catch(err => {
               hasError.value = 'unAuthed';
             })
           }
         })
         .catch((err: Error) => {
+          console.log('error', err)
           hasError.value = err.toString()
         })
         .finally(() => {
-          parentFrame && parentFrame.event('initialized');
+          parentFrame && parentFrame.event('loaded');
         })
     });
   }

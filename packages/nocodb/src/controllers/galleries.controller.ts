@@ -52,6 +52,23 @@ export class GalleriesController {
     });
   }
 
+  @Patch(['/api/v2/meta/galleries/:galleryViewId/patch-meta'])
+  @Acl('galleryMetaUpdate')
+  async galleryMetaUpdate(
+    @Param('galleryViewId') galleryViewId: string,
+    @Body() body: GalleryUpdateReqType,
+
+    @Req() req: Request,
+  ) {
+    return body.meta
+      ? await this.galleriesService.galleryViewUpdate({
+          galleryViewId,
+          gallery: { meta: body.meta } as GalleryUpdateReqType,
+          req,
+        })
+      : 0;
+  }
+
   @Patch([
     '/api/v1/db/meta/galleries/:galleryViewId',
     '/api/v2/meta/galleries/:galleryViewId',

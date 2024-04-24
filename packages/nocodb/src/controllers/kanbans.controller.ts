@@ -51,6 +51,23 @@ export class KanbansController {
     });
   }
 
+  @Patch(['/api/v2/meta/kanbans/:kanbanViewId/patch-meta'])
+  @Acl('kanbanMetaUpdate')
+  async kanbanMetaUpdate(
+    @Param('kanbanViewId') kanbanViewId: string,
+    @Body() body,
+
+    @Req() req: Request,
+  ) {
+    return body.meta
+      ? await this.kanbansService.kanbanViewUpdate({
+          kanbanViewId,
+          kanban: { meta: body.meta },
+          req,
+        })
+      : 0;
+  }
+
   @Patch([
     '/api/v1/db/meta/kanbans/:kanbanViewId',
     '/api/v2/meta/kanbans/:kanbanViewId',

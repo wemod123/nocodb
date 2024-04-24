@@ -2076,6 +2076,9 @@ export interface ProjectUserReqType {
     | 'owner'
     | 'viewer'
     | 'creator';
+  uid?: string;
+  avatar?: string;
+  display_name?: string;
 }
 
 /**

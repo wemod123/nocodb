@@ -28,57 +28,57 @@ import { getProjectRolePower } from '~/utils/roleHelper';
 
 @Injectable()
 export class BaseUsersService {
-  constructor(protected appHooksService: AppHooksService) { }
+  constructor(protected appHooksService: AppHooksService) {}
 
   async getUserCacheStore(param: {
-    baseId: string,
-    userId: string,
-    cacheKey: string
+    baseId: string;
+    userId: string;
+    cacheKey: string;
   }) {
     const cache = await NocoStore.get(
       `{userStore}:${param.baseId}:${param.userId}:${param.cacheKey}`,
-      CacheGetType.TYPE_OBJECT
-    )
+      CacheGetType.TYPE_OBJECT,
+    );
 
-    return cache || {}
+    return cache || {};
   }
 
   async setUserCacheStore(param: {
-    baseId: string,
-    userId: string,
-    cacheKey: string,
-    payload: any
+    baseId: string;
+    userId: string;
+    cacheKey: string;
+    payload: any;
   }) {
     await NocoStore.set(
       `{userStore}:${param.baseId}:${param.userId}:${param.cacheKey}`,
-      param.payload
-    )
-    return 1
+      param.payload,
+    );
+    return 1;
   }
 
   async getUserMetaCacheStore(param: {
-    baseId: string,
-    metaCategory: string,
-    cacheKey: string
+    baseId: string;
+    metaCategory: string;
+    cacheKey: string;
   }) {
     const cache = await NocoStore.get(
       `{userStore}:${param.baseId}:${param.metaCategory}:${param.cacheKey}`,
-      CacheGetType.TYPE_OBJECT
-    )
-    return cache || {}
+      CacheGetType.TYPE_OBJECT,
+    );
+    return cache || {};
   }
 
   async setUserMetaCacheStore(param: {
-    baseId: string,
-    metaCategory: string,
-    cacheKey: string,
-    payload: any
+    baseId: string;
+    metaCategory: string;
+    cacheKey: string;
+    payload: any;
   }) {
     await NocoStore.set(
       `{userStore}:${param.baseId}:${param.metaCategory}:${param.cacheKey}`,
-      param.payload
-    )
-    return 1
+      param.payload,
+    );
+    return 1;
   }
 
   async userList(param: { baseId: string; query: any }) {
@@ -88,12 +88,13 @@ export class BaseUsersService {
       await BaseUser.getUsersList({
         ...param.query,
         base_id: param.baseId,
-        tid: base.title || `#invalid-base#`
+        tid: base.title || `#invalid-base#`,
       }),
       {
         ...param.query,
         count: await BaseUser.getUsersCount({
           base_id: param.baseId,
+          tid: base.title || `#invalid-base#`,
           ...param.query,
         }),
       },
@@ -211,7 +212,10 @@ export class BaseUsersService {
             email,
             roles: OrgUserRoles.VIEWER,
             token_version: randomTokenString(),
-            tid: base.title
+            tid: base.title,
+            uid: param.baseUser?.uid,
+            display_name: param.baseUser?.display_name,
+            avatar: param.baseUser?.avatar,
           });
 
           // add user to base
@@ -262,7 +266,7 @@ export class BaseUsersService {
   async baseUserUpdate(param: {
     userId: string;
     // todo: update swagger
-    baseUser: ProjectUserReqType & { base_id: string, tid?: string };
+    baseUser: ProjectUserReqType & { base_id: string; tid?: string };
     // todo: refactor
     req: any;
     baseId: string;
@@ -441,8 +445,9 @@ export class BaseUsersService {
           to: email,
           subject: 'Verify email',
           html: ejs.render(template, {
-            signupLink: `${req.ncSiteUrl}${Noco.getConfig()?.dashboardPath
-              }#/signup/${token}`,
+            signupLink: `${req.ncSiteUrl}${
+              Noco.getConfig()?.dashboardPath
+            }#/signup/${token}`,
             baseName: req.body?.baseName,
             roles: (req.body?.roles || '')
               .split(',')

@@ -24,6 +24,8 @@
 
   const { isUIAllowed, isSuper } = useRoles()
 
+  const { entryConfig } = useGlobal()
+
   const { $e } = useNuxtApp()
 
   const router = useRouter()
@@ -231,7 +233,9 @@
                         :key="base.id"
                         :base-role="base.project_role || ''"
                         :base="base">
-          <DashboardTreeViewProjectNode v-if="isSuper" />
+          <DashboardSopeViewNav
+                                v-if="entryConfig?.entryToken && entryConfig?.scope && entryConfig.scope?.paths.length > 0" />
+          <DashboardTreeViewProjectNode v-else-if="isSuper" />
           <DashboardTreeViewFolderTree v-else />
         </ProjectWrapper>
       </template>

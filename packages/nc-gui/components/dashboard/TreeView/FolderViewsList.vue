@@ -37,9 +37,9 @@
 
   const { isUIAllowed } = useRoles()
 
-  const { isMobileMode } = useGlobal()
+  const { isMobileMode, entryConfig } = useGlobal()
 
-  const { $e } = useNuxtApp()
+  const { $e, $api, $state } = useNuxtApp()
 
   const { t } = useI18n()
 
@@ -316,8 +316,14 @@
         icon,
       }
 
-      api.dbView.update(view.id as string, {
-        meta: view.meta,
+      // api.dbView.update(view.id as string, {
+      //   meta: view.meta,
+      // })
+      await $fetch(`/api/v2/meta/views/${view.id}/patch-meta`, {
+        baseURL: $api.instance.defaults.baseURL,
+        method: 'PATCH',
+        body: { meta: view.meta },
+        headers: { 'xc-auth': $state.token.value as string }
       })
 
       $e('a:view:icon:sidebar', { icon })

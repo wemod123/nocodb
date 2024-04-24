@@ -110,6 +110,23 @@ export class TablesController {
     return table;
   }
 
+  @Patch(['/api/v2/meta/tables/:tableId/patch-meta'])
+  @Acl('tableMetaUpdate')
+  async tableMetaUpdate(
+    @Param('tableId') tableId: string,
+    @Body() body: TableReqType,
+    @Request() req,
+  ) {
+    await this.tablesService.tableUpdate({
+      tableId: tableId,
+      table: { meta: body.meta } as TableReqType,
+      baseId: req.ncProjectId,
+      user: req.ncProjectId,
+      req,
+    });
+    return { msg: 'ok' };
+  }
+
   @Patch(['/api/v1/db/meta/tables/:tableId', '/api/v2/meta/tables/:tableId'])
   @Acl('tableUpdate')
   async tableUpdate(

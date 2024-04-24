@@ -202,7 +202,7 @@
 </script>
 
 <template>
-  <a-menu-item class="nc-sidebar-node !pl-10.5 !min-h-10 !max-h-10 !mb-0.25 select-none group text-gray-700 !flex !items-center !mt-0 hover:(!bg-slate-200 !text-gray-900) cursor-pointer"
+  <a-menu-item class="nc-sidebar-node nc-sidebar-node-item !pl-10.5 !min-h-10 !max-h-10 !mb-0.25 select-none group text-gray-700 !flex !items-center !mt-0 hover:(!bg-slate-200 !text-gray-900) cursor-pointer"
                :data-testid="`view-sidebar-view-${vModel.alias || vModel.title}`"
                @dblclick.stop="onDblClick"
                @click="onClick">
@@ -251,7 +251,7 @@
       <div class="flex-1" />
 
       <NcTooltip v-if="!isEditing"
-                 class="flex"
+                 class="flex mr-4"
                  placement="topLeft">
         <template #title>
           <div class="pt-1 px-1">
@@ -265,8 +265,15 @@
             <span>{{ $t(`msg.view_${vModel.lock_type}`) }}</span>
           </div>
         </template>
-        <GeneralIcon icon="appStore"
-                     class="text-slate-400 hover:text-primary mr-2 opacity-0 group-hover:opacity-100" />
+        <span class="text-slate-400 hover:text-primary opacity-0 group-hover:opacity-100">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="1.3em"
+               height="1.3em"
+               viewBox="0 0 24 24">
+            <path fill="currentColor"
+                  d="M17 16.88c.56 0 1 .44 1 1s-.44 1-1 1s-1-.45-1-1s.44-1 1-1m0-3c2.73 0 5.06 1.66 6 4c-.94 2.34-3.27 4-6 4s-5.06-1.66-6-4c.94-2.34 3.27-4 6-4m0 1.5a2.5 2.5 0 0 0 0 5a2.5 2.5 0 0 0 0-5M18 3H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5.42c-.16-.32-.3-.66-.42-1c.12-.34.26-.68.42-1H4v-4h6v2.97c.55-.86 1.23-1.6 2-2.21V13h1.15c1.16-.64 2.47-1 3.85-1c1.06 0 2.07.21 3 .59V5c0-1.1-.9-2-2-2m-8 8H4V7h6zm8 0h-6V7h6z" />
+          </svg>
+        </span>
       </NcTooltip>
 
       <template v-if="!isEditing && !isLocked && isUIAllowed('viewCreateOrEdit')">

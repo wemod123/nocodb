@@ -5,7 +5,7 @@ import { iconMap } from '#imports'
 <template>
   <a-dropdown :trigger="['click']" overlay-class-name="nc-dropdown-actions-menu">
     <a-button v-e="['c:actions']" class="nc-actions-menu-btn nc-toolbar-btn">
-      <div class="flex gap-2 items-center">
+      <div class="flex gap-1 items-center">
         <component :is="iconMap.download" class="group-hover:text-accent text-gray-500" />
         <span class="text-capitalize !text-sm font-normal text-gray-500">{{ $t('general.download') }}</span>
         <component :is="iconMap.arrowDown" class="text-grey" />

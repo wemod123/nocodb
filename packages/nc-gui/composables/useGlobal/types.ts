@@ -67,6 +67,8 @@ export interface EntryConfig {
   rs: number
   actorSource?: string
   services: { [key: string]: any }
+  scope?: { paths: string[], sources: string[], bases: string[] }
+  targetRoute?: string
 }
 
 export type State = ToRefs<Omit<StoredState, 'token'>> & {

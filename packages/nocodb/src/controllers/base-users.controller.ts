@@ -22,18 +22,31 @@ import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
 @UseGuards(MetaApiLimiterGuard, GlobalGuard)
 @Controller()
 export class BaseUsersController {
-  constructor(protected readonly baseUsersService: BaseUsersService) { }
+  constructor(protected readonly baseUsersService: BaseUsersService) {}
+
+  @Get(['/api/v2/meta/bases/:baseId/users/basic/info'])
+  @Acl('userListBasicInfo')
+  async userListBasicInfo(
+    @Param('baseId') baseId: string,
+    @Req() req: Request,
+  ) {
+    const users = await this.baseUsersService.userList({
+      baseId,
+      query: req.query,
+    });
+    return users;
+  }
 
   @Get([
     '/api/v1/db/meta/projects/:baseId/users',
     '/api/v2/meta/bases/:baseId/users',
   ])
-  @Acl('userList')
+  @Acl('userListBasicInfo')
   async userList(@Param('baseId') baseId: string, @Req() req: Request) {
     return {
       users: await this.baseUsersService.userList({
         baseId,
-        query: req.query
+        query: req.query,
       }),
     };
   }
@@ -149,12 +162,12 @@ export class BaseUsersController {
   async getUserBaseStoreKv(
     @Param('baseId') baseId: string,
     @Param('cacheKey') cacheKey: string,
-    @Req() req: Request
+    @Req() req: Request,
   ): Promise<any> {
     return await this.baseUsersService.getUserCacheStore({
       baseId,
       userId: req.user.id,
-      cacheKey
+      cacheKey,
     });
   }
 
@@ -169,7 +182,7 @@ export class BaseUsersController {
       baseId,
       userId: req.user.id,
       cacheKey,
-      payload: body
+      payload: body,
     });
   }
 
@@ -182,11 +195,13 @@ export class BaseUsersController {
     return await this.baseUsersService.getUserMetaCacheStore({
       baseId,
       metaCategory,
-      cacheKey
+      cacheKey,
     });
   }
 
-  @Patch(['/api/v1/user/store/projects/:baseId/category/:category/key/:cacheKey'])
+  @Patch([
+    '/api/v1/user/store/projects/:baseId/category/:category/key/:cacheKey',
+  ])
   async setUserStoreMetaCache(
     @Param('baseId') baseId: string,
     @Param('metaCategory') metaCategory: string,
@@ -197,8 +212,7 @@ export class BaseUsersController {
       baseId,
       metaCategory,
       cacheKey,
-      payload: body
+      payload: body,
     });
   }
-
 }

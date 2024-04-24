@@ -80,7 +80,7 @@ export default class BaseUser {
       limit = 25,
       offset = 0,
       query,
-      tid
+      tid,
     }: {
       base_id: string;
       limit: number;
@@ -103,7 +103,7 @@ export default class BaseUser {
         `${MetaTable.USERS}.uid`,
         `${MetaTable.USERS}.tid`,
         `${MetaTable.PROJECT_USERS}.base_id`,
-        `${MetaTable.PROJECT_USERS}.roles as roles`
+        `${MetaTable.PROJECT_USERS}.roles as roles`,
       )
       .offset(offset)
       .limit(limit);
@@ -137,13 +137,19 @@ export default class BaseUser {
     {
       base_id,
       query,
+      tid,
     }: {
       base_id: string;
       query?: string;
+      tid?: string;
     },
     ncMeta = Noco.ncMeta,
   ): Promise<number> {
     const queryBuilder = ncMeta.knex(MetaTable.USERS);
+
+    if (tid) {
+      queryBuilder.where({ tid });
+    }
 
     if (query) {
       queryBuilder.where('email', 'like', `%${query.toLowerCase?.()}%`);

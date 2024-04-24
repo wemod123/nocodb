@@ -177,7 +177,7 @@ const normalizedWidth = computed(() => {
     @resize="(event: any) => onResize(event[0].size)"
   >
     <Pane
-      min-size="15%"
+      min-size="20%"
       :size="mobileNormalizedSidebarSize"
       max-size="40%"
       class="nc-sidebar-splitpane !sm:max-w-94 relative !overflow-visible flex"

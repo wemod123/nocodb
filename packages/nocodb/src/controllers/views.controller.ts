@@ -38,6 +38,22 @@ export class ViewsController {
     );
   }
 
+  @Patch(['/api/v2/meta/views/:viewId/patch-meta'])
+  @Acl('viewMetaUpdate')
+  async viewMetaUpdate(
+    @Param('viewId') viewId: string,
+    @Body() body: ViewUpdateReqType,
+    @Req() req: Request,
+  ) {
+    await this.viewsService.viewUpdate({
+      viewId,
+      view: { meta: body.meta } as ViewUpdateReqType,
+      user: req.user,
+      req,
+    });
+    return { msg: 'ok' };
+  }
+
   @Patch(['/api/v1/db/meta/views/:viewId', '/api/v2/meta/views/:viewId'])
   @Acl('viewUpdate')
   async viewUpdate(
