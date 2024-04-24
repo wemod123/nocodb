@@ -299,6 +299,7 @@ const selectedOpt = computed(() => {
       :placeholder="isEditColumn ? $t('labels.optional') : ''"
       :allow-clear="!column.rqd && editAllowed"
       :bordered="false"
+      :not-found-content="$t('labels.optionsNotSet')"
       :open="isOpen && editAllowed"
       :disabled="readOnly || !editAllowed"
       :show-arrow="hasEditRoles && !readOnly && active && vModel === null"

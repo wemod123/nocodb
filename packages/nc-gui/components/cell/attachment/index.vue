@@ -182,9 +182,9 @@ const onImageClick = (item: any) => {
     ref="attachmentCellRef"
     tabindex="0"
     :style="{
-      height: isForm || isExpandedForm ? undefined : `max(${(rowHeight || 1) * 1.8}rem, 41px)`,
+      height: isForm || isExpandedForm ? undefined : `max(${(rowHeight || 1) * 1.5}rem, 32px)`,
     }"
-    class="nc-attachment-cell relative flex color-transition flex items-center w-full xs:(min-h-12 max-h-32)"
+    class="nc-attachment-cell relative flex color-transition flex items-center w-full xs:(min-h-9 max-h-32)"
     :class="{ 'justify-center': !active, 'justify-between': active }"
   >
     <LazyCellAttachmentCarousel v-if="selectedImage"/>
@@ -205,7 +205,7 @@ const onImageClick = (item: any) => {
     <div
       v-if="!isReadonly"
       :class="{ 'sm:(mx-auto px-4) xs:(w-full min-w-8)': !visibleItems.length }"
-      class="group cursor-pointer py-1 flex gap-1 items-center"
+      class="group cursor-pointer flex gap-1 items-center"
       data-testid="attachment-cell-file-picker-button"
       @click="open"
     >
@@ -240,9 +240,9 @@ const onImageClick = (item: any) => {
       <div
         ref="sortableRef"
         :class="{ 'justify-center': !isExpandedForm && !isGallery && !isKanban }"
-        class="flex cursor-pointer w-full items-center flex-wrap gap-2 py-1.5 px-1 scrollbar-thin-dull overflow-hidden mt-0 items-start"
+        class="flex cursor-pointer w-full items-center flex-wrap gap-2 px-1 scrollbar-thin-dull overflow-hidden mt-0 items-start"
         :style="{
-          maxHeight: isForm || isExpandedForm ? undefined : `max(${(rowHeight || 1) * 1.8}rem, 41px)`,
+          maxHeight: isForm || isExpandedForm ? undefined : `max(${(rowHeight || 1) * 1}rem, 32px)`,
         }"
       >
         <template v-for="(item, i) of visibleItems" :key="item.url || item.title">
@@ -259,7 +259,7 @@ const onImageClick = (item: any) => {
                   :alt="item.title || `#${i}`"
                   class="rounded"
                   :class="{
-                    'h-7.5 w-8.8': rowHeight === 1,
+                    'h-6 w-8.8': rowHeight === 1,
                     'h-11.5 w-12.8': rowHeight === 2,
                     'h-16.8 w-20.8': rowHeight === 4,
                     'h-20.8 !w-30': isForm || isExpandedForm || rowHeight === 6,
@@ -307,7 +307,7 @@ const onImageClick = (item: any) => {
 .nc-cell {
   .nc-attachment-cell {
     .nc-attachment {
-      @apply min-h-[1.8rem] min-w-[1.8rem] !ring-1 !ring-gray-300 !rounded;
+      @apply min-h-[1.5rem] min-w-[1.8rem] !ring-1 !ring-gray-300 !rounded;
     }
 
     .ghost,

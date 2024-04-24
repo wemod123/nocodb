@@ -68,6 +68,7 @@ watch(isLeftSidebarOpen, () => {
 })
 
 function handleMouseMove(e: MouseEvent) {
+  return;
   if (isMobileMode.value) return
   if (!wrapperRef.value) return
   if (sidebarState.value === 'openEnd') return

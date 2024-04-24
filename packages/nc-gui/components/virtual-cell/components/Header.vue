@@ -1,66 +1,66 @@
 <script lang="ts" setup>
-import OnetoOneIcon from '~icons/nc-icons/onetoone'
-import InfoIcon from '~icons/nc-icons/info'
-import FileIcon from '~icons/nc-icons/file'
+  import OnetoOneIcon from '~icons/nc-icons/onetoone'
+  import InfoIcon from '~icons/nc-icons/info'
+  import FileIcon from '~icons/nc-icons/file'
 
-import { iconMap } from '#imports'
+  import { iconMap } from '#imports'
 
-const { relation, relatedTableTitle, displayValue, header, tableTitle } = defineProps<{
-  relation: string
-  header?: string | null
-  tableTitle: string
-  relatedTableTitle: string
-  displayValue?: string
-}>()
+  const { relation, relatedTableTitle, displayValue, header, tableTitle } = defineProps<{
+    relation: string
+    header?: string | null
+    tableTitle: string
+    relatedTableTitle: string
+    displayValue?: string
+  }>()
 
-const { isMobileMode } = useGlobal()
+  const { isMobileMode } = useGlobal()
 
-const { t } = useI18n()
+  const { t, locale } = useI18n()
 
-const relationMeta = computed(() => {
-  if (relation === 'hm') {
-    return {
-      title: t('msg.hm.title'),
-      icon: iconMap.hm,
-      tooltip_desc: t('msg.hm.tooltip_desc'),
-      tooltip_desc2: t('msg.hm.tooltip_desc2'),
+  const relationMeta = computed(() => {
+    if (relation === 'hm') {
+      return {
+        title: t('msg.hm.title'),
+        icon: iconMap.hm,
+        tooltip_desc: t('msg.hm.tooltip_desc'),
+        tooltip_desc2: t('msg.hm.tooltip_desc2'),
+      }
+    } else if (relation === 'mm') {
+      return {
+        title: t('msg.mm.title'),
+        icon: iconMap.mm,
+
+        tooltip_desc: t('msg.mm.tooltip_desc'),
+        tooltip_desc2: t('msg.mm.tooltip_desc2'),
+      }
+    } else if (relation === 'bt') {
+      return {
+        title: t('msg.bt.title'),
+        icon: iconMap.bt,
+        tooltip_desc: t('msg.bt.tooltip_desc'),
+        tooltip_desc2: t('msg.bt.tooltip_desc2'),
+      }
+    } else {
+      return {
+        title: t('msg.oo.title'),
+        icon: OnetoOneIcon,
+        tooltip_desc: t('msg.oo.tooltip_desc'),
+        tooltip_desc2: t('msg.oo.tooltip_desc2'),
+      }
     }
-  } else if (relation === 'mm') {
-    return {
-      title: t('msg.mm.title'),
-      icon: iconMap.mm,
-
-      tooltip_desc: t('msg.mm.tooltip_desc'),
-      tooltip_desc2: t('msg.mm.tooltip_desc2'),
-    }
-  } else if (relation === 'bt') {
-    return {
-      title: t('msg.bt.title'),
-      icon: iconMap.bt,
-      tooltip_desc: t('msg.bt.tooltip_desc'),
-      tooltip_desc2: t('msg.bt.tooltip_desc2'),
-    }
-  } else {
-    return {
-      title: t('msg.oo.title'),
-      icon: OnetoOneIcon,
-      tooltip_desc: t('msg.oo.tooltip_desc'),
-      tooltip_desc2: t('msg.oo.tooltip_desc2'),
-    }
-  }
-})
+  })
 </script>
 
 <template>
   <div class="flex sm:justify-between relative pb-2 items-center">
-    <div v-if="!isMobileMode" class="flex text-base font-bold justify-start items-center min-w-36">
+    <div v-if="!isMobileMode"
+         class="flex text-base font-bold justify-start items-center min-w-36">
       {{ header ?? '' }}
     </div>
     <div class="flex flex-row w-full items-center justify-center gap-2 xs:(h-full)">
       <div class="flex justify-end h-full)">
         <div
-          class="flex max-w-full xs:w-full flex-shrink-0 xs:(h-full) rounded-md gap-1 text-gray-700 items-center bg-gray-100 px-2 py-1"
-        >
+             class="flex max-w-full xs:w-full flex-shrink-0 xs:(h-full) rounded-md gap-1 text-gray-700 items-center bg-gray-100 px-2 py-1">
           <FileIcon class="w-4 h-4 min-w-4" />
           <span class="truncate">
             {{ displayValue }}
@@ -69,43 +69,43 @@ const relationMeta = computed(() => {
       </div>
       <NcTooltip class="flex-shrink-0">
         <template #title> {{ relationMeta.title }} </template>
-        <component
-          :is="relationMeta.icon"
-          class="w-7 h-7 p-1 rounded-md"
-          :class="{
-            '!bg-orange-500': relation === 'hm',
-            '!bg-purple-500': relation === 'mm',
-            '!bg-blue-500': relation === 'bt',
-          }"
-        />
+        <component :is="relationMeta.icon"
+                   class="w-7 h-7 p-1 rounded-md"
+                   :class="{
+                     '!bg-orange-500': relation === 'hm',
+                     '!bg-purple-500': relation === 'mm',
+                     '!bg-blue-500': relation === 'bt',
+                   }" />
       </NcTooltip>
       <div class="flex justify-start xs:w-[calc(50%-1.5rem)] w-[calc(50%-1.5rem)] xs:justify-start">
-        <div
-          class="flex rounded-md max-w-full flex-shrink-0 gap-1 items-center px-2 py-1 xs:w-full overflow-hidden"
-          :class="{
-            '!bg-orange-50 !text-orange-500': relation === 'hm',
-            '!bg-purple-50 !text-purple-500': relation === 'mm',
-            '!bg-blue-50 !text-blue-500': relation === 'bt',
-          }"
-        >
-          <MdiFileDocumentMultipleOutline
-            class="w-4 h-4 min-w-4"
-            :class="{
-              '!text-orange-500': relation === 'hm',
-              '!text-purple-500': relation === 'mm',
-              '!text-blue-500': relation === 'bt',
-            }"
-          />
+        <div class="flex rounded-md max-w-full flex-shrink-0 gap-1 items-center px-2 py-1 xs:w-full overflow-hidden"
+             :class="{
+               '!bg-orange-50 !text-orange-500': relation === 'hm',
+               '!bg-purple-50 !text-purple-500': relation === 'mm',
+               '!bg-blue-50 !text-blue-500': relation === 'bt',
+             }">
+          <MdiFileDocumentMultipleOutline class="w-4 h-4 min-w-4"
+                                          :class="{
+                                            '!text-orange-500': relation === 'hm',
+                                            '!text-purple-500': relation === 'mm',
+                                            '!text-blue-500': relation === 'bt',
+                                          }" />
           <span class="truncate"> {{ relatedTableTitle }} Records </span>
         </div>
       </div>
     </div>
-    <div v-if="false && !isMobileMode" class="flex flex-row justify-end w-36">
-      <NcTooltip class="z-10" placement="bottom">
+    <div v-if="!isMobileMode"
+         class="flex flex-row justify-end w-36">
+      <NcTooltip class="z-10"
+                 placement="bottom">
         <template #title>
           <div class="p-1">
             <h1 class="text-white font-bold">{{ relationMeta.title }}</h1>
-            <div class="text-white">
+            <div v-if="locale === 'zh-Hans'">
+              {{ $t(`msg.${relation}.tooltip_desc3`, { x: tableTitle, y: relatedTableTitle }) }}
+            </div>
+            <div v-else
+                 class="text-white">
               {{ relationMeta.tooltip_desc }}
               <span class="bg-gray-700 px-2 rounded-md">
                 {{ tableTitle }}

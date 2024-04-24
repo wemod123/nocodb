@@ -2066,9 +2066,9 @@ export interface ProjectUserReqType {
    * Base User Email
    * @format email
    */
-  email: string;
+  email?: string;
   /** Base User Role */
-  roles:
+  roles?:
     | 'no-access'
     | 'commenter'
     | 'editor'

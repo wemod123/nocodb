@@ -20668,7 +20668,6 @@
           "avatar": { "type": "string" },
           "display_name": { "type": "string" }
         },
-        "required": ["email", "roles"],
         "x-stoplight": {
           "id": "3bvgqk9tn16ur"
         }

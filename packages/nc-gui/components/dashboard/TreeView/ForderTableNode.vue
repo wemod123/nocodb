@@ -219,8 +219,6 @@
       message.error(await extractSdkResponseErrorMsg(e))
     }
   }
-
-  console.log('///////', activeView.value)
 </script>
 
 <template>

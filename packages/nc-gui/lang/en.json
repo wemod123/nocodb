@@ -535,6 +535,7 @@
     }
   },
   "labels": {
+    "optionsNotSet": "Options not set",
     "tableViewName": "View name",
     "tableEntity": "Table entity",
     "sAtatchments": "'s attachements list",

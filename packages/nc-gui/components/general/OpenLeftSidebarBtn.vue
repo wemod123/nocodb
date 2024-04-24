@@ -27,7 +27,7 @@ const onClick = () => {
       <NcButton
         :type="isMobileMode ? 'secondary' : 'text'"
         :size="isMobileMode ? 'medium' : 'small'"
-        class="nc-sidebar-left-toggle-icon !text-gray-600 !hover:text-gray-800 w-8"
+        class="nc-sidebar-left-toggle-icon !text-gray-600 hover:!text-indigo-500 hover:!bg-slate-200/60 w-8"
         @click="onClick"
       >
         <div class="flex items-center text-inherit">

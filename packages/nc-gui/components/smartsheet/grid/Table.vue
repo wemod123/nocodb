@@ -1475,7 +1475,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                   <tr
                     v-show="!showSkeleton"
                     class="nc-grid-row !xs:h-14"
-                    :style="{ height: rowHeight ? `${rowHeight * 1.8}rem` : `1.5rem` }"
+                    :style="{ height: rowHeight ? `${rowHeight * 1.5}rem` : `1.5rem` }"
                     :data-testid="`grid-row-${rowIndex}`"
                   >
                     <td

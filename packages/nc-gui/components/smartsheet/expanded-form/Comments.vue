@@ -303,7 +303,7 @@ watch(commentInputDomRef, () => {
                 </div>
               </div>
             </div>
-            <div v-dompurify-html="log.details" class="text-sm font-medium"></div>
+            <div v-dompurify-html="log.details" class="text-sm"></div>
           </div>
         </div>
       </div>
