@@ -169,7 +169,7 @@ watch([activeViewTitleOrId, activeTableId], () => {
     <div style="height: calc(100% - var(--topbar-height))">
       <div v-if="openedViewsTab === 'view'" class="flex flex-col h-full flex-1 min-w-0">
         <LazySmartsheetToolbar v-if="!isForm" />
-        <div class="flex flex-row w-full" style="height: calc(100% - var(--topbar-height))">
+        <div class="flex flex-row w-full" style="height: calc(100% - var(--topbar-height) - 4px)">
           <Transition name="layout" mode="out-in">
             <div class="flex flex-1 min-h-0 w-3/4">
               <div class="h-full flex-1 min-w-0 min-h-0 bg-white">

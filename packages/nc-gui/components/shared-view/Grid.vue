@@ -60,7 +60,7 @@
 </script>
 
 <template>
-  <div class="nc-container flex flex-col h-full px-4 lg:px-8 xl:px-12 !pb-5 bg-slate-200 rounded-lg">
+  <div class="nc-container flex flex-col h-full px-4 lg:px-8 xl:px-12 !pb-5 bg-slate-200 rounded-lg xs:!p-0">
     <LazySmartsheetToolbar class="!px-0 xs:hidden flex" />
     <LazySmartsheetGrid class="rounded overflow-hidden" />
   </div>

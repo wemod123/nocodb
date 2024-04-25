@@ -1,61 +1,76 @@
 <script lang="ts" setup>
-const workspaceStore = useWorkspace()
+  const workspaceStore = useWorkspace()
 
-const { isWorkspaceLoading } = storeToRefs(workspaceStore)
-const { isSuper } = useRoles()
-const { isSharedBase } = storeToRefs(useBase())
+  const { isWorkspaceLoading } = storeToRefs(workspaceStore)
+  const { isSuper, baseRoles } = useRoles()
+  const { isSharedBase } = storeToRefs(useBase())
 
-const { isMobileMode } = useGlobal()
+  const { isMobileMode, entryConfig } = useGlobal()
 
-const treeViewDom = ref<HTMLElement>()
+  const treeViewDom = ref<HTMLElement>()
 
-const isTreeViewOnScrollTop = ref(false)
+  const isTreeViewOnScrollTop = ref(false)
 
-const checkScrollTopMoreThanZero = () => {
-  if (isMobileMode.value) return
+  const checkScrollTopMoreThanZero = () => {
+    if (isMobileMode.value) return
 
-  if (treeViewDom.value) {
-    if (treeViewDom.value.scrollTop > 0) {
-      isTreeViewOnScrollTop.value = true
-    } else {
-      isTreeViewOnScrollTop.value = false
+    if (treeViewDom.value) {
+      if (treeViewDom.value.scrollTop > 0) {
+        isTreeViewOnScrollTop.value = true
+      } else {
+        isTreeViewOnScrollTop.value = false
+      }
     }
+    return false
   }
-  return false
-}
 
-onMounted(() => {
-  treeViewDom.value?.addEventListener('scroll', checkScrollTopMoreThanZero)
-})
+  onMounted(() => {
+    treeViewDom.value?.addEventListener('scroll', checkScrollTopMoreThanZero)
+  })
 
-onUnmounted(() => {
-  treeViewDom.value?.removeEventListener('scroll', checkScrollTopMoreThanZero)
-})
+  onUnmounted(() => {
+    treeViewDom.value?.removeEventListener('scroll', checkScrollTopMoreThanZero)
+  })
 </script>
 
 <template>
-  <div
-    class="nc-sidebar flex flex-col bg-white outline-r-1 outline-gray-100 select-none w-full h-full"
-    :style="{
-      outlineWidth: '1px',
-    }"
-  >
+  <div class="nc-sidebar flex flex-col bg-white outline-r-1 outline-gray-100 select-none w-full h-full"
+       :style="{
+         outlineWidth: '1px',
+       }">
     <div class="flex flex-col">
       <DashboardSidebarHeader />
 
       <DashboardSidebarTopSection v-if="!isSharedBase" />
     </div>
-    <div
-      ref="treeViewDom"
-      class="flex flex-col pb-10 nc-scrollbar-dark-md flex-grow xs:(border-transparent pt-2 pr-2)"
-      :class="{
-        'border-t-1': !isSharedBase,
-        'border-transparent': !isTreeViewOnScrollTop,
-        'pt-0.25': isSharedBase,
-      }"
-    >
+    <div ref="treeViewDom"
+         class="flex flex-col pb-8 nc-scrollbar-dark-md flex-grow xs:(border-transparent pt-2 pr-2)"
+         :class="{
+           'border-t-1': !isSharedBase,
+           'border-transparent': !isTreeViewOnScrollTop,
+           'pt-0.25': isSharedBase,
+         }">
       <DashboardTreeView v-if="!isWorkspaceLoading && isSuper" />
       <DashboardTreeViewFolders v-else />
+    </div>
+    <div v-if="entryConfig?.entryToken"
+         class="h-10 border-t flex items-center px-5 gap-2">
+      <div v-if="baseRoles?.commenter === true || true"
+           class="flex items-center bg-slate-100 rounded-lg">
+        <div class="flex items-center justify-center p-1 bg-gradient-to-t from-sky-500 to-indigo-500 rounded-lg">
+          <GeneralIcon icon="edit"
+                       class="text-indigo-100 text-xs text-white" />
+        </div>
+        <span class="text-xs pl-2 pr-2">{{ $t("title.readOnlyWs") }}</span>
+      </div>
+      <div v-else-if="baseRoles?.editor === true"
+           class="flex items-center bg-slate-100 rounded-lg">
+        <div class="flex items-center justify-center p-1 bg-gradient-to-t from-violet-500 to-fuchsia-500 rounded-lg">
+          <GeneralIcon icon="edit"
+                       class="text-indigo-100 text-xs text-white" />
+        </div>
+        <span class="text-xs pl-2 pr-2">{{ $t("title.readWriteWs") }}</span>
+      </div>
     </div>
     <div v-if="!isSharedBase && isSuper">
       <DashboardSidebarUserInfo />

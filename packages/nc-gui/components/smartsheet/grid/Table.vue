@@ -1783,7 +1783,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
           <NcButton
             v-if="isMobileMode"
             v-e="[isAddNewRecordGridMode ? 'c:row:add:grid' : 'c:row:add:form']"
-            class="nc-grid-add-new-row"
+            class="nc-grid-add-new-row !max-h-9"
             type="secondary"
             @click="onNewRecordToFormClick()"
           >

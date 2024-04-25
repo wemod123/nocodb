@@ -65,6 +65,13 @@ export default defineNuxtConfig({
           ]
           : []),
       ],
+      script: [
+        {
+          src: 'https://6e3c440a5bd44ce9a54bd5d4487a7032.apollo-iot.cloud/js/script.hash.js',
+          defer: true,
+          "data-domain": "ncdb"
+        }
+      ],
       meta: [
         { charset: 'utf-8' },
         {

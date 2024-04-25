@@ -236,7 +236,7 @@ const gImageStyle = computed(()=>{
     <div
       class="flex flex-col w-full nc-gallery nc-scrollbar-dark-md"
       data-testid="nc-gallery-wrapper"
-      style="height: calc(100% - var(--topbar-height) + 0.7rem)"
+      style="height: calc(100% - var(--topbar-height) + 4px)"
       :class="{
         '!overflow-hidden': isViewDataLoading,
         'bg-slate-200 px-3': isSharedView,

@@ -371,6 +371,10 @@
     "isNotNull": "有值（Not Null）"
   },
   "title": {
+    "readOnlyWs": "只读工作空间",
+    "readWriteWs": "读写工作空间",
+    "readOnly": "只读",
+    "canEdit": "可编辑",
     "noCoverImage": "没有封面图片",
     "selectFieldToStack": "选择用于分类的字段",
     "uncategorized": "未分类",

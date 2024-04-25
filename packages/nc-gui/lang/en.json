@@ -369,6 +369,10 @@
     "isNotNull": "is not null"
   },
   "title": {
+    "readOnlyWs": "Readonly workspaces",
+    "readWriteWs": "Read/Write workspaces",
+    "readOnly": "Readonly",
+    "canEdit": "Can Edit",
     "noCoverImage": "No cover image",
     "selectFieldToStack": "Select a field to stack records by",
     "uncategorized": "Uncategorized",

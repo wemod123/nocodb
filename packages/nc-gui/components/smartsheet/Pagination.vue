@@ -70,8 +70,8 @@ const renderAltOrOptlKey = () => {
 
 <template>
   <div
-    class="flex items-center bg-white border-gray-200 nc-grid-pagination-wrapper"
-    :class="{ 'border-t-1': !isGroupBy, 'h-13': isMobileMode, 'h-10': !isMobileMode }"
+    class="flex items-center bg-white border-gray-200 h-12 nc-grid-pagination-wrapper"
+    :class="{ 'border-t-1': !isGroupBy }"
     :style="`${fixedSize ? `width: ${fixedSize}px;` : ''}${
       isGroupBy ? 'margin-top:1px; border-radius: 0 0 4px 4px !important;' : ''
     }${extraStyle}`"
@@ -96,8 +96,8 @@ const renderAltOrOptlKey = () => {
       v-if="!hidePagination"
       class="transition-all duration-350"
       :class="{
-        '-ml-17': isLeftSidebarOpen && !alignLeft,
-        'ml-8': alignLeft,
+        '-ml-17': isLeftSidebarOpen && !alignLeft && !isMobileMode,
+        'ml-8': alignLeft
       }"
     >
       <div v-if="isViewDataLoading" class="flex flex-row justify-center item-center min-h-10 min-w-42">

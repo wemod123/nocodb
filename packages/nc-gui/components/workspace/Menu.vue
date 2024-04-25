@@ -1,11 +1,13 @@
 <script setup lang="ts">
   const { pF } = useGlobal()
+  const { isMobileMode } = useGlobal()
 </script>
 
 <template>
   <div class="flex flex-row flex-grow pr-1 py-0.5 rounded-md w-full"
        style="max-width: calc(100% - 2.5rem)">
-    <div class="flex-grow min-w-20">
+    <div class="flex-grow min-w-20"
+         :class="{ 'pl-12': isMobileMode }">
       <div data-testid="nc-workspace-menu"
            class="flex capitalize font-bold text-lg text-slate-500 items-center nc-workspace-menu overflow-hidden py-1.25 pr-0.25 justify-center w-full ml-2">
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +29,7 @@
           <GeneralIcon icon="reload"
                        class="text-slate-400 text-sm text" />
         </div>
-        <div class="flex flex-grow"></div>
+        <div class="flex flex-grow" />
       </div>
     </div>
   </div>
