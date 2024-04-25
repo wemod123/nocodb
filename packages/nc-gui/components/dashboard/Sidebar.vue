@@ -55,7 +55,7 @@
     </div>
     <div v-if="entryConfig?.entryToken"
          class="h-10 border-t flex items-center px-5 gap-2">
-      <div v-if="baseRoles?.commenter === true || true"
+      <div v-if="baseRoles?.commenter === true"
            class="flex items-center bg-slate-100 rounded-lg">
         <div class="flex items-center justify-center p-1 bg-gradient-to-t from-sky-500 to-indigo-500 rounded-lg">
           <GeneralIcon icon="edit"

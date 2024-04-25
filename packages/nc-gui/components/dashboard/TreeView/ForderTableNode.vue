@@ -226,7 +226,7 @@
        :data-order="table.order"
        :data-id="table.id"
        :data-table-id="table.id"
-       :class="[`nc-base-tree-tbl nc-base-tree-tbl-${table.title}`]"
+       :class="[`nc-base-tree-tbl nc-base-tree-tbl-${table.title}`, isMobileMode ? 'ntnw-narrow' : '']"
        :data-active="openedTableId === table.id">
     <GeneralTooltip class="nc-tree-item-inner nc-sidebar-node pl-2 pr-0.75 mb-0.25 rounded-md h-10 w-full group cursor-pointer hover:bg-slate-200"
                     :class="{
@@ -458,6 +458,10 @@
     background-size: 41px 41px;
     background-position: 0px 32px;
     background-image: repeating-linear-gradient(0deg, #9F2AF3, #9F2AF3 4px, #DFE4EE 4px, #DFE4EE);
+  }
+
+  &.ntnw-narrow:before{
+    left: 36.2px;
   }
 }
 

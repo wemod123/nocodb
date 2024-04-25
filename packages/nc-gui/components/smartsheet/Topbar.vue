@@ -27,6 +27,8 @@
                         class="!w-44 !h-4 ml-2 !rounded overflow-hidden" />
     </template>
     <template v-else>
+      <GeneralOpenLeftSidebarBtn v-if="!isMobileMode" />
+
       <LazySmartsheetToolbarViewInfo v-if="!isPublic" />
 
       <div v-if="!isSharedBase && !isMobileMode && isSuper"
@@ -45,7 +47,7 @@
 
       <SmartsheetToolbarExport v-if="!isMobileMode && entryConfig?.entryToken" />
 
-      <GeneralOpenLeftSidebarBtn />
+      <GeneralOpenLeftSidebarBtn v-if="isMobileMode" />
     </template>
   </div>
 </template>

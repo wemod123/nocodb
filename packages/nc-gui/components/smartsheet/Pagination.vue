@@ -96,7 +96,6 @@ const renderAltOrOptlKey = () => {
       v-if="!hidePagination"
       class="transition-all duration-350"
       :class="{
-        '-ml-17': isLeftSidebarOpen && !alignLeft && !isMobileMode,
         'ml-8': alignLeft
       }"
     >
