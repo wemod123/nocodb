@@ -41,21 +41,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     await state.signOut(true)
   }
 
-  /** Validate scope when user has a scoped routers */
-  if (
-    state.entryConfig.value?.scope &&
-    state.entryConfig.value?.scope?.paths &&
-    state.entryConfig.value?.scope?.paths.length > 0
-  ) {
-    if (to.path === '/entry') {
-      return;
-    }
-
-    if (!state.entryConfig.value.scope.paths.some(p => to.path?.startsWith(p))) {
-      return navigateTo(state.entryConfig.value.scope.paths[0])
-    }
-  }
-
   /** If baseHostname defined block home page access under subdomains, and redirect to workspace page */
   if (
     state.appInfo.value.baseHostName &&
@@ -119,6 +104,23 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       return navigateTo(from.path)
     }
   } else {
+    /** Validate scope when user has a scoped routers */
+    if (
+      !to.path?.includes('/signin') &&
+      state.entryConfig.value?.entryToken &&
+      state.entryConfig.value?.scope &&
+      state.entryConfig.value?.scope?.paths &&
+      state.entryConfig.value?.scope?.paths.length > 0
+    ) {
+      if (to.path.startsWith('/entry')) {
+        return;
+      }
+
+      if (!state.entryConfig.value.scope.paths.some(p => to.path?.startsWith(p))) {
+        return navigateTo(state.entryConfig.value.scope.paths[0])
+      }
+    }
+
     /** If page is limited to certain users verify the user have the roles */
     if (to.meta.allowedRoles && to.meta.allowedRoles.every((role) => !allRoles.value?.[role])) {
       message.error("You don't have enough permission to access the page.")

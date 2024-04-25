@@ -35,7 +35,7 @@ export class UsersService {
     protected metaService: MetaService,
     protected appHooksService: AppHooksService,
     protected basesService: BasesService,
-  ) { }
+  ) {}
 
   // allow signup/signin only if email matches against pattern
   validateEmailPattern(email: string) {
@@ -60,13 +60,13 @@ export class UsersService {
   async signRobotToken(tid: string): Promise<string> {
     const robotUser = await User.list({ query: `${tid}@robot.services`, tid });
     const id = robotUser?.[0]?.id;
-    return id ? signRobotApiToken(id, Noco.getConfig()) : 'Invalid request'
+    return id ? signRobotApiToken(id, Noco.getConfig()) : 'Invalid request';
   }
 
   async findOneByUidAndTid(uid: string, tid: string) {
     return await this.metaService.metaGet(null, null, MetaTable.USERS, {
       uid,
-      tid
+      tid,
     });
   }
 
@@ -107,14 +107,20 @@ export class UsersService {
   }: {
     id: string;
     params: {
-      email?: string
-      display_name?: string
-      avatar?: string
-      tid?: string
-      uid?: string
+      email?: string;
+      display_name?: string;
+      avatar?: string;
+      tid?: string;
+      uid?: string;
     };
   }) {
-    const updateObj = extractProps(params, ['email', 'display_name', 'avatar', 'tid', 'uid']);
+    const updateObj = extractProps(params, [
+      'email',
+      'display_name',
+      'avatar',
+      'tid',
+      'uid',
+    ]);
 
     return await User.update(id, updateObj);
   }
@@ -150,7 +156,7 @@ export class UsersService {
       let settings: { invite_only_signup?: boolean } = {};
       try {
         settings = JSON.parse((await Store.get(NC_APP_SETTINGS))?.value);
-      } catch { }
+      } catch {}
 
       if (settings?.invite_only_signup) {
         NcError.badRequest('Not allowed to signup, contact super admin.');
