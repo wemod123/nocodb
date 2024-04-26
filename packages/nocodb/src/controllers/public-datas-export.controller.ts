@@ -6,7 +6,7 @@ import {
   Response,
   UseGuards,
 } from '@nestjs/common';
-import { ErrorMessages, isSystemColumn, ViewTypes } from 'nocodb-sdk';
+import { isSystemColumn, ViewTypes } from 'nocodb-sdk';
 import * as XLSX from 'xlsx';
 import { nocoExecute } from 'nc-help';
 import papaparse from 'papaparse';
@@ -17,6 +17,7 @@ import { PublicDatasExportService } from '~/services/public-datas-export.service
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
 import { Column, Model, Source, View } from '~/models';
 import { PublicApiLimiterGuard } from '~/guards/public-api-limiter.guard';
+import { verifyPublicToken } from '~/helpers/publicAccess';
 
 @UseGuards(PublicApiLimiterGuard)
 @Controller()
@@ -44,9 +45,7 @@ export class PublicDatasExportController {
     )
       NcError.notFound('Not found');
 
-    if (view.password && view.password !== req.headers?.['xc-password']) {
-      NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, req.headers?.['xc-password']);
 
     const model = await view.getModelWithInfo();
 
@@ -97,9 +96,7 @@ export class PublicDatasExportController {
     )
       NcError.notFound('Not found');
 
-    if (view.password && view.password !== req.headers?.['xc-password']) {
-      NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, req.headers?.['xc-password']);
 
     const model = await view.getModelWithInfo();
     await view.getColumns();

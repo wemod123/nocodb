@@ -15,6 +15,7 @@ import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
 import { mimeIcons } from '~/utils/mimeTypes';
 import { Column, Model, Source, View } from '~/models';
 import { utf8ify } from '~/helpers/stringHelpers';
+import { verifyPublicToken } from '~/helpers/publicAccess';
 
 // todo: move to utils
 export function sanitizeUrlPath(paths) {
@@ -41,9 +42,7 @@ export class PublicDatasService {
       NcError.notFound('Not found');
     }
 
-    if (view.password && view.password !== password) {
-      return NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, param.password);
 
     const model = await Model.getByIdOrName({
       id: view?.fk_model_id,
@@ -108,9 +107,7 @@ export class PublicDatasService {
       NcError.notFound('Not found');
     }
 
-    if (view.password && view.password !== param.password) {
-      return NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, param.password);
 
     const model = await Model.getByIdOrName({
       id: view?.fk_model_id,
@@ -201,9 +198,7 @@ export class PublicDatasService {
       NcError.notFound('Not found');
     }
 
-    if (view.password && view.password !== param.password) {
-      return NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, param.password);
 
     const model = await Model.getByIdOrName({
       id: view?.fk_model_id,
@@ -258,9 +253,7 @@ export class PublicDatasService {
     if (!view) NcError.notFound();
     if (view.type !== ViewTypes.FORM) NcError.notFound();
 
-    if (view.password && view.password !== param.password) {
-      return NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, param.password);
 
     const model = await Model.getByIdOrName({
       id: view?.fk_model_id,
@@ -368,9 +361,7 @@ export class PublicDatasService {
       NcError.notFound('Not found');
     }
 
-    if (view.password && view.password !== param.password) {
-      NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, param.password);
 
     const column = await Column.get({ colId: param.columnId });
     const colOptions = await column.getColOptions<LinkToAnotherRecordColumn>();
@@ -429,9 +420,7 @@ export class PublicDatasService {
       NcError.notFound('Not found');
     }
 
-    if (view.password && view.password !== param.password) {
-      NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, param.password);
 
     const column = await getColumnByIdOrName(
       param.columnId,
@@ -503,9 +492,7 @@ export class PublicDatasService {
       NcError.notFound('Not found');
     }
 
-    if (view.password && view.password !== param.password) {
-      NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, param.password);
 
     const column = await getColumnByIdOrName(
       param.columnId,

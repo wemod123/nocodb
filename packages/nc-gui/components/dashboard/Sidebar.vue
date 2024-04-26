@@ -54,12 +54,12 @@
       <DashboardTreeViewFolders v-else />
     </div>
     <div v-if="entryConfig?.entryToken"
-         class="h-10 border-t flex items-center px-5 gap-2">
+         class="h-12 min-h-12 border-t flex items-center px-5 gap-2">
       <div v-if="baseRoles?.commenter === true"
            class="flex items-center bg-slate-100 rounded-lg">
-        <div class="flex items-center justify-center p-1 bg-gradient-to-t from-sky-500 to-indigo-500 rounded-lg">
-          <GeneralIcon icon="edit"
-                       class="text-indigo-100 text-xs text-white" />
+        <div class="flex w-6 h-6 items-center justify-center p-1 bg-gradient-to-t from-sky-500 to-indigo-500 rounded-lg">
+          <GeneralIcon icon="lock"
+                       class="text-indigo-100 text-white" />
         </div>
         <span class="text-xs pl-2 pr-2">{{ $t("title.readOnlyWs") }}</span>
       </div>

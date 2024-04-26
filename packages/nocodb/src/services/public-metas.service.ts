@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ErrorMessages, RelationTypes, UITypes } from 'nocodb-sdk';
+import { RelationTypes, UITypes } from 'nocodb-sdk';
 import { isLinksOrLTAR } from 'nocodb-sdk';
 import type { LinkToAnotherRecordColumn, LookupColumn } from '~/models';
 import { NcError } from '~/helpers/catchError';
 import { Base, Column, Model, Source, View } from '~/models';
+import { verifyPublicToken } from '~/helpers/publicAccess';
 
 @Injectable()
 export class PublicMetasService {
@@ -15,9 +16,7 @@ export class PublicMetasService {
 
     if (!view) NcError.notFound('Not found');
 
-    if (view.password && view.password !== param.password) {
-      NcError.forbidden(ErrorMessages.INVALID_SHARED_VIEW_PASSWORD);
-    }
+    verifyPublicToken(view.password, param.password);
 
     await view.getFilters();
     await view.getSorts();

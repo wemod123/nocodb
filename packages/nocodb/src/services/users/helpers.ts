@@ -5,10 +5,18 @@ import type { NcConfig } from '~/interface/config';
 import type { Response } from 'express';
 
 export function signRobotApiToken(id: string, config: NcConfig) {
-  return jwt.sign({ id }, config.auth.jwt.secret)
+  return jwt.sign({ id }, config.auth.jwt.secret);
 }
 
 export function genJwt(user: User, config: NcConfig) {
+  const serviceRED = process.env.NC_SERVICE_ROBOT_EMAIL_DOMAIN;
+  const serviceRJE = process.env.NC_SERVICE_ROBOT_JWT_EXPIRE;
+
+  const expireOptions =
+    serviceRED && serviceRJE && user.email.includes(serviceRED)
+      ? { expiresIn: serviceRJE }
+      : { expiresIn: '10h', ...(config.auth.jwt.options as any) };
+
   return jwt.sign(
     {
       email: user.email,
@@ -17,19 +25,21 @@ export function genJwt(user: User, config: NcConfig) {
       token_version: user.token_version,
     },
     config.auth.jwt.secret,
-    // todo: better typing
-    { expiresIn: '10h', ...(config.auth.jwt.options as any) },
+    expireOptions,
   );
 }
 
-export function verifyPWJwt(token: string, config: NcConfig): { uid: string, tid: string } | null {
+export function verifyPWJwt(
+  token: string,
+  config: NcConfig,
+): { uid: string; tid: string } | null {
   try {
-    return jwt.verify(
-      token,
-      config.auth.jwt.secret
-    ) as { uid: string, tid: string } | null
+    return jwt.verify(token, config.auth.jwt.secret) as {
+      uid: string;
+      tid: string;
+    } | null;
   } catch (err) {
-    return null
+    return null;
   }
 }
 

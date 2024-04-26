@@ -12,7 +12,7 @@ import {
 import { Request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
-import { extractRolesObj } from 'nocodb-sdk';
+import { extractRolesObj, OrgUserRoles } from 'nocodb-sdk';
 import * as ejs from 'ejs';
 import type { AppConfig } from '~/interface/config';
 
@@ -33,7 +33,7 @@ export class AuthController {
     protected readonly usersService: UsersService,
     protected readonly appHooksService: AppHooksService,
     protected readonly config: ConfigService<AppConfig>,
-  ) { }
+  ) {}
 
   @Post([
     '/auth/user/signup',
@@ -126,14 +126,10 @@ export class AuthController {
   @Get(['/api/v1/auth/robot/apitoken/:tid'])
   @UseGuards(GlobalGuard)
   async robotToken(@Req() req: Request, @Param('tid') tid: string) {
-    const roles = typeof req.user?.roles === 'string' ?
-      { super: false } :
-      (req.user?.roles as { [key: string]: boolean });
-
-    if (roles?.super === true) {
-      return await this.usersService.signRobotToken(tid)
+    if (req.user.roles?.[OrgUserRoles.SUPER_ADMIN] === true) {
+      return await this.usersService.signRobotToken(tid);
     } else {
-      return 'Invalid request'
+      return 'Invalid request';
     }
   }
 

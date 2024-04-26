@@ -59,7 +59,7 @@ export default class User implements UserType {
       'user_name',
       'avatar',
       'tid',
-      'uid'
+      'uid',
     ]);
 
     if (insertObj.email) {
@@ -96,7 +96,7 @@ export default class User implements UserType {
       'user_name',
       'avatar',
       'tid',
-      'uid'
+      'uid',
     ]);
 
     if (updateObj.email) {
@@ -206,13 +206,13 @@ export default class User implements UserType {
       offset,
       query,
       uid,
-      tid
+      tid,
     }: {
       limit?: number | undefined;
       offset?: number | undefined;
       query?: string;
       uid?: string;
-      tid?: string
+      tid?: string;
     } = {},
     ncMeta = Noco.ncMeta,
   ) {
@@ -234,7 +234,7 @@ export default class User implements UserType {
         `${MetaTable.USERS}.avatar`,
         `${MetaTable.USERS}.tid`,
         `${MetaTable.USERS}.uid`,
-        `${MetaTable.USERS}.display_name`
+        `${MetaTable.USERS}.display_name`,
       )
       .select(
         ncMeta
@@ -247,7 +247,6 @@ export default class User implements UserType {
       );
 
     if (uid || tid) {
-
       if (uid) {
         queryBuilder.where('uid', uid);
       }
@@ -259,7 +258,6 @@ export default class User implements UserType {
       if (query) {
         queryBuilder.where('email', 'like', `%${query.toLowerCase?.()}%`);
       }
-
     } else if (query) {
       queryBuilder.where('email', 'like', `%${query.toLowerCase?.()}%`);
     }
