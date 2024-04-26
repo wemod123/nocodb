@@ -113,7 +113,10 @@ export default class PresignedUrl {
 
     if (url) {
       // if present, check if the expiry date is greater than now + 30 minutes
-      if (new Date(url.expires_at).getTime() > (new Date().getTime() + 1000 * 60 * 30)) {
+      if (
+        new Date(url.expires_at).getTime() >
+        new Date().getTime() + 1000 * 60 * 30
+      ) {
         // if greater, return the url
         return url.url;
       } else {
@@ -124,7 +127,10 @@ export default class PresignedUrl {
 
     if (s3) {
       // if not present, create a new url
-      const storageAdapter = await NcPluginMgrv2.storageAdapter();
+      const storageAdapter = await NcPluginMgrv2.storageAdapter(
+        undefined,
+        new URL(param.path).pathname.split('/')[1],
+      );
 
       tempUrl = await (storageAdapter as any).getSignedUrl(
         path,

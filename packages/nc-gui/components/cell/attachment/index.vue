@@ -240,7 +240,7 @@ const onImageClick = (item: any) => {
       <div
         ref="sortableRef"
         :class="{ 'justify-center': !isExpandedForm && !isGallery && !isKanban }"
-        class="flex cursor-pointer w-full items-center flex-wrap gap-2 px-1 scrollbar-thin-dull overflow-hidden mt-0 items-start"
+        class="flex cursor-pointer w-full items-center flex-wrap gap-2 p-1 scrollbar-thin-dull overflow-hidden mt-0 items-start"
         :style="{
           maxHeight: isForm || isExpandedForm ? undefined : `max(${(rowHeight || 1) * 1}rem, 32px)`,
         }"

@@ -32,6 +32,7 @@ import Noco from '~/Noco';
 import Local from '~/plugins/storage/Local';
 import { MetaTable } from '~/utils/globals';
 import Plugin from '~/models/Plugin';
+import S3Plugin from '~/plugins/mino/MinioPlugin';
 
 const defaultPlugins = [
   SlackPluginConfig,
@@ -151,25 +152,22 @@ class NcPluginMgrv2 {
 
   public static async storageAdapter(
     ncMeta = Noco.ncMeta,
+    bucket: string,
   ): Promise<IStorageAdapterV2> {
-    const pluginData = await ncMeta.metaGet2(null, null, MetaTable.PLUGIN, {
-      category: PluginCategory.STORAGE,
-      active: true,
-    });
+    // const pluginData = await ncMeta.metaGet2(null, null, MetaTable.PLUGIN, {
+    //   category: PluginCategory.STORAGE,
+    //   active: true,
+    // });
 
-    if (!pluginData) return new Local();
+    // if (!pluginData) return new Local();
 
-    const pluginConfig = defaultPlugins.find(
-      (c) =>
-        c.title === pluginData.title && c.category === PluginCategory.STORAGE,
-    );
-    const plugin = new pluginConfig.builder(ncMeta, pluginData);
+    // const pluginConfig = defaultPlugins.find(
+    //   (c) =>
+    //     c.title === pluginData.title && c.category === PluginCategory.STORAGE,
+    // );
+    const plugin = new S3Plugin(ncMeta, { bucket });
 
-    if (pluginData?.input) {
-      pluginData.input = JSON.parse(pluginData.input);
-    }
-
-    await plugin.init(pluginData?.input);
+    await plugin.init({ bucket });
     return plugin.getAdapter();
   }
 

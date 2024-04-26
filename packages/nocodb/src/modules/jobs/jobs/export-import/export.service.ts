@@ -701,7 +701,10 @@ export class ExportService {
       models: exportedModels,
     };
 
-    const storageAdapter = await NcPluginMgrv2.storageAdapter();
+    const storageAdapter = await NcPluginMgrv2.storageAdapter(
+      undefined,
+      'nc-db-storage',
+    );
 
     const destPath = `export/${base.id}/${source.id}/${param.path}`;
 

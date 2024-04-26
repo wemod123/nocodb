@@ -295,7 +295,10 @@ export class PublicDatasService {
     }, {});
 
     const attachments = {};
-    const storageAdapter = await NcPluginMgrv2.storageAdapter();
+    const storageAdapter = await NcPluginMgrv2.storageAdapter(
+      undefined,
+      base.title,
+    );
 
     for (const file of param.files || []) {
       // remove `_` prefix and `[]` suffix

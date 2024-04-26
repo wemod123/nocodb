@@ -1,4 +1,5 @@
 import path from 'path';
+import { validate } from 'uuid';
 import { AppEvents } from 'nocodb-sdk';
 import { Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
@@ -17,13 +18,15 @@ export class AttachmentsService {
   constructor(private readonly appHooksService: AppHooksService) {}
 
   async upload(param: { path?: string; files: FileType[]; req: NcRequest }) {
-    // TODO: add getAjvValidatorMw
-    const filePath = this.sanitizeUrlPath(
-      param.path?.toString()?.split('/') || [''],
-    );
-    const destPath = path.join('nc', 'uploads', ...filePath);
+    const pathParts = param.path?.toString()?.split('/') || [''];
+    const filePath = this.sanitizeUrlPath(pathParts);
+    const bucket = validate(pathParts[0]) ? pathParts[0] : 'nc-db-storage';
+    const destPath = path.join('db-attachments-uploads', ...filePath.slice(1));
 
-    const storageAdapter = await NcPluginMgrv2.storageAdapter();
+    const storageAdapter = await NcPluginMgrv2.storageAdapter(
+      undefined,
+      bucket,
+    );
 
     const attachments = await Promise.all(
       param.files?.map(async (file) => {
@@ -102,13 +105,15 @@ export class AttachmentsService {
     urls: AttachmentReqType[];
     req: NcRequest;
   }) {
-    // TODO: add getAjvValidatorMw
-    const filePath = this.sanitizeUrlPath(
-      param?.path?.toString()?.split('/') || [''],
-    );
-    const destPath = path.join('nc', 'uploads', ...filePath);
+    const pathParts = param.path?.toString()?.split('/') || [''];
+    const filePath = this.sanitizeUrlPath(pathParts);
+    const bucket = validate(pathParts[0]) ? pathParts[0] : 'nc-db-storage';
+    const destPath = path.join('db-attachments-uploads', ...filePath.slice(1));
 
-    const storageAdapter = await NcPluginMgrv2.storageAdapter();
+    const storageAdapter = await NcPluginMgrv2.storageAdapter(
+      undefined,
+      bucket,
+    );
 
     const attachments = await Promise.all(
       param.urls?.map?.(async (urlMeta) => {

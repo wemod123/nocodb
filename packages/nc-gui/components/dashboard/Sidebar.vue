@@ -54,7 +54,8 @@
       <DashboardTreeViewFolders v-else />
     </div>
     <div v-if="entryConfig?.entryToken"
-         class="h-12 min-h-12 border-t flex items-center px-5 gap-2">
+         class="border-t flex items-center px-5 gap-2"
+         style="min-height:50px">
       <div v-if="baseRoles?.commenter === true"
            class="flex items-center bg-slate-100 rounded-lg">
         <div class="flex w-6 h-6 items-center justify-center p-1 bg-gradient-to-t from-sky-500 to-indigo-500 rounded-lg">

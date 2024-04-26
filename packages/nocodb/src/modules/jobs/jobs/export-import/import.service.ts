@@ -1295,7 +1295,10 @@ export class ImportService {
       case 'local': {
         const path = src.path.replace(/\/$/, '');
 
-        const storageAdapter = await NcPluginMgrv2.storageAdapter();
+        const storageAdapter = await NcPluginMgrv2.storageAdapter(
+          undefined,
+          'nc-db-storage',
+        );
 
         try {
           const schema = JSON.parse(
