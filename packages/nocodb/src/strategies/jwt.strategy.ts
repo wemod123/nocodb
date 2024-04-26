@@ -8,23 +8,32 @@ import { UsersService } from '~/services/users/users.service';
 
 const verifyEntryCode = (req, theUid: string) => {
   const [eIv, payload] = split(req.headers['xc-entry'] || '', ',');
-  if (!eIv && payload) { return 0 }
+  if (!eIv && payload) {
+    return 0;
+  }
   try {
     const iv = Buffer.from(eIv, 'hex');
     const encryptedText = Buffer.from(payload, 'hex');
-    const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(process.env.NC_SERVER_HMAC_KEY), iv);
+    const decipher = crypto.createDecipheriv(
+      'aes-256-cbc',
+      Buffer.from(process.env.NC_SERVER_HMAC_KEY),
+      iv,
+    );
     let decrypted = decipher.update(encryptedText);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
     const { uid, iat } = JSON.parse(decrypted.toString());
-    if (uid === theUid && (new Date().getTime() - parseInt(iat) < 1000 * 60 * 60 * 2)) {
-      return 1
+    if (
+      uid === theUid &&
+      new Date().getTime() - parseInt(iat) < 1000 * 60 * 60 * 2
+    ) {
+      return 1;
     } else {
-      return 0
+      return 0;
     }
   } catch (err) {
-    return 0
+    return 0;
   }
-}
+};
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -47,17 +56,22 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       });
     }
 
-    if ((req.headers['xc-tokenkind'] || 'N-U-L-L') === process.env.NC_MGT_TOKEN_PREDEST) {
+    if (
+      (req.headers['xc-tokenkind'] || 'N-U-L-L') ===
+      process.env.NC_MGT_TOKEN_PREDEST
+    ) {
       return User.getWithRoles(user.id, {
         user,
         baseId: req.ncProjectId,
       });
     }
 
+    /** Skip token version for service account */
     if (
-      !user.token_version ||
-      !jwtPayload.token_version ||
-      user.token_version !== jwtPayload.token_version
+      !user.email.endsWith(process.env.NC_SERVICE_ROBOT_EMAIL_DOMAIN) &&
+      (!user.token_version ||
+        !jwtPayload.token_version ||
+        user.token_version !== jwtPayload.token_version)
     ) {
       throw new Error('Token Expired. Please login again.');
     }

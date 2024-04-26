@@ -13,7 +13,7 @@ export function genJwt(user: User, config: NcConfig) {
   const serviceRJE = process.env.NC_SERVICE_ROBOT_JWT_EXPIRE;
 
   const expireOptions =
-    serviceRED && serviceRJE && user.email.includes(serviceRED)
+    serviceRED && serviceRJE && user.email.endsWith(serviceRED)
       ? { expiresIn: serviceRJE }
       : { expiresIn: '10h', ...(config.auth.jwt.options as any) };
 
