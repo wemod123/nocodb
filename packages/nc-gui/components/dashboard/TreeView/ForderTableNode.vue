@@ -312,13 +312,13 @@
                    placement="topLeft">
           <template #title>
             <div class="px-1.5 pt-1">{{ $t('msg.tableEntityMsg', { table: table.title || table.table_name }) }}</div>
-            <div v-if="table.meta?.markAsSys"
+            <!-- <div v-if="table.meta?.markAsSys"
                  class="py-1 text-yellow-300 flex items-center">
               <div class="flex items-center justify-center w-5">
                 <GeneralIcon icon="lock" />
               </div>
               <span>{{ $t("title.sysTable") }}</span>
-            </div>
+            </div> -->
           </template>
           <GeneralIconsTableLock v-if="table.meta?.markAsSys"
                                  class="!text-rose-400 hover:!text-rose-500 mr-1 opacity-0 group-hover:opacity-100"

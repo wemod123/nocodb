@@ -92,8 +92,6 @@ main {
 
 .nc-scrollbar-x-md {
   overflow-x: scroll;
-  scrollbar-width: thin !important;
-
 
   &::-webkit-scrollbar {
     width: 4px;
@@ -115,6 +113,10 @@ main {
   }
   &::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-300;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none!important; /* Hides the scrollbar buttons */
   }
 }
 

@@ -218,7 +218,7 @@ const linkOrUnLink = (rowRef: Record<string, string>, id: string) => {
         </a-input>
       </div>
     </div>
-    <div class="flex flex-col flex-grow nc-scrollbar-md cursor-pointer pr-1">
+    <div class="flex flex-col flex-grow nc-scrollbar-md pr-1">
       <div v-if="isDataExist || isChildrenLoading" class="mt-2 mb-2">
         <div class="cursor-pointer pr-1">
           <template v-if="isChildrenLoading">

@@ -530,7 +530,7 @@
                                  @end="(e) => e.target.classList.remove('grabbing')"
                                  @change="onMove($event, stack.title)">
                         <template #item="{ element: record, index }">
-                          <div class="nc-kanban-item py-2 pl-3 pr-2">
+                          <div class="nc-kanban-item py-2 pl-3 pr-2 min-h-8">
                             <LazySmartsheetRow :row="record">
                               <a-card :key="`${getRowId(record)}-${index}`"
                                       class="!rounded-lg h-full border-gray-200 border-1 group overflow-hidden break-all max-w-[450px] shadow-sm hover:shadow-md cursor-pointer"

@@ -472,7 +472,7 @@
 
         <div class="flex flex-col my-1.5 nc-scrollbar-md max-h-[47.5vh] pr-3">
           <div class="nc-fields-list">
-            <div v-if="!fields?.filter((el) => el?.title.toLowerCase().includes(filterQuery.toLowerCase())).length"
+            <div v-if="!fields?.filter((el) => el?.title?.toLowerCase().includes(filterQuery?.toLowerCase())).length"
                  class="px-0.5 py-2 text-gray-500">
               {{ $t('title.noFieldsFound') }}
             </div>
@@ -481,7 +481,7 @@
                        @change="onMove($event)">
               <template #item="{ element: field }">
                 <div v-if="filteredFieldList
-                  .filter((el) => el !== gridDisplayValueField && el?.title.toLowerCase().includes(filterQuery.toLowerCase()))
+                  .filter((el) => el !== gridDisplayValueField && el?.title?.toLowerCase().includes(filterQuery?.toLowerCase()))
                   .includes(field)
                   "
                      :key="field.id"
@@ -517,7 +517,7 @@
               </template>
               <template v-if="activeView?.type === ViewTypes.GRID"
                         #header>
-                <div v-if="gridDisplayValueField && filteredFieldList[0]?.title.toLowerCase().includes(filterQuery.toLowerCase())"
+                <div v-if="gridDisplayValueField && filteredFieldList[0]?.title?.toLowerCase()?.includes(filterQuery?.toLowerCase())"
                      :key="`pv-${gridDisplayValueField.id}`"
                      class="pl-7.5 pr-2.1 py-2 flex flex-row items-center border-1 border-gray-200"
                      :class="{
@@ -556,7 +556,7 @@
                     size="sm"
                     class="nc-fields-show-all-fields !text-gray-500 !w-1/2"
                     @click="showAllColumns = !showAllColumns">
-            {{ showAllColumns ? $t('title.hideAll') : $t('general.showAll') }} {{ $t('objects.fields').toLowerCase() }}
+            {{ showAllColumns ? $t('title.hideAll') : $t('general.showAll') }} {{ $t('objects.fields')?.toLowerCase() }}
           </NcButton>
           <NcButton v-if="!isPublic && !filterQuery"
                     type="ghost"
