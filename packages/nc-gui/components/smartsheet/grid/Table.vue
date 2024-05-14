@@ -1459,7 +1459,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                 </th>
               </tr>
             </thead>
-            <tbody v-if="headerOnly !== true" ref="tableBodyEl">
+            <tbody v-if="headerOnly !== true && !isPaginationLoading" ref="tableBodyEl">
               <template v-if="showSkeleton">
                 <tr v-for="(row, rowIndex) of dummyRowDataForLoading" :key="rowIndex">
                   <td
@@ -1766,8 +1766,8 @@ const checkMouseMove = (evt: MouseEvent)=>{
       </NcDropdown>
     </div>
 
-    <LazySmartsheetPagination
-      v-if="headerOnly !== true"
+    <SmartsheetPagination
+      v-if="headerOnly !== true && !isPaginationLoading"
       :key="isMobileMode"
       v-model:pagination-data="paginationDataRef"
       :show-api-timing="!isGroupBy"
@@ -1854,7 +1854,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
           </a-dropdown-button>
         </div>
       </template>
-    </LazySmartsheetPagination>
+    </SmartsheetPagination>
     <div v-if="showTooltip" 
          class="absolute z-5 right-[40%] bottom-15 bg-slate-700 text-slate-50 rounded-lg border-1 px-3 py-2">
       {{ $t("msg.scrollHMsg") }}
