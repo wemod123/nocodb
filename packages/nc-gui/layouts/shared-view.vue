@@ -1,15 +1,23 @@
 <script lang="ts" setup>
   import { iconMap, navigateTo, useEventListener, useRouter } from '#imports'
 
-  const { isLoading, appInfo } = useGlobal()
+  const { isLoading, appInfo, setIsMobileMode } = useGlobal()
 
   const { sharedView } = useSharedView()
+
+  const { width } = useWindowSize();
+
+  watch(() => width.value, () => {
+    setIsMobileMode(width.value < 640)
+  })
 
   const route = useRoute()
 
   const router = useRouter()
 
   onMounted(() => {
+    setIsMobileMode(width.value < 640)
+
     // check if we are inside an iframe
     // if we are, communicate to the parent page whenever we navigate to a new url,
     // so that the parent page can respond to it properly.
@@ -55,7 +63,7 @@
   <a-layout id="nc-app">
     <a-layout class="!flex-col !bg-slate-200">
 
-      <div class="flex items-center gap-2 pt-2 bg-slate-200 h-10"
+      <!-- <div class="flex items-center gap-2 pt-2 bg-slate-200 h-10"
            :class="[isGalleryView || isKanbanView ? 'px-6' : 'px-4 lg:px-8 xl:px-12']">
         <template v-if="isLoading">
           <span class="text-white"
@@ -72,10 +80,10 @@
                            :meta="sharedView" />
           {{ sharedView?.title }}
         </div>
-      </div>
+      </div> -->
 
       <div class="w-full overflow-hidden"
-           style="height: calc(100vh - 40px)">
+           style="height: 100vh">
         <slot />
       </div>
     </a-layout>

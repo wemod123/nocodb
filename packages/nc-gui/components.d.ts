@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AAlert: typeof import('ant-design-vue/es')['Alert']
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
     ABreadcrumb: typeof import('ant-design-vue/es')['Breadcrumb']
     ABreadcrumbItem: typeof import('ant-design-vue/es')['BreadcrumbItem']
@@ -97,11 +98,14 @@ declare module '@vue/runtime-core' {
     MdiDiscord: typeof import('~icons/mdi/discord')['default']
     MdiDotsHorizontal: typeof import('~icons/mdi/dots-horizontal')['default']
     MdiEye: typeof import('~icons/mdi/eye')['default']
+    MdiFileDocumentMultipleOutline: typeof import('~icons/mdi/file-document-multiple-outline')['default']
     MdiFileDocumentOutline: typeof import('~icons/mdi/file-document-outline')['default']
     MdiFlag: typeof import('~icons/mdi/flag')['default']
     MdiHeart: typeof import('~icons/mdi/heart')['default']
     MdiHistory: typeof import('~icons/mdi/history')['default']
+    MdiLoading: typeof import('~icons/mdi/loading')['default']
     MdiLogin: typeof import('~icons/mdi/login')['default']
+    MdiMagnify: typeof import('~icons/mdi/magnify')['default']
     MdiMenuDown: typeof import('~icons/mdi/menu-down')['default']
     MdiMessageOutline: typeof import('~icons/mdi/message-outline')['default']
     MdiMicrosoftTeams: typeof import('~icons/mdi/microsoft-teams')['default']

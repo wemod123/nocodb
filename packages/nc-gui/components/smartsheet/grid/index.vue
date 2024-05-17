@@ -209,6 +209,8 @@ const goToPreviousRow = () => {
 
   navigateToSiblingRow(NavigateDir.PREV)
 }
+
+const isPublic = inject(IsPublicInj, ref(false))
 </script>
 
 <template>
@@ -254,7 +256,7 @@ const goToPreviousRow = () => {
     />
     <Suspense>
       <LazySmartsheetExpandedForm
-        v-if="expandedFormRow && expandedFormDlg"
+        v-if="expandedFormRow && expandedFormDlg && !isPublic"
         v-model="expandedFormDlg"
         :row="expandedFormRow"
         :state="expandedFormRowState"

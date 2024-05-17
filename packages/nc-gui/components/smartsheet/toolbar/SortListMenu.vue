@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { PlanLimitTypes, RelationTypes, UITypes, isLinksOrLTAR, isSystemColumn } from 'nocodb-sdk'
   import type { ColumnType, LinkToAnotherRecordType } from 'nocodb-sdk'
+  import uniqBy from 'lodash/uniqBy'
   import {
     ActiveViewInj,
     IsLockedInj,
@@ -42,7 +43,7 @@
     }
   })
 
-  const columns = computed(() => meta.value?.columns || [])
+  const columns = computed(() => uniqBy(meta.value?.columns, 'id') || [])
 
   const columnByID = computed(() =>
     columns.value.reduce((obj, col) => {

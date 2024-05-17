@@ -37,8 +37,8 @@ export class PublicMetasService {
         const column = view.model.columnsById[c.fk_column_id];
         return (
           c.show ||
-          (column.rqd && !column.cdf && !column.ai) ||
-          column.pk ||
+          (column?.rqd && !column?.cdf && !column?.ai) ||
+          column?.pk ||
           view.model.columns.some(
             (c1) =>
               isLinksOrLTAR(c1.uidt) &&

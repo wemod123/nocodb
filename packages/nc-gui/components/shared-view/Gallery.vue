@@ -25,7 +25,7 @@ useProvideSmartsheetStore(sharedView, meta, true, ref([]), nestedFilters)
 <template>
   <div class="nc-container h-full">
     <div class="flex flex-col h-full flex-1 min-w-0">
-      <LazySmartsheetToolbar class="!px-6"/>
+      <LazySmartsheetToolbar />
       <div class="h-full flex-1 min-w-0 min-h-0 bg-gray-50">
         <LazySmartsheetGallery />
       </div>

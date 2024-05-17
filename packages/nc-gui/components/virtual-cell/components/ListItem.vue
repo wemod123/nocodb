@@ -75,7 +75,7 @@
 <template>
   <NcTooltip class="z-10"
              placement="top"
-             :disabled="isMobileMode || readonly">
+             :disabled="isMobileMode || readonly || isPublic">
     <template #title>
       {{ $t("title.clickToAction", { action: isLinked ? $t("title.actionUnlinkRecord") : $t("title.actionLinkRecord") }) }}
     </template>

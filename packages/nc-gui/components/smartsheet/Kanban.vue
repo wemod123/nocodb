@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import Draggable from 'vuedraggable'
+  import uniqBy from 'lodash/uniqBy'
   import { ViewTypes, isVirtualCol } from 'nocodb-sdk'
   import {
     ActiveViewInj,
@@ -108,7 +109,7 @@
 
   const fields = inject(FieldsInj, ref([]))
 
-  const fieldsWithoutDisplay = computed(() => fields.value.filter((f) => !isPrimary(f)))
+  const fieldsWithoutDisplay = computed(() => uniqBy(fields.value, 'id').filter((f) => !isPrimary(f)))
 
   const displayField = computed(() => meta.value?.columns?.find((c) => c.pv && fields.value.includes(c)) ?? null)
 
@@ -212,6 +213,7 @@
   })
 
   const expandFormClick = async (e: MouseEvent, row: RowType) => {
+    if (isPublic.value) return;
     const target = e.target as HTMLElement
     if (target.closest('.arrow') || target.closest('.slick-dots')) return
     if (e.target as HTMLElement) {
@@ -407,10 +409,10 @@
        }">
     <div ref="kanbanContainerRef"
          :class="{ '!px-6 bg-slate-200 !mt-2': isKanbanView }"
-         class="nc-kanban-container flex mt-4 pb-4 px-4 overflow-y-hidden w-full nc-scrollbar-x-lg"
+         class="nc-kanban-container flex mt-4 pb-5 px-4 overflow-y-hidden w-full nc-scrollbar-x-lg"
          :style="{
-           minHeight: isKanbanView ? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',
-           maxHeight: isKanbanView ? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',
+           minHeight: isPublic ? 'calc(100vh - 57px)' : isKanbanView ? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',
+           maxHeight: isPublic ? 'calc(100vh - 57px)' : isKanbanView ? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',
          }">
       <div v-if="isViewDataLoading"
            class="flex flex-row min-h-full gap-x-2">
@@ -515,13 +517,13 @@
                   </a-layout-header>
 
                   <a-layout-content class="overflow-y-hidden mt-1 bg-slate-100"
-                                    style="max-height: calc(100% - 11rem)">
+                                    :style="{ maxHeight: `calc(100% - ${isPublic ? '7.5rem' : '11rem'})` }">
                     <div :ref="kanbanListRef"
                          class="nc-kanban-list bg-slate-100 h-full nc-scrollbar-dark-md"
                          :data-stack-title="stack.title">
                       <!-- Draggable Record Card -->
                       <Draggable :list="formattedData.get(stack.title)"
-                                 item-key="row.Id"
+                                 item-key="row.id"
                                  draggable=".nc-kanban-item"
                                  group="kanban-card"
                                  class="h-full"
@@ -530,7 +532,8 @@
                                  @end="(e) => e.target.classList.remove('grabbing')"
                                  @change="onMove($event, stack.title)">
                         <template #item="{ element: record, index }">
-                          <div class="nc-kanban-item py-2 pl-3 pr-2 min-h-8">
+                          <div class="nc-kanban-item py-2 pl-3 pr-2 min-h-8"
+                               :class="{ 'not-draggable': isLocked || !hasEditPermission || isPublic }">
                             <LazySmartsheetRow :row="record">
                               <a-card :key="`${getRowId(record)}-${index}`"
                                       class="!rounded-lg h-full border-gray-200 border-1 group overflow-hidden break-all max-w-[450px] shadow-sm hover:shadow-md cursor-pointer"
@@ -642,7 +645,7 @@
                     </div>
                   </a-layout-content>
 
-                  <div class="!rounded-lg !px-3 pt-3">
+                  <div class="!rounded-lg-b !px-3 pt-3 border-t">
                     <div v-if="formattedData.get(stack.title)"
                          class="text-center">
                       <!-- Stack Title -->
@@ -653,7 +656,8 @@
                         {{ countByStack.get(stack.title) !== 1 ? $t('objects.records') : $t('objects.record') }}
                       </div>
 
-                      <div class="flex flex-row w-full mt-3 justify-between items-center cursor-pointer bg-white px-4 py-2 rounded-lg border-gray-100 border-1 shadow-sm shadow-gray-100"
+                      <div v-if="!isPublic"
+                           class="flex flex-row w-full mt-3 justify-between items-center cursor-pointer bg-white px-4 py-2 rounded-lg border-gray-100 border-1 shadow-sm shadow-gray-100"
                            @click="() => {
                              selectedStackTitle = stack.title
                              openNewRecordFormHook.trigger(stack.title)
@@ -741,7 +745,7 @@
   </div>
 
   <Suspense>
-    <LazySmartsheetExpandedForm v-if="expandedFormRow && expandedFormDlg"
+    <LazySmartsheetExpandedForm v-if="expandedFormRow && expandedFormDlg && !isPublic"
                                 v-model="expandedFormDlg"
                                 :row="expandedFormRow"
                                 :state="expandedFormRowState"
@@ -750,7 +754,7 @@
   </Suspense>
 
   <Suspense>
-    <LazySmartsheetExpandedForm v-if="expandedFormOnRowIdDlg"
+    <LazySmartsheetExpandedForm v-if="expandedFormOnRowIdDlg && !isPublic"
                                 :key="route.query.rowId"
                                 v-model="expandedFormOnRowIdDlg"
                                 :row="{ row: {}, oldRow: {}, rowMeta: {} }"

@@ -423,6 +423,7 @@ const onConfirmDeleteRowClick = async () => {
 }
 
 watch(rowId, async (nRow) => {
+  if(isPublic.value) return;
   await _loadRow(nRow)
   await loadCommentsAndLogs()
 })
@@ -460,7 +461,7 @@ export default {
 </script>
 
 <template>
-  <NcModal
+  <NcModal v-if="!isPublic"
     :visible="isExpanded"
     :footer="null"
     :width="commentsDrawer && isUIAllowed('commentList') ? 'min(80vw,1280px)' : 'min(80vw,1280px)'"
@@ -523,7 +524,7 @@ export default {
                 {{ isRecordLinkCopied ? $t('labels.copiedRecordURL') : $t('labels.copyRecordURL') }}
               </div>
             </NcButton>
-            <NcDropdown v-if="!isNew" placement="bottomRight">
+            <NcDropdown v-if="!isNew && !isPublic" placement="bottomRight">
               <NcButton type="secondary" class="nc-expand-form-more-actions w-10">
                 <GeneralIcon icon="threeDotVertical" class="text-md text-gray-700" />
               </NcButton>

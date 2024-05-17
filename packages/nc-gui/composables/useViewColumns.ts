@@ -3,6 +3,7 @@ import type { ColumnType, GridColumnReqType, GridColumnType, MapType, TableType,
 import type { ComputedRef, Ref } from 'vue'
 import { computed, ref, storeToRefs, useBase, useNuxtApp, useRoles, useUndoRedo, watch } from '#imports'
 import type { Field } from '#imports'
+import uniqBy from 'lodash/uniqBy'
 
 const [useProvideViewColumns, useViewColumns] = useInjectionState(
   (
@@ -69,7 +70,7 @@ const [useProvideViewColumns, useViewColumns] = useInjectionState(
           }
         }, {})
 
-        fields.value = meta.value?.columns
+        fields.value = uniqBy(meta.value?.columns, 'id')
           ?.map((column: ColumnType) => {
             const currentColumnField = fieldById[column.id!] || {}
 

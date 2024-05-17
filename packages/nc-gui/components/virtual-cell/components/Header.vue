@@ -54,10 +54,10 @@
 <template>
   <div class="flex sm:justify-between relative pb-2 items-center">
     <div v-if="!isMobileMode"
-         class="flex text-base font-bold justify-start items-center min-w-36">
+         class="xs:hidden flex text-base font-bold justify-start items-center min-w-36">
       {{ header ?? '' }}
     </div>
-    <div class="flex flex-row w-full items-center justify-center gap-2 xs:(h-full)">
+    <div class="flex flex-row w-full items-center xs:justify-start justify-center gap-2 xs:(h-full)">
       <div class="flex justify-end h-full)">
         <div
              class="flex max-w-full xs:w-full flex-shrink-0 xs:(h-full) rounded-md gap-1 text-gray-700 items-center bg-gray-100 px-2 py-1">
@@ -95,7 +95,7 @@
       </div>
     </div>
     <div v-if="!isMobileMode"
-         class="flex flex-row justify-end w-36">
+         class="flex xs:hidden flex-row justify-end w-36">
       <NcTooltip class="z-10"
                  placement="bottom">
         <template #title>

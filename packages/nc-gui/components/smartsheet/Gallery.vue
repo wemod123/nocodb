@@ -207,6 +207,7 @@ const gImageStyle = computed(()=>{
   return galleryData.value?.meta ? JSON.parse(galleryData.value.meta) : { }
 })
 
+const isPublic = inject(IsPublicInj, ref(false))
 </script>
 
 <template>
@@ -234,7 +235,7 @@ const gImageStyle = computed(()=>{
     </template>
 
     <div
-      class="flex flex-col w-full nc-gallery nc-scrollbar-dark-md"
+      class="flex flex-col w-full nc-gallery nc-scrollbar-dark-md xs:px-0"
       data-testid="nc-gallery-wrapper"
       style="height: calc(100% - var(--topbar-height) + 4px)"
       :class="{
@@ -369,7 +370,7 @@ const gImageStyle = computed(()=>{
   <LazySmartsheetPagination v-model:pagination-data="paginationData" show-api-timing :change-page="changePage" />
   <Suspense>
     <LazySmartsheetExpandedForm
-      v-if="expandedFormRow && expandedFormDlg"
+      v-if="expandedFormRow && expandedFormDlg && !isPublic"
       v-model="expandedFormDlg"
       :row="expandedFormRow"
       :state="expandedFormRowState"
@@ -380,7 +381,7 @@ const gImageStyle = computed(()=>{
 
   <Suspense>
     <LazySmartsheetExpandedForm
-      v-if="expandedFormOnRowIdDlg"
+      v-if="expandedFormOnRowIdDlg && !isPublic"
       v-model="expandedFormOnRowIdDlg"
       :row="{ row: {}, oldRow: {}, rowMeta: {} }"
       :meta="meta"

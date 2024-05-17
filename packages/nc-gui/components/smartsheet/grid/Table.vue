@@ -1474,7 +1474,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                 <template #default="{ state }">
                   <tr
                     v-show="!showSkeleton"
-                    class="nc-grid-row !xs:h-14"
+                    class="nc-grid-row"
                     :style="{ height: rowHeight ? `${rowHeight * 1.5}rem` : `1.5rem` }"
                     :data-testid="`grid-row-${rowIndex}`"
                   >
@@ -1485,8 +1485,11 @@ const checkMouseMove = (evt: MouseEvent)=>{
                       @contextmenu="contextMenuTarget = null"
                     >
                       <div class="items-center flex gap-1 min-w-[60px]">
+                        <div v-if="isPublicView" class="sm:min-w-4 text-xs text-gray-500">
+                          {{ ((paginationDataRef?.page ?? 1) - 1) * (paginationDataRef?.pageSize ?? 25) + rowIndex + 1 }}
+                        </div>
                         <div
-                          v-if="!readOnly || isMobileMode"
+                          v-else-if="!readOnly || isMobileMode"
                           class="nc-row-no sm:min-w-4 text-xs text-gray-500"
                           :class="{ toggle: !readOnly, hidden: row.rowMeta.selected }"
                         >
@@ -1892,8 +1895,8 @@ const checkMouseMove = (evt: MouseEvent)=>{
   td,
   th {
     @apply border-gray-100 border-solid border-r bg-slate-100;
-    min-height: 36px !important;
-    height: 36px !important;
+    min-height: 32px !important;
+    height: 32px !important;
     position: relative;
   }
 

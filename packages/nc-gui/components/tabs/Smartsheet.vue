@@ -161,6 +161,8 @@ const onDrop = async (event: DragEvent) => {
 watch([activeViewTitleOrId, activeTableId], () => {
   handleSidebarOpenOnMobileForNonViews()
 })
+
+const isPublic = inject(IsPublicInj, ref(false))
 </script>
 
 <template>
@@ -191,7 +193,7 @@ watch([activeViewTitleOrId, activeTableId], () => {
       </div>
       <SmartsheetDetails v-else />
     </div>
-    <LazySmartsheetExpandedFormDetached />
+    <LazySmartsheetExpandedFormDetached v-if="!isPublic"/>
   </div>
 </template>
 

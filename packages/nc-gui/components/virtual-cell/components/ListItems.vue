@@ -368,7 +368,7 @@ const onCreatedRecord = (record: any) => {
     </div>
     <Suspense>
       <LazySmartsheetExpandedForm
-        v-if="expandedFormDlg"
+        v-if="expandedFormDlg && !isPublic"
         v-model="expandedFormDlg"
         :meta="relatedTableMeta"
         :row="{

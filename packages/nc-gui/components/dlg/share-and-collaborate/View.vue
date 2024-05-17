@@ -141,6 +141,7 @@ watch(showShareModal, (val) => {
           <component :is="iconMap.close" />
         </div>
       </div>
+      <div class="mx-3 mt-2 px-3 py-2 rounded-lg bg-warning/30">🛑 Group View In Grid Layout IS NOT Supported In Shared Views.</div>
       <div v-if="isViewToolbar && activeView" class="share-view bg-slate-100">
         <div class="flex flex-row items-center gap-x-2 px-4 pt-3 pb-3 select-none">
           <component
