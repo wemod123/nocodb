@@ -7,7 +7,7 @@ export default defineNuxtPlugin(() => {
   try {
     document.documentElement?.classList.add('nc-fonts-not-loaded')
 
-    const fontFaces = [...document.fonts.values()]
+    const fontFaces = document.fonts ? [...document.fonts.values()] : []
     const materialFont = fontFaces.find((fontFace) => fontFace.family === 'Material Symbols')
 
     if (!materialFont || !materialFont.loaded) {
@@ -29,7 +29,7 @@ export default defineNuxtPlugin(() => {
     let intervalId: any
 
     function poll() {
-      const fontFaces = [...document.fonts.values()]
+      const fontFaces = document.fonts ? [...document.fonts.values()] : []
       const materialFont = fontFaces.find((fontFace) => fontFace.family === 'Material Symbols')
 
       if (materialFont?.status === 'unloaded') {

@@ -24,7 +24,7 @@ const verifyEntryCode = (req, theUid: string) => {
     const { uid, iat } = JSON.parse(decrypted.toString());
     if (
       uid === theUid &&
-      new Date().getTime() - parseInt(iat) < 1000 * 60 * 60 * 2
+      new Date().getTime() - parseInt(iat) < 1000 * 60 * 60 * 24
     ) {
       return 1;
     } else {

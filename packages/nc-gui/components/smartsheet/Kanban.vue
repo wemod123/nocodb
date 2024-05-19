@@ -418,7 +418,7 @@
            class="flex flex-row min-h-full gap-x-2">
         <a-skeleton-input v-for="index of Array(20)"
                           :key="index"
-                          class="!min-w-80 !min-h-full !rounded-xl overflow-hidden" />
+                          class="!min-w-76 !min-h-full !rounded-xl overflow-hidden" />
       </div>
       <a-dropdown v-else
                   v-model:visible="contextMenu"
@@ -441,7 +441,7 @@
               <!-- Non Collapsed Stacks -->
               <a-card v-if="!stack.collapsed"
                       :key="`${stack.id}-${stackIdx}`"
-                      class="mx-4 !bg-slate-100 flex flex-col w-80 h-full !rounded-xl overflow-y-hidden"
+                      class="mx-4 !bg-slate-100 flex flex-col w-76 h-full !rounded-xl overflow-y-hidden"
                       :class="{
                         'not-draggable': stack.title === null || isLocked || isPublic || !hasEditPermission,
                         '!cursor-default': isLocked || !hasEditPermission,

@@ -1366,7 +1366,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                       overlay-class-name="nc-dropdown-grid-add-column"
                       @visible-change="persistMenu = altModifier"
                     >
-                      <div class="h-[36px] w-[60px] flex items-center justify-center">
+                      <div class="h-[32px] w-[60px] flex items-center justify-center">
                         <GeneralIcon v-if="isEeUI && (altModifier || persistMenu)" icon="magic" class="text-sm text-orange-400" />
                         <component :is="iconMap.plus" class="text-base nc-column-add text-gray-500 !group-hover:text-black" />
                       </div>
