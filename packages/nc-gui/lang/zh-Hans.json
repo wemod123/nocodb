@@ -1070,6 +1070,7 @@
     "key": "键"
   },
   "msg": {
+    "authUpdateDetectedPCR": "检测到授权信息更新，点击重新加载以继续",
     "errorPleaseTryLater": "错误，请稍后重试",
     "updateDbTableMsg": "修改数据库表名仅限于指定专业用户，此操作可能引起数据丢失，请谨慎操作",
     "workspaceLimitReachInfo": "当前工作空间数量已达到上限，升级订阅以创建更多工作空间",

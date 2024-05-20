@@ -31,11 +31,15 @@
     <template v-else>
       <div v-if="isPublic"
            class="xs:flex-grow">
-        <div class="text-xl font-semibold truncate flex gap-2 items-center pr-3">
+        <div :class="{ 'pl-10': isMobileMode }"
+             class="text-xl font-semibold truncate flex gap-2 items-center pr-3">
           <GeneralViewIcon v-if="sharedView"
                            class="!text-xl"
                            :meta="sharedView" />
-          {{ sharedView?.title }}
+          <div class="truncate"
+               :style="{ maxWidth: isMobileMode ? `250px` : '500px' }">
+            {{ sharedView?.title }}
+          </div>
         </div>
       </div>
       <LazySmartsheetToolbarMappedBy v-if="isMap" />

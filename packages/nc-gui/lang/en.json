@@ -1068,6 +1068,7 @@
     "key": "Key"
   },
   "msg": {
+    "authUpdateDetectedPCR": "Authorization scope update detected. Please click refresh to continue.",
     "errorPleaseTryLater": "Error, please try later",
     "updateDbTableMsg": "Changing the database table name is restricted to designated professional users only. This operation may result in data loss, so please proceed with caution.",
     "workspaceLimitReachInfo": "Workspace limit reached with current subscription, upgrade subscription to create more workspace",

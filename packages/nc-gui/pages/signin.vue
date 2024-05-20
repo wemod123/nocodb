@@ -1,100 +1,100 @@
 <script setup lang="ts">
-import type { RuleObject } from 'ant-design-vue/es/form'
-import {
-  definePageMeta,
-  iconMap,
-  navigateTo,
-  reactive,
-  ref,
-  useApi,
-  useGlobal,
-  useI18n,
-  useSidebar,
-  validateEmail,
-} from '#imports'
+  import type { RuleObject } from 'ant-design-vue/es/form'
+  import {
+    definePageMeta,
+    iconMap,
+    navigateTo,
+    reactive,
+    ref,
+    useApi,
+    useGlobal,
+    useI18n,
+    useSidebar,
+    validateEmail,
+  } from '#imports'
 
-definePageMeta({
-  requiresAuth: false,
-  title: 'title.headLogin',
-})
+  definePageMeta({
+    requiresAuth: false,
+    title: 'title.headLogin',
+  })
 
-const route = useRoute()
+  const route = useRoute()
 
-const { signIn: _signIn, pF, signOut, entryConfig} = useGlobal()
+  const { signIn: _signIn, pF, signOut, entryConfig } = useGlobal()
 
-const { api, isLoading, error } = useApi({ useGlobalInstance: true })
+  const { api, isLoading, error } = useApi({ useGlobalInstance: true })
 
-const { t } = useI18n()
+  const { t } = useI18n()
 
-useSidebar('nc-left-sidebar', { hasSidebar: false })
+  useSidebar('nc-left-sidebar', { hasSidebar: false })
 
-const formValidator = ref()
+  const formValidator = ref()
 
-const form = reactive({
-  email: '',
-  password: '',
-})
+  const form = reactive({
+    email: '',
+    password: '',
+  })
 
-const formRules: Record<string, RuleObject[]> = {
-  email: [
-    // E-mail is required
-    { required: true, message: t('msg.error.signUpRules.emailReqd') },
-    // E-mail must be valid format
-    {
-      validator: (_: unknown, v: string) => {
-        return new Promise((resolve, reject) => {
-          if (validateEmail(v)) return resolve()
+  const formRules: Record<string, RuleObject[]> = {
+    email: [
+      // E-mail is required
+      { required: true, message: t('msg.error.signUpRules.emailReqd') },
+      // E-mail must be valid format
+      {
+        validator: (_: unknown, v: string) => {
+          return new Promise((resolve, reject) => {
+            if (validateEmail(v)) return resolve()
 
-          reject(new Error(t('msg.error.signUpRules.emailInvalid')))
-        })
+            reject(new Error(t('msg.error.signUpRules.emailInvalid')))
+          })
+        },
+        message: t('msg.error.signUpRules.emailInvalid'),
       },
-      message: t('msg.error.signUpRules.emailInvalid'),
-    },
-  ],
-  password: [
-    // Password is required
-    { required: true, message: t('msg.error.signUpRules.passwdRequired') },
-  ],
-}
+    ],
+    password: [
+      // Password is required
+      { required: true, message: t('msg.error.signUpRules.passwdRequired') },
+    ],
+  }
 
-async function signIn() {
-  if (!formValidator.value.validate()) return
+  async function signIn() {
+    if (!formValidator.value.validate()) return
 
-  resetError()
+    resetError()
 
-  api.auth.signin(form).then(async ({ token }) => {
-    _signIn(token!)
+    api.auth.signin(form).then(async ({ token }) => {
+      _signIn(token!)
 
-    await navigateTo({
-      path: '/',
+      await navigateTo({
+        path: '/',
+        query: route.query,
+      })
+    })
+  }
+
+  function resetError() {
+    if (error.value) error.value = null
+  }
+
+  function navigateSignUp() {
+    navigateTo({
+      path: '/signup',
       query: route.query,
     })
-  })
-}
+  }
 
-function resetError() {
-  if (error.value) error.value = null
-}
+  function navigateForgotPassword() {
+    navigateTo({
+      path: '/forgot-password',
+      query: route.query,
+    })
+  }
 
-function navigateSignUp() {
-  navigateTo({
-    path: '/signup',
-    query: route.query,
-  })
-}
+  onMounted(() => { signOut() })
 
-function navigateForgotPassword() {
-  navigateTo({
-    path: '/forgot-password',
-    query: route.query,
-  })
-}
-
-onMounted(()=>{ signOut() })
-
-function runReload(){
-  pF.value?.reload()
-}
+  function runReload() {
+    pF.value?.reload()
+  }
 </script>
 
 <template>
@@ -102,12 +102,13 @@ function runReload(){
     <div style="width:300px;"
          class="flex flex-col items-center justify-center py-4">
       <component :is="iconMap.acl"
-                 class="text-4xl text-orange-500" />
-      <div class="py-3 text-slate-400">
-        {{ $t('msg.notAuthorized') }}
+                 class="text-5xl text-gray-300" />
+      <div class="pt-3 pb-5 text-slate-400 text-sm">
+        {{ $t('msg.authUpdateDetectedPCR') }}
       </div>
-      <button class="scaling-btn bg-opacity-100" @click="runReload()">
-        <span class="flex items-center gap-2">
+      <button class="bg-opacity-80 bg-violet-500 py-2 text-white w-60 !rounded-lg"
+              @click="runReload()">
+        <span class="flex items-center gap-2 justify-center py-1">
           <component :is="iconMap.reload" />
           {{ $t('general.reload') }}
         </span>
@@ -226,6 +227,7 @@ function runReload(){
 
 <style lang="scss">
 .signin {
+
   .ant-input-affix-wrapper,
   .ant-input {
     @apply !appearance-none my-1 border-1 border-solid border-primary border-opacity-50 rounded;

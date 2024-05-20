@@ -103,13 +103,13 @@
          style="width:300px;"
          class="flex flex-col items-center justify-center py-4">
       <component :is="iconMap.acl"
-                 class="text-4xl text-orange-500" />
-      <div class="py-3 text-slate-400">
-        {{ $t('msg.notAuthorized') }}
+                 class="text-5xl text-gray-300" />
+      <div class="pt-3 pb-5 text-slate-400 text-sm">
+        {{ $t('msg.authUpdateDetectedPCR') }}
       </div>
-      <button class="scaling-btn bg-opacity-100"
+      <button class="bg-opacity-80 bg-violet-500 py-2 text-white w-60 !rounded-lg"
               @click="parentFrame?.reload();">
-        <span class="flex items-center gap-2">
+        <span class="flex items-center gap-2 justify-center py-1">
           <component :is="iconMap.reload" />
           {{ $t('general.reload') }}
         </span>

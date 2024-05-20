@@ -29,25 +29,22 @@
     } catch { }
 
     try {
+      /** Set password with token if present */
+      await loadSharedView(route.params.viewId as string, route.query.p_token as string)
+
+      /** Removing existing other creds */
       drySignOut();
-    } catch { }
-
-    /** Set password with token if present */
-    if (route.query.p_token) {
-      try {
-        await loadSharedView(route.params.viewId as string, route.query.p_token as string)
-        return;
-      } catch { }
-    }
-
-    try {
-      await loadSharedView(route.params.viewId as string)
     } catch (e: any) {
       if (e?.response?.status === 403) {
         showPassword.value = true
       } else {
         message.error(await extractSdkResponseErrorMsg(e))
       }
+    }
+
+    /** Emit event if is loaded via iframe */
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'view-loaded' }, '*')
     }
   })
 </script>

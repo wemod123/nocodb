@@ -409,7 +409,7 @@
        }">
     <div ref="kanbanContainerRef"
          :class="{ '!px-6 bg-slate-200 !mt-2': isKanbanView }"
-         class="nc-kanban-container flex mt-4 pb-5 px-4 overflow-y-hidden w-full nc-scrollbar-x-lg"
+         class="nc-kanban-container flex mt-4 pb-5 px-4 overflow-y-hidden w-full"
          :style="{
            minHeight: isPublic ? 'calc(100vh - 57px)' : isKanbanView ? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',
            maxHeight: isPublic ? 'calc(100vh - 57px)' : isKanbanView ? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',

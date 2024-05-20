@@ -3,7 +3,7 @@ import { ErrorMessages } from 'nocodb-sdk';
 import { NcError } from '~/helpers/catchError';
 
 export function verifyPublicToken(vPassowrd: string, password: string) {
-  if (password?.startsWith(`p__token__`)) {
+  if (vPassowrd && password && password.startsWith(`p__token__`)) {
     const token = password.replace(`p__token__`, ``);
     try {
       const { serviceId } = jwt.verify(
