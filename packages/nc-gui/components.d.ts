@@ -63,6 +63,8 @@ declare module '@vue/runtime-core' {
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
     AUploadDragger: typeof import('ant-design-vue/es')['UploadDragger']
+    CilFullscreen: typeof import('~icons/cil/fullscreen')['default']
+    CilFullscreenExit: typeof import('~icons/cil/fullscreen-exit')['default']
     IcBaselineMoreVert: typeof import('~icons/ic/baseline-more-vert')['default']
     IcOutlineInsertDriveFile: typeof import('~icons/ic/outline-insert-drive-file')['default']
     IcRoundEdit: typeof import('~icons/ic/round-edit')['default']

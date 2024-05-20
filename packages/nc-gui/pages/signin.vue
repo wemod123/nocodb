@@ -103,7 +103,7 @@
          class="flex flex-col items-center justify-center py-4">
       <component :is="iconMap.acl"
                  class="text-5xl text-gray-300" />
-      <div class="pt-3 pb-5 text-slate-400 text-sm">
+      <div class="pt-3 pb-5 text-slate-400 text-sm text-center">
         {{ $t('msg.authUpdateDetectedPCR') }}
       </div>
       <button class="bg-opacity-80 bg-violet-500 py-2 text-white w-60 !rounded-lg"

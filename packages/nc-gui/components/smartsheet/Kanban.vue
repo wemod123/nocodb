@@ -401,7 +401,7 @@
 </script>
 
 <template>
-  <div class="flex flex-col w-full bg-white"
+  <div class="flex h-full flex-col w-full bg-white"
        :class="{ 'bg-slate-200': isKanbanView }"
        data-testid="nc-kanban-wrapper"
        :style="{
@@ -411,8 +411,8 @@
          :class="{ '!px-6 bg-slate-200 !mt-2': isKanbanView }"
          class="nc-kanban-container flex mt-4 pb-5 px-4 overflow-y-hidden w-full"
          :style="{
-           minHeight: isPublic ? 'calc(100vh - 57px)' : isKanbanView ? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',
-           maxHeight: isPublic ? 'calc(100vh - 57px)' : isKanbanView ? 'calc(100vh - 98px)' : 'calc(100vh - 116px)',
+           minHeight: isPublic ? 'calc(100vh - 62px)' : isKanbanView ? 'calc(100vh - 96px)' : 'calc(100vh - 113px)',
+           maxHeight: isPublic ? 'calc(100vh - 62px)' : isKanbanView ? 'calc(100vh - 96px)' : 'calc(100vh - 113px)',
          }">
       <div v-if="isViewDataLoading"
            class="flex flex-row min-h-full gap-x-2">
@@ -437,7 +437,7 @@
                    @change="onMoveStack($event)">
           <template #item="{ element: stack, index: stackIdx }">
             <div class="nc-kanban-stack"
-                 :class="{ 'w-[50px]': stack.collapsed }">
+                 :class="{ 'w-[50px]': stack.collapsed, 'not-draggable': isPublic }">
               <!-- Non Collapsed Stacks -->
               <a-card v-if="!stack.collapsed"
                       :key="`${stack.id}-${stackIdx}`"

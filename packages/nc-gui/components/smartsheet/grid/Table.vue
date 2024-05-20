@@ -1359,7 +1359,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                   }"
                   @click.stop="addColumnDropdown = true"
                 >
-                  <div class="absolute top-0 left-0 h-[36px] border-b-1 border-r-1 border-gray-200 nc-grid-add-edit-column group">
+                  <div class="absolute top-0 left-0 h-[32px] border-b-1 border-r-1 border-gray-200 nc-grid-add-edit-column group">
                     <a-dropdown
                       v-model:visible="addColumnDropdown"
                       :trigger="['click']"
