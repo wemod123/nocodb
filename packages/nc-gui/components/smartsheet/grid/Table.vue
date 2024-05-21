@@ -134,6 +134,22 @@ const { isPkAvail, isSqlView, eventBus } = useSmartsheetStoreOrThrow()
 
 const { isViewDataLoading, isPaginationLoading } = storeToRefs(useViewsStore())
 
+const refreshGrid = ref(false);
+const refreshRowHeight = ref(props.rowHeight)
+
+watch(()=> isViewDataLoading.value, ()=>{
+  if(isViewDataLoading){
+    refreshGrid.value = true;
+    setTimeout(() => {
+      refreshGrid.value = false;
+    }, 500);
+    refreshRowHeight.value = props.rowHeight ? (props.rowHeight * 1.2) : 1.2;
+    setTimeout(() => {
+      refreshRowHeight.value = 0;
+    }, 1000);
+  }
+})
+
 const { $e } = useNuxtApp()
 
 const { t } = useI18n()
@@ -1241,7 +1257,8 @@ const checkMouseMove = (evt: MouseEvent)=>{
 </script>
 
 <template>
-  <div class="flex flex-col" :class="`${headerOnly !== true ? 'h-full w-full' : ''}`">
+  <div v-if="isMobileMode ? !refreshGrid : true" 
+    class="flex flex-col" :class="`${headerOnly !== true ? 'h-full w-full' : ''}`">
     <div data-testid="drag-icon-placeholder" class="absolute w-1 h-1 pointer-events-none opacity-0"></div>
     <div
       ref="dragColPlaceholderDomRef"
@@ -1475,7 +1492,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                   <tr
                     v-show="!showSkeleton"
                     class="nc-grid-row"
-                    :style="{ height: rowHeight ? `${rowHeight * 1.5}rem` : `1.5rem` }"
+                    :style="{ height: isMobileMode && refreshRowHeight ? `${refreshRowHeight * 1.5}rem` : rowHeight ? `${rowHeight * 1.5}rem` : `1.5rem` }"
                     :data-testid="`grid-row-${rowIndex}`"
                   >
                     <td

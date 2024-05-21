@@ -194,7 +194,7 @@
             }">
         {{ activeView?.is_default ? $t('title.defaultView') : activeView?.title }}
       </span>
-      <GeneralIcon v-if="!actionMenuDisabled"
+      <GeneralIcon v-if="!actionMenuDisabled && !isMobileMode"
                    icon="arrowDown"
                    class="ml-1" />
     </div>

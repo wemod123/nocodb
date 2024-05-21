@@ -398,10 +398,12 @@
   const gImageStyle = computed(() => {
     return kanbanMetaData.value?.meta ? JSON.parse(kanbanMetaData.value.meta) : {}
   })
+
+  const { isMobileMode } = useGlobal()
 </script>
 
 <template>
-  <div class="flex h-full flex-col w-full bg-white"
+  <div class="flex h-full flex-col w-full bg-white relative"
        :class="{ 'bg-slate-200': isKanbanView }"
        data-testid="nc-kanban-wrapper"
        :style="{
@@ -742,6 +744,8 @@
                               hide-pagination
                               class="!py-4">
     </LazySmartsheetPagination>
+    <div v-if="isPublic && isMobileMode"
+         class="h-150 w-full -mt-150" />
   </div>
 
   <Suspense>

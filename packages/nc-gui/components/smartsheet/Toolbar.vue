@@ -23,7 +23,7 @@
 
 <template>
   <div :class="{ 'xs:ml-8 !min-h-[54px]': isPublic }"
-       class="nc-table-toolbar ml-6 py-1 xs:pr-2.5 flex gap-2 items-center border-b border-gray-200 overflow-hidden max-h-12 min-h-12 z-7">
+       class="nc-table-toolbar px-2.5 py-1 xs:pl-6 flex gap-2 items-center border-b border-gray-200 overflow-hidden max-h-12 min-h-12 z-7">
     <template v-if="isViewsLoading">
       <a-skeleton-input :active="true"
                         class="!w-44 !h-4 ml-2 !rounded overflow-hidden" />
