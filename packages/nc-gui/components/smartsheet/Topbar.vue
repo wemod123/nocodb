@@ -31,11 +31,16 @@
 
       <LazySmartsheetToolbarViewInfo v-if="!isPublic" />
 
+      <div v-if="isMobileMode" 
+           class="border-1 rounded-lg flex justify-center pr-1 items-center w-10 h-10">
+        <LazySmartsheetToolbarReload />
+      </div>
+
       <div v-if="!isSharedBase && !isMobileMode && isSuper"
            class="w-47.5">
         <SmartsheetTopbarSelectMode />
       </div>
-      <div class="flex-1" />
+      <div v-if="!isMobileMode" class="flex-1" />
 
       <GeneralApiLoader v-if="!isMobileMode" />
 

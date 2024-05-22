@@ -595,7 +595,7 @@ export default {
             </div>
           </template>
           <template v-else>
-            <div class="flex flex-row w-full">
+            <div class="flex flex-row w-full justify-between">
               <NcButton
                 v-if="props.showNextPrevIcons && !isFirstRow"
                 v-e="['c:row-expand:prev']"
@@ -606,7 +606,7 @@ export default {
                 <GeneralIcon icon="arrowLeft" class="text-lg text-gray-700" />
               </NcButton>
               <div v-else class="min-w-10.5"></div>
-              <div class="flex flex-grow justify-center items-center font-semibold text-lg">
+              <div class="flex justify-center items-center font-semibold text-lg">
                 <div>{{ meta.title }}</div>
               </div>
               <NcButton

@@ -135,13 +135,24 @@ const { isPkAvail, isSqlView, eventBus } = useSmartsheetStoreOrThrow()
 const { isViewDataLoading, isPaginationLoading } = storeToRefs(useViewsStore())
 
 const refreshGrid = ref(false);
+const adjustingMobileRowHeight = ref('2.5rem')
 
-watch(()=> isViewDataLoading.value, ()=>{
-  if(isViewDataLoading){
-    refreshGrid.value = true;
+watch(()=> isViewDataLoading.value, (val)=>{
+  if(!isMobileMode.value) {
+    return;
+  }
+
+  refreshGrid.value = true;
+  adjustingMobileRowHeight.value = '2.5rem';
+
+  if(!val){
     setTimeout(() => {
       refreshGrid.value = false;
-    }, 500)
+    }, 300)
+
+    setTimeout(() => {
+      adjustingMobileRowHeight.value = '3rem'
+    }, 800);
   }
 })
 
@@ -1487,7 +1498,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                   <tr
                     v-show="!showSkeleton"
                     class="nc-grid-row"
-                    :style="{ height: isMobileMode ? `2.5rem` : rowHeight ? `${rowHeight * 1.5}rem` : `1.5rem` }"
+                    :style="{ height: isMobileMode ? adjustingMobileRowHeight : rowHeight ? `${rowHeight * 1.5}rem` : `1.5rem` }"
                     :data-testid="`grid-row-${rowIndex}`"
                   >
                     <td
