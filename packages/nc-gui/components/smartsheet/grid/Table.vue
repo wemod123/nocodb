@@ -135,18 +135,13 @@ const { isPkAvail, isSqlView, eventBus } = useSmartsheetStoreOrThrow()
 const { isViewDataLoading, isPaginationLoading } = storeToRefs(useViewsStore())
 
 const refreshGrid = ref(false);
-const refreshRowHeight = ref(props.rowHeight)
 
 watch(()=> isViewDataLoading.value, ()=>{
   if(isViewDataLoading){
     refreshGrid.value = true;
     setTimeout(() => {
       refreshGrid.value = false;
-    }, 500);
-    refreshRowHeight.value = props.rowHeight ? (props.rowHeight * 1.2) : 1.2;
-    setTimeout(() => {
-      refreshRowHeight.value = 0;
-    }, 1000);
+    }, 500)
   }
 })
 
@@ -1492,7 +1487,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                   <tr
                     v-show="!showSkeleton"
                     class="nc-grid-row"
-                    :style="{ height: isMobileMode && refreshRowHeight ? `${refreshRowHeight * 1.5}rem` : rowHeight ? `${rowHeight * 1.5}rem` : `1.5rem` }"
+                    :style="{ height: isMobileMode ? `2.5rem` : rowHeight ? `${rowHeight * 1.5}rem` : `1.5rem` }"
                     :data-testid="`grid-row-${rowIndex}`"
                   >
                     <td
@@ -1570,8 +1565,8 @@ const checkMouseMove = (evt: MouseEvent)=>{
                           rowIndex === (isNaN(selectedRange.end.row) ? activeCell.row : selectedRange.end.row) &&
                           colIndex === (isNaN(selectedRange.end.col) ? activeCell.col : selectedRange.end.col),
                         'nc-required-cell': isColumnRequiredAndNull(columnObj, row.row) && !isPublicView,
-                        'align-middle': !rowHeight || rowHeight === 1,
-                        'align-top': rowHeight && rowHeight !== 1,
+                        'align-middle': !rowHeight || rowHeight === 1 || (isMobileMode && rowHeight <= 3),
+                        'align-top': rowHeight && rowHeight !== 1 && !isMobileMode,
                         'filling': isCellInFillRange(rowIndex, colIndex),
                         'readonly':
                           (isLookup(columnObj) || isRollup(columnObj) || isFormula(columnObj)) &&

@@ -58,7 +58,7 @@
       <LazySmartsheetToolbarSortListMenu v-if="isGrid || isGallery || isKanban" />
 
       <LazySmartsheetToolbarRowHeight v-if="isGrid"
-                                      :class="{ 'hidden': isPublic && isMobileMode }" />
+                                      :class="{ 'hidden': isMobileMode }" />
 
       <template v-if="!isMobileMode">
         <LazySmartsheetToolbarExport v-if="isPublic && allowCSVDownload" />
