@@ -1498,6 +1498,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                   <tr
                     v-show="!showSkeleton"
                     class="nc-grid-row"
+                    :class="{ 'nc-grid-row-selected': row.rowMeta.selected }"
                     :style="{ height: isMobileMode ? adjustingMobileRowHeight : rowHeight ? `${rowHeight * 1.5}rem` : `1.5rem` }"
                     :data-testid="`grid-row-${rowIndex}`"
                   >
@@ -1906,7 +1907,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
 
 <style scoped lang="scss">
 .nc-grid-wrapper {
-  @apply h-full w-full bg-whte;
+  @apply h-full w-full bg-white;
 
   .nc-grid-add-edit-column {
     @apply bg-slate-100;
@@ -1932,7 +1933,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
   }
 
   td {
-    @apply bg-white border-b;
+    @apply border-b;
   }
 
   td:not(:first-child) > div {
@@ -1941,8 +1942,6 @@ const checkMouseMove = (evt: MouseEvent)=>{
   }
 
   table {
-    background-color: var(--nc-grid-bg);
-
     border-collapse: separate;
     border-spacing: 0;
   }
@@ -2069,7 +2068,20 @@ const checkMouseMove = (evt: MouseEvent)=>{
     }
   }
 
+  td {
+    @apply bg-white
+  }
+
+  &.nc-grid-row-selected{
+    td {
+      @apply !bg-slate-50
+    }
+  }
+
   &:hover {
+    td {
+      @apply !bg-slate-50
+    }
     .nc-row-no.toggle {
       @apply hidden;
     }

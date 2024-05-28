@@ -294,7 +294,7 @@ const selectedOpt = computed(() => {
       v-else
       ref="aselect"
       :value="localValue !== undefined ? localValue : vModel"
-      class="w-full overflow-hidden xs:min-h-12"
+      class="w-full overflow-hidden max-h-7 -mt-0.5"
       :class="{ 'caret-transparent': !hasEditRoles }"
       :placeholder="isEditColumn ? $t('labels.optional') : ''"
       :allow-clear="!column.rqd && editAllowed"
@@ -314,7 +314,7 @@ const selectedOpt = computed(() => {
         :key="op.title"
         :value="op.title"
         :data-testid="`select-option-${column.title}-${rowIndex}`"
-        :class="`nc-select-option-${column.title}-${op.title}`"
+        :class="`nc-select-option-${column.title}-${op.title} max-h-7 flex items-center`"
         @click.stop
       >
         <a-tag class="rounded-tag" :color="op.color">
@@ -364,7 +364,10 @@ const selectedOpt = computed(() => {
 }
 
 :deep(.ant-select-selector) {
-  @apply !px-0;
+  @apply !px-0 max-h-7;
+  .ant-select-selection-item{
+    @apply flex items-center;
+  }
 }
 
 :deep(.ant-select-selection-search-input) {

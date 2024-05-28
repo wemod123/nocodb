@@ -128,6 +128,21 @@
     },
   })
 
+  const loadCell = ref(true)
+  watch(
+    () => props.modelValue,
+    (v) => {
+      if (
+        props.column?.uidt === 'DateTime' ||
+        props.column?.uidt === 'Date'
+      ) {
+        loadCell.value = false;
+        setTimeout(() => {
+          loadCell.value = true;
+        }, 100);
+      }
+    })
+
   const navigate = (dir: NavigateDir, e: KeyboardEvent) => {
     if (isJSON(column.value)) return
 
@@ -195,7 +210,8 @@
 </script>
 
 <template>
-  <div ref="elementToObserve"
+  <div v-if="loadCell"
+       ref="elementToObserve"
        class="nc-cell w-full h-full relative"
        :class="[
          `nc-cell-${(column?.uidt || 'default').toLowerCase()}`,

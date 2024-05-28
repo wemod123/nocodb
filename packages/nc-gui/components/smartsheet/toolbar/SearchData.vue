@@ -46,7 +46,8 @@
     () => activeView.value?.id,
     (n, o) => {
       if (n !== o) {
-        loadFieldQuery(activeView.value?.id)
+        // loadFieldQuery(activeView.value?.id)
+        search.value.query = ''
       }
     },
     { immediate: true },

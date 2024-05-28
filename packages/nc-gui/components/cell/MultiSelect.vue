@@ -508,7 +508,7 @@ const onChange = (v) =>{
 }
 
 :deep(.ant-tag) {
-  @apply "rounded" my-[2px];
+  @apply "rounded" my-[2px] !mr-1;
 }
 
 :deep(.ant-tag-close-icon) {
@@ -526,12 +526,15 @@ const onChange = (v) =>{
 .nc-multi-select:not(.read-only) {
   :deep(.ant-select-selector),
   :deep(.ant-select-selector input) {
-    @apply "!cursor-pointer";
+    @apply !cursor-pointer max-h-7 flex items-center;;
+    .ant-select-selection-item{
+      @apply flex items-center;
+    }
   }
 }
 
 :deep(.ant-select-selector) {
-  @apply !px-0;
+  @apply !px-0 -mt-1;
 }
 
 :deep(.ant-select-selection-search-input) {
