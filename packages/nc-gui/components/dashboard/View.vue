@@ -175,6 +175,7 @@ const normalizedWidth = computed(() => {
     :class="{
       'hide-resize-bar': !isLeftSidebarOpen || sidebarState === 'openStart',
     }"
+    dblclick-disabled
     @resize="(event: any) => onResize(event[0].size)"
   >
     <Pane
@@ -188,7 +189,7 @@ const normalizedWidth = computed(() => {
     >
       <div
         ref="wrapperRef"
-        class="nc-sidebar-wrapper relative flex flex-col h-full justify-center !sm:(max-w-94) absolute overflow-visible"
+        class="nc-sidebar-wrapper border-r relative flex flex-col h-full justify-center !sm:(max-w-94) absolute overflow-visible"
         :class="{
           'mobile': isMobileMode,
           'minimized-height': !isLeftSidebarOpen,
@@ -204,7 +205,7 @@ const normalizedWidth = computed(() => {
     </Pane>
     <Pane
       :size="mobileNormalizedContentSize"
-      class="flex-grow"
+      class="flex-grow ml-[1px]"
       :style="{
         'min-width': `${100 - mobileNormalizedSidebarSize}%`,
       }"
@@ -243,7 +244,7 @@ const normalizedWidth = computed(() => {
 
 .nc-sidebar-content-resizable-wrapper > {
   .splitpanes__splitter {
-    @apply !w-0 relative overflow-visible;
+    @apply !w-0 relative overflow-visible !hidden;
   }
   .splitpanes__splitter:before {
     @apply bg-gray-200 w-0.25 absolute left-0 top-0 h-full z-40;

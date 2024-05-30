@@ -69,6 +69,7 @@ export interface EntryConfig {
   services: { [key: string]: any }
   scope?: { paths: string[], sources: string[], bases: string[] }
   targetRoute?: string
+  viewToken?: string
 }
 
 export type State = ToRefs<Omit<StoredState, 'token'>> & {

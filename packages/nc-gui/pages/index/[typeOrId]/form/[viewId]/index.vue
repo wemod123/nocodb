@@ -37,7 +37,8 @@
 </script>
 
 <template>
-  <div class="bg-slate-100 nc-scrollbar-md overflow-y-auto overflow-x-hidden flex flex-col items-center color-transition nc-form-view relative h-[100vh] pt-0 pb-8 md:py-4">
+  <div
+       class="bg-slate-100 nc-scrollbar-md overflow-y-auto overflow-x-hidden flex flex-col items-center color-transition nc-form-view relative h-[100vh]">
     <NuxtPage />
 
     <!-- <div
@@ -66,9 +67,9 @@ p {
 }
 
 .nc-form-view {
-  .nc-cell {
+  .nc-cell:not(.nc-cell-singleselect) {
     @apply !bg-slate-100/70 transition;
-    @apply bg-slate-100/80 border-1 border-slate-200;
+    @apply bg-slate-100/80;
 
     &:hover {
       @apply !border-slate-400/60;
@@ -78,7 +79,7 @@ p {
       @apply !border-violet-500
     }
 
-    * {
+    *:not(.ant-tag, .ant-tag *) {
       @apply !bg-slate-100/70;
     }
 
@@ -105,7 +106,7 @@ p {
     }
 
     &.nc-input {
-      @apply w-full rounded p-2 min-h-[40px] flex items-center;
+      @apply w-full rounded p-2 min-h-[44px] flex items-center;
 
       .duration-cell-wrapper {
         @apply w-full;

@@ -180,7 +180,7 @@ const onDelete = async () => {
     </template>
 
     <template v-if="view.type !== ViewTypes.FORM">
-      <template v-if="isUIAllowed('csvTableImport') && !isPublicView">
+      <template v-if="false && isUIAllowed('csvTableImport') && !isPublicView">
         <NcSubMenu key="upload">
           <template #title>
             <div

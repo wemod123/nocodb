@@ -162,7 +162,7 @@ const openDropDown = (e: Event) => {
       </span>
     </a-tooltip>
 
-    <span v-if="isVirtualColRequired(column, meta?.columns || []) || required" class="text-red-500">&nbsp;*</span>
+    <span v-if="isVirtualColRequired(column, meta?.columns || []) || required" class="!text-red-500">&nbsp;*</span>
 
     <template v-if="!hideMenu">
       <div class="flex-1" />

@@ -79,13 +79,13 @@ const [useProvideSharedFormStore, useSharedFormStore] = useInjectionState((share
     columns.value?.filter((c) => c.show).filter((col) => !isVirtualCol(col) || isLinksOrLTAR(col.uidt)),
   )
 
-  const loadSharedView = async () => {
+  const loadSharedView = async (routePwd?: string) => {
     passwordError.value = null
 
     try {
       const viewMeta = await api.public.sharedViewMetaGet(sharedViewId, {
         headers: {
-          'xc-password': password.value,
+          'xc-password': password.value || routePwd,
         },
       })
 
@@ -133,7 +133,7 @@ const [useProvideSharedFormStore, useSharedFormStore] = useInjectionState((share
       } else if ((await extractSdkResponseErrorMsg(e)) === ErrorMessages.INVALID_SHARED_VIEW_PASSWORD) {
         passwordDlg.value = true
 
-        if (password.value && password.value !== '') passwordError.value = 'Something went wrong. Please check your credentials.'
+        if (password.value && password.value !== '') passwordError.value = 'ERR_INVALID_PASSWORD_COMPLEX'
       }
     }
   }

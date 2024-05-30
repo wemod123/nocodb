@@ -134,7 +134,8 @@
     (v) => {
       if (
         props.column?.uidt === 'DateTime' ||
-        props.column?.uidt === 'Date'
+        props.column?.uidt === 'Date' ||
+        props.column?.uidt === 'Rating'
       ) {
         loadCell.value = false;
         setTimeout(() => {
@@ -218,10 +219,10 @@
          {
            'font-bold': isPrimary(column) && !props.virtual && !isForm,
            'nc-grid-numeric-cell-right': isGrid && isNumericField && !isEditColumnMenu && !isForm && !isExpandedFormOpen,
-           'h-10': isForm && !isSurveyForm && !isAttachment(column) && !props.virtual,
+           'h-10': isForm && !isSurveyForm && !isAttachment(column) && !props.virtual && !isSingleSelect(column),
            'nc-grid-numeric-cell-left': (isForm && isNumericField && isExpandedFormOpen) || isEditColumnMenu,
            '!min-h-30 resize-y': isTextArea(column) && (isForm || isSurveyForm),
-           '!border-2 !border-brand-500': props.editEnabled && (isSurveyForm || isForm) && !isDrawerExist(),
+           '!overflow-visible': isForm
          },
        ]"
        @keydown.enter.exact="navigate(NavigateDir.NEXT, $event)"
@@ -292,6 +293,7 @@
       </template>
     </template>
   </div>
+  <div v-else class="min-h-[32px]" />
 </template>
 
 <style scoped lang="scss">

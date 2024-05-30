@@ -54,3 +54,9 @@ useSelectedCellKeyupListener(inject(ActiveCellInj, ref(false)), (e: KeyboardEven
     </template>
   </a-rate>
 </template>
+
+<style>
+.ant-rate-star-first,.ant-rate-star-second {
+    color: rgba(148, 163, 184, 0.4);
+}
+</style>

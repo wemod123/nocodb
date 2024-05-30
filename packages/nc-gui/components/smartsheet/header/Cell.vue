@@ -109,7 +109,7 @@ const onClick = (e: Event) => {
       </a-tooltip>
     </div>
 
-    <span v-if="(column.rqd && !column.cdf) || required" class="text-red-500">&nbsp;*</span>
+    <span v-if="(column.rqd && !column.cdf) || required" class="!text-red-500">&nbsp;*</span>
 
     <template v-if="!hideMenu">
       <div class="flex-1" />

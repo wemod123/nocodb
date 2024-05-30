@@ -197,7 +197,7 @@ watch(editorDom, () => {
 
 .nc-textarea-rich-editor {
   .ProseMirror {
-    @apply flex-grow pt-1 border-1 border-gray-200 rounded-lg pr-1 mr-2;
+    @apply flex-grow pt-0.5 border-1 border-gray-200 rounded-lg pr-1 mr-2;
 
     > * {
       @apply ml-1;
