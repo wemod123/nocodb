@@ -733,7 +733,7 @@ watch(modelRef, async () => {
         {{ importingTip }}
       </p>
     </template>
-    <a-card v-if="importDataOnly">
+    <a-card v-if="importDataOnly" class="max-ant-card">
       <a-form :model="data" name="import-only">
         <p v-if="data.tables && quickImportType === 'excel'" class="text-center">
           {{ data.tables.length }} sheet{{ data.tables.length > 1 ? 's' : '' }}

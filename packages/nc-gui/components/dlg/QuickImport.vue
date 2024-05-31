@@ -3,38 +3,6 @@ import type { TableType } from 'nocodb-sdk'
 import type { UploadChangeParam, UploadFile } from 'ant-design-vue'
 import { Upload } from 'ant-design-vue'
 import { toRaw, unref } from '@vue/runtime-core'
-import type { ImportWorkerPayload, importFileList, streamImportFileList } from '#imports'
-import {
-  BASE_FALLBACK_URL,
-  CSVTemplateAdapter,
-  ExcelTemplateAdapter,
-  ExcelUrlTemplateAdapter,
-  Form,
-  ImportSource,
-  ImportType,
-  ImportWorkerOperations,
-  ImportWorkerResponse,
-  JSONTemplateAdapter,
-  JSONUrlTemplateAdapter,
-  computed,
-  extractSdkResponseErrorMsg,
-  fieldRequiredValidator,
-  iconMap,
-  importCsvUrlValidator,
-  importExcelUrlValidator,
-  importUrlValidator,
-  initWorker,
-  message,
-  reactive,
-  ref,
-  storeToRefs,
-  useBase,
-  useGlobal,
-  useI18n,
-  useNuxtApp,
-  useVModel,
-} from '#imports'
-
 // import worker script according to the doc of Vite
 import importWorkerUrl from '~/workers/importWorker?worker&url'
 
@@ -146,7 +114,7 @@ const importMeta = computed(() => {
 const dialogShow = useVModel(rest, 'modelValue', emit)
 
 // watch dialogShow to init or terminate worker
-if (isWorkerSupport) {
+if (isWorkerSupport && process.env.NODE_ENV === 'production') {
   watch(
     dialogShow,
     async (val) => {
@@ -551,10 +519,10 @@ const onChange = () => {
     @keydown.esc="dialogShow = false"
   >
     <a-spin :spinning="isParsingData" :tip="progressMsg" size="large">
-      <div class="px-5">
-        <div class="prose-xl font-weight-bold my-5">{{ importMeta.header }}</div>
+      <div class="px-2">
+        <div class="prose-xl font-weight-bold -mt-1">{{ importMeta.header }}</div>
 
-        <div class="mt-5">
+        <div class="mt-2 px-2 overflow-y-auto nc-scrollbar-md py-4" style="max-height:calc(100vh - 240px)">
           <LazyTemplateEditor
             v-if="templateEditorModal"
             ref="templateEditorRef"
@@ -721,3 +689,24 @@ const onChange = () => {
     </template>
   </a-modal>
 </template>
+
+<style lang="pcss">
+  .nc-modal-quick-import.ant-modal-wrap{
+    @apply flex items-center justify-center;
+    .ant-modal{
+      top: auto;
+      margin-top: 24px
+    }
+
+    .ant-modal-footer{
+      @apply mt-2
+    }
+
+    .max-ant-card{
+      @apply !border-none;
+      .ant-card-body{
+        @apply !p-0;
+      }
+    }
+  }
+</style>

@@ -165,11 +165,19 @@
   })
 
   const isPublic = inject(IsPublicInj, ref(false))
+
+  const isWithinIframe = computed(() => {
+    try {
+      return window.self !== window.top
+    } catch (e) {
+      return true
+    }
+  })
 </script>
 
 <template>
   <LazySmartsheetTopbar />
-  <div v-if="entryConfig?.entryToken && isForm && activeView"
+  <div v-if="entryConfig?.entryToken && isForm && activeView && isWithinIframe"
        class="w-full"
        style="height:calc(100vh - 52px)">
     <iframe v-if="activeView?.uuid"
@@ -177,8 +185,14 @@
             width="100%"
             height="100%"
             style="border: none;" />
-    <div v-else>
-      xxxf
+    <div v-else
+         class="flex items-center justify-center h-full flex-col">
+      <component :is="iconMap.info"
+                 class="w-12 h-12 text-slate-300" />
+      <div class="text-center text-gray-500">
+        <div class="text-lg">Form not released</div>
+        <div class="text-sm">Please contact admin for correct configurations</div>
+      </div>
     </div>
   </div>
   <div v-else
@@ -190,7 +204,7 @@
            class="flex flex-col h-full flex-1 min-w-0">
         <LazySmartsheetToolbar v-if="!isForm" />
         <div class="flex flex-row w-full"
-             style="height: calc(100% - var(--topbar-height) - 4px)">
+             style="height: calc(100% - var(--topbar-height) + 1px)">
           <Transition name="layout"
                       mode="out-in">
             <div class="flex flex-1 min-h-0 w-3/4">

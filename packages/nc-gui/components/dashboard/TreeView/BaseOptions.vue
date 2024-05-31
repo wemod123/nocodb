@@ -59,7 +59,7 @@ function openQuickImportDialog(type: string) {
 
 <template>
   <!-- Quick Import From -->
-  <NcSubMenu class="py-0" data-testid="nc-sidebar-base-import">
+  <NcSubMenu v-if="false" class="py-0" data-testid="nc-sidebar-base-import">
     <template #title>
       <GeneralIcon icon="download" />
       {{ $t('labels.importData') }}
