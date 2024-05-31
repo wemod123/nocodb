@@ -213,17 +213,16 @@
     </template>
 
     <template v-if="view.type !== ViewTypes.FORM">
-      <template v-if="isUIAllowed('csvTableImport') && !isPublicView">
-        <NcMenuItem v-if="isUIAllowed(`csvTableImport`) && !isPublicView"
-                    @click="openQuickImportDialog('csv')">
-          <div class="nc-base-menu-item"
-               :class="{ disabled: lockType === LockType.Locked }">
-            <component :is="iconMap.upload" />
-            {{ `${$t('general.upload')} CSV` }}
-          </div>
-        </NcMenuItem>
+      <NcMenuItem v-if="!isPublicView && isUIAllowed('viewCreateOrEdit')"
+                  @click="openQuickImportDialog('csv')">
+        <div class="nc-base-menu-item"
+             :class="{ disabled: lockType === LockType.Locked }">
+          <component :is="iconMap.upload" />
+          {{ `${$t('general.upload')} CSV` }}
+        </div>
+      </NcMenuItem>
 
-        <!-- <NcSubMenu key="upload">
+      <!-- <NcSubMenu key="upload">
           <template #title>
             <div v-e="[
               'c:navdraw:preview-as',
@@ -258,7 +257,7 @@
             </NcMenuItem>
           </template>
         </NcSubMenu> -->
-      </template>
+
       <NcSubMenu key="download">
         <template #title>
           <div v-e="[

@@ -1257,8 +1257,10 @@ onKeyStroke('ArrowDown', onDown)
 
 const showTooltip = ref(false)
 const checkMouseMove = (evt: MouseEvent)=>{
-  const diff = window.innerHeight - (evt.y || evt.clientY || evt.pageY)
-  showTooltip.value =  (diff < 52 && diff > 41)
+  const rect = gridWrapper.value?.getBoundingClientRect();
+  if(!rect) return;
+  const mouseY = evt.clientY - rect.top;
+  showTooltip.value =  mouseY > rect.height - 20 && mouseY < rect.height + rect.top;
 }
 </script>
 
@@ -1283,7 +1285,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
         class="border-r-1 border-l-1 border-gray-200 h-full"
       ></div>
     </div>
-    <div ref="gridWrapper" class="nc-grid-wrapper min-h-0 flex-1 relative" :class="gridWrapperClass" @mousemove="checkMouseMove">
+    <div ref="gridWrapper" class="nc-grid-wrapper min-h-0 flex-1 relative" :class="gridWrapperClass" @mousemove="checkMouseMove" @mouseout="showTooltip=false">
       <div v-show="isPaginationLoading" class="flex items-center justify-center absolute l-0 t-0 w-full h-full z-10 pb-10">
         <div class="flex flex-col justify-center gap-2">
           <GeneralLoader size="xlarge" />
@@ -1883,7 +1885,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
       </template>
     </SmartsheetPagination>
     <div v-if="showTooltip" 
-         class="absolute z-5 right-[40%] bottom-15 bg-slate-700 text-slate-50 rounded-lg border-1 px-3 py-2">
+         class="absolute z-[500] right-[40%] bottom-18 bg-slate-700 text-slate-50 rounded-lg border-1 px-3 py-2">
       {{ $t("msg.scrollHMsg") }}
     </div>
   </div>
