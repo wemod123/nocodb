@@ -88,11 +88,11 @@
 
         <a-alert v-if="notFound"
                  type="warning"
-                 class="my-4 text-center"
+                 class="my-4 text-center z-10"
                  :message="$t('general.notFound')" />
 
         <template v-else-if="submitted">
-          <div class="flex justify-center">
+          <div class="flex justify-center z-10">
             <div v-if="sharedFormView"
                  class="min-w-[380px] mt-3 pb-10">
               <div class="pb-12 text-lg flex gap-2 justify-center items-center">

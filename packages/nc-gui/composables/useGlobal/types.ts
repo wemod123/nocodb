@@ -70,6 +70,7 @@ export interface EntryConfig {
   scope?: { paths: string[], sources: string[], bases: string[] }
   targetRoute?: string
   viewToken?: string
+  subFrameToken?: string
 }
 
 export type State = ToRefs<Omit<StoredState, 'token'>> & {

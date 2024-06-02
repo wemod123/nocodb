@@ -207,5 +207,5 @@
     </template>
   </NcDropdown>
 
-  <LazySmartsheetToolbarReload v-if="openedViewsTab === 'view' && !isMobileMode && !isRenaming" />
+  <LazySmartsheetToolbarReload v-if="openedViewsTab === 'view' && !isMobileMode && !isRenaming && (activeView?.type !== ViewTypes.FORM)" />
 </template>

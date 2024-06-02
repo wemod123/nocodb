@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import type { ColumnType, LinkToAnotherRecordType, TableType } from 'nocodb-sdk'
-  import { UITypes, isLinksOrLTAR } from 'nocodb-sdk'
+  import { UITypes, ViewTypes, isLinksOrLTAR } from 'nocodb-sdk'
 
   import {
     ActiveViewInj,
@@ -195,6 +195,8 @@
       </div>
     </div>
   </div>
+  <TabsSubFrame v-else-if="isGrid && !isPublic && !activeView?.is_default && activeView?.meta?.loadSubFrame === true && activeView?.meta?.subFramePath"
+                v-model:activeTab="activeTab" />
   <div v-else
        class="nc-container flex flex-col h-full"
        @drop="onDrop"
@@ -204,7 +206,7 @@
            class="flex flex-col h-full flex-1 min-w-0">
         <LazySmartsheetToolbar v-if="!isForm" />
         <div class="flex flex-row w-full"
-             style="height: calc(100% - var(--topbar-height) + 1px)">
+             style="height: calc(100% - var(--topbar-height))">
           <Transition name="layout"
                       mode="out-in">
             <div class="flex flex-1 min-h-0 w-3/4">

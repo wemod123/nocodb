@@ -9,12 +9,13 @@ export default class NocoStore {
   private static prefix: string;
 
   public static init() {
-    this.cacheDisabled = (process.env.NC_DISABLE_CACHE_STORE || false) === 'true';
+    this.cacheDisabled =
+      (process.env.NC_DISABLE_CACHE_STORE || false) === 'true';
     if (this.cacheDisabled) {
       return;
     }
     if (process.env.NC_REDIS_STORE_URL) {
-      this.client = new RedisCacheMgr(process.env.NC_REDIS_STORE_URL);
+      this.client = new RedisCacheMgr(process.env.NC_REDIS_STORE_URL, true);
     } else {
       this.client = new RedisMockCacheMgr();
     }

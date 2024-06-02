@@ -1282,6 +1282,7 @@
         "no_new": "No new notifications",
         "clear": "Clear"
       },
+      "errorPleaseClickReloadToRetry": "Error, please click reload to retry",
       "sponsor": {
         "header": "You can help us!",
         "message": "We are a tiny team working full time to make NocoDB Open-source. We believe a tool like NocoDB should be available freely to every problem solver on Internet."

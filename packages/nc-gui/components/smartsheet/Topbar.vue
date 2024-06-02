@@ -2,7 +2,7 @@
   import { IsPublicInj, inject, ref, useSmartsheetStoreOrThrow, useViewsStore } from '#imports'
 
   const { isGrid, isForm, isGallery, isKanban, isMap } = useSmartsheetStoreOrThrow()
-
+  const { activeView } = storeToRefs(useViewsStore())
   const { isSuper } = useRoles();
 
   const router = useRouter()
@@ -29,20 +29,24 @@
     <template v-else>
       <GeneralOpenLeftSidebarBtn v-if="!isMobileMode" />
 
-      <LazySmartsheetToolbarViewInfo v-if="!isPublic" />
+      <LazySmartsheetToolbarViewInfo v-if="!isPublic"
+                                     :class="{ 'flex-1': isMobileMode }" />
 
-      <div v-if="isMobileMode && !isForm" 
+      <div v-if="isMobileMode && !isForm"
            class="border-1 rounded-lg flex justify-center pr-1 items-center w-10 h-10">
         <LazySmartsheetToolbarReload />
       </div>
 
-      <div v-if="isMobileMode && isForm" class="flex-1" /> 
+      <div v-if="!isMobileMode"
+           class="flex-1" />
 
       <div v-if="!isSharedBase && !isMobileMode && isSuper"
-           class="w-47.5">
+           class="w-64 flex items-center truncate">
         <SmartsheetTopbarSelectMode />
+        <SmartsheetTopbarGridEmbed v-if="isGrid && !activeView?.is_default" />
       </div>
-      <div v-if="!isMobileMode" class="flex-1" />
+      <div v-if="!isMobileMode"
+           class="flex-1" />
 
       <GeneralApiLoader v-if="!isMobileMode" />
 

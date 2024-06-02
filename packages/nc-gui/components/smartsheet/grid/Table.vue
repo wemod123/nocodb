@@ -1507,6 +1507,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                     <td
                       key="row-index"
                       class="caption nc-grid-cell pl-5 pr-1"
+                      :class="{ 'active-row-cell': activeCell.row === rowIndex }"
                       :data-testid="`cell-Id-${rowIndex}`"
                       @contextmenu="contextMenuTarget = null"
                     >
@@ -1572,6 +1573,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
                       class="cell relative nc-grid-cell cursor-pointer"
                       :class="{
                         'active': isCellSelected(rowIndex, colIndex),
+                        'active-row-cell': activeCell.row === rowIndex,
                         'active-cell':
                           (activeCell.row === rowIndex && activeCell.col === colIndex) ||
                           (selectedRange._start?.row === rowIndex && selectedRange._start?.col === colIndex),
@@ -1884,8 +1886,8 @@ const checkMouseMove = (evt: MouseEvent)=>{
         </div>
       </template>
     </SmartsheetPagination>
-    <div v-if="showTooltip" 
-         class="absolute z-[500] right-[40%] bottom-18 bg-slate-700 text-slate-50 rounded-lg border-1 px-3 py-2">
+    <div v-show="showTooltip" 
+         class="absolute z-99 right-[40%] bottom-17 bg-slate-700 text-slate-50 rounded-lg border-1 px-3 py-2">
       {{ $t("msg.scrollHMsg") }}
     </div>
   </div>
@@ -1965,15 +1967,19 @@ const checkMouseMove = (evt: MouseEvent)=>{
 
   // todo: replace with css variable
   td.active::after {
-    @apply text-primary border-current bg-primary bg-opacity-5;
+    @apply text-primary border-current;
   }
 
   td.active.readonly::after {
-    @apply text-primary bg-grey-50 bg-opacity-5 !border-gray-200;
+    @apply text-primary !border-gray-200;
   }
 
   td.active-cell::after {
-    @apply border-1 border-solid text-primary border-current bg-primary bg-opacity-3;
+    @apply border-1 border-solid text-primary border-current;
+  }
+
+  td.active-row-cell:not(.active-cell) {
+    @apply !bg-slate-100;
   }
 
   td.filling::after {
@@ -2081,7 +2087,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
   }
 
   &:hover {
-    td {
+    td:not(.active-cell) {
       @apply !bg-slate-50
     }
     .nc-row-no.toggle {

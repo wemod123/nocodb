@@ -88,6 +88,7 @@ declare module '@vue/runtime-core' {
     MaterialSymbolsWarning: typeof import('~icons/material-symbols/warning')['default']
     MdiAccountSupervisorOutline: typeof import('~icons/mdi/account-supervisor-outline')['default']
     MdiArrowDownDropCircle: typeof import('~icons/mdi/arrow-down-drop-circle')['default']
+    MdiArrowDownDropCircleOutline: typeof import('~icons/mdi/arrow-down-drop-circle-outline')['default']
     MdiArrowLeft: typeof import('~icons/mdi/arrow-left')['default']
     MdiArrowULeftBottom: typeof import('~icons/mdi/arrow-u-left-bottom')['default']
     MdiCalculatorVariant: typeof import('~icons/mdi/calculator-variant')['default']

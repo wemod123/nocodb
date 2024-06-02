@@ -195,7 +195,7 @@ main {
     width: 0px;
   }
   &::-webkit-scrollbar {
-    @apply bg-transparent;
+    @apply bg-slate-300/30;
   }
   &::-webkit-scrollbar-thumb {
     width: 14px;
@@ -203,6 +203,9 @@ main {
   }
   &::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-400;
+  }
+  &::-webkit-scrollbar-corner {
+    @apply bg-gray-200;
   }
 }
 
