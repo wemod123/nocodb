@@ -9,6 +9,7 @@
   const frameContainer = ref();
   const subFrameConfig = ref();
   const isError = ref(false);
+  const loading = ref(false)
 
   const isValidPreviewToken = (token: string) => {
     try {
@@ -19,6 +20,7 @@
   }
 
   const runEmbed = async () => {
+    loading.value = true;
     try {
       const getPfConfig = pF.value &&
         props.asPageId &&
@@ -61,6 +63,10 @@
           frameContainer.value.appendChild(iframe);
         });
       }
+
+      setTimeout(() => {
+        loading.value = false;
+      }, 1000);
 
       connectToChild({
         iframe,
@@ -115,7 +121,13 @@
     </div>
   </div>
 
-  <div v-if="!(subFrameConfig || (previewToken && usePreviewToken))"
+  <div v-if="loading || true"
+       style="height:calc(100vh - 51px)"
+       class="absolute top-[51px] left-0 w-full bg-gray-100 bg-opacity-50 z-10 flex justify-center items-center">
+    <a-spin />
+  </div>
+
+  <div v-else-if="!(subFrameConfig || (previewToken && usePreviewToken))"
        class="p-10">
     <div class="text-lg font-semibold mb-4">Sub Frame Token For Preview</div>
     <a-textarea v-model:value="previewToken"
