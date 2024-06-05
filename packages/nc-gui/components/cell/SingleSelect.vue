@@ -194,7 +194,7 @@
         vModel.value = newOptValue
         await getMeta(column.value.fk_model_id!, true)
       } catch (e: any) {
-        console.log(e)
+        // console.log(e)
         message.error(await extractSdkResponseErrorMsg(e))
       }
     }

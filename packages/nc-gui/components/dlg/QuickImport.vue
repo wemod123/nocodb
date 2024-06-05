@@ -496,7 +496,7 @@
 
       templateEditorModal.value = true
     } catch (e: any) {
-      console.log(e)
+      // console.log(e)
       message.error(await extractSdkResponseErrorMsg(e))
     } finally {
       isParsingData.value = false

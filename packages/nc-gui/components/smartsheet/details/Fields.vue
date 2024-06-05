@@ -515,7 +515,7 @@ const saveChanges = async () => {
     }
 
     for (const f of fields.value) {
-      console.log(f.title, getFieldOrder(f))
+      // console.log(f.title, getFieldOrder(f))
     }
 
     for (const op of ops.value) {

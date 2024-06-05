@@ -114,7 +114,7 @@ onMounted(async () => {
         }
       } catch (e) {
         isValid.value = false
-        console.log(e)
+        // console.log(e)
       }
     })
 

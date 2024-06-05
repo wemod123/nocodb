@@ -31,7 +31,6 @@ const generate = () => {
     }
     errorForCurrentInput.value = false
   } catch (e) {
-    console.log('e', e)
     errorForCurrentInput.value = true
   }
 }

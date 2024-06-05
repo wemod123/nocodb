@@ -27,11 +27,11 @@
   }
 
   const theUser = computed(
-    () => baseUsers.value?.find(u => u.email === (props.user?.email || props.email))
+    () => baseUsers.value?.find(u => u.email === (props.user?.email || props.email)) || props.user
   )
 
-  const displayName = computed(() => theUser?.display_name ?? '')
-  const email = computed(() => theUser?.email || props.user?.email || props.email)
+  const displayName = computed(() => theUser.value?.display_name ?? '')
+  const email = computed(() => theUser.value?.email || props.user?.email || props.email)
 
   function hashStringToNumber(str: string) {
     let hash = 0

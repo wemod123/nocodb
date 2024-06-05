@@ -1189,7 +1189,7 @@ watch(
           await loadData?.()
         } catch (e) {
           if (!axios.isCancel(e)) {
-            console.log(e)
+            // console.info(e)
             message.error(t('msg.errorLoadingData'))
           }
         } finally {
@@ -1197,7 +1197,7 @@ watch(
         }
       }
     } catch (e) {
-      console.log(e)
+      console.error(e)
     } finally {
       switchingTab.value = false
     }

@@ -54,7 +54,6 @@ const loadCollaborators = async () => {
               : ProjectRoles.NO_ACCESS),
       })),
     ]
-    console.log('collaborators.value>>>',collaborators.value)
   } catch (e: any) {
     message.error(await extractSdkResponseErrorMsg(e))
   }

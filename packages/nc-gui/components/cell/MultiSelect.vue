@@ -278,7 +278,7 @@ async function addIfMissingAndSave() {
       activeOptCreateInProgress.value--
     }
   } catch (e: any) {
-    console.log(e)
+    // console.log(e)
     activeOptCreateInProgress.value--
     message.error(await extractSdkResponseErrorMsg(e))
   }

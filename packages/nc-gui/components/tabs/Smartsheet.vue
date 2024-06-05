@@ -155,9 +155,7 @@
           childColumn: childPkCol?.title,
         })
       }
-    } catch (e) {
-      // console.log('error', e)
-    }
+    } catch { }
   }
 
   watch([activeViewTitleOrId, activeTableId], () => {

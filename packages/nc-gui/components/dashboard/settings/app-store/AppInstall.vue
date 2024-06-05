@@ -119,7 +119,7 @@ const readPluginDetails = async () => {
     plugin.value = { ...res, formDetails, parsedInput }
     pluginFormData.value = plugin.value.parsedInput
   } catch (e) {
-    console.log(e)
+    // console.log(e)
   } finally {
     isLoading.value = false
   }

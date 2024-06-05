@@ -74,7 +74,7 @@ const formatJson = (json: string) => {
   try {
     return JSON.stringify(JSON.parse(json))
   } catch (e) {
-    console.log(e)
+    // console.log(e)
     return json
   }
 }

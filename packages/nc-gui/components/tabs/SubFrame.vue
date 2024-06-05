@@ -44,6 +44,10 @@
     } catch {
       console.error('Invalid subframe options')
     }
+
+    setTimeout(() => {
+      loading.value = false;
+    }, 1500);
   }
 
   const embedContent = (options: any) => {
@@ -78,7 +82,6 @@
           requestEmbedConfig: () => options,
 
           event: (eventName: string, payload?: any) => {
-            // console.log('event--->>>', eventName, payload)
             switch (eventName) {
               case 'error':
                 isError.value = payload ?? 'Error'
@@ -121,7 +124,7 @@
     </div>
   </div>
 
-  <div v-if="loading || true"
+  <div v-if="loading"
        style="height:calc(100vh - 51px)"
        class="absolute top-[51px] left-0 w-full bg-gray-100 bg-opacity-50 z-10 flex justify-center items-center">
     <a-spin />
