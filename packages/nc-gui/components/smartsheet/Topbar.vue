@@ -56,7 +56,7 @@
       <LazyGeneralLanguage v-if="false && isSharedBase && !appInfo.ee"
                            class="cursor-pointer text-lg hover:(text-black bg-gray-200) mr-0 p-1.5 rounded-md" />
 
-      <SmartsheetToolbarExport v-if="!isMobileMode && entryConfig?.entryToken && !isForm" />
+      <SmartsheetToolbarExport v-if="!isMobileMode && entryConfig?.entryToken && !isForm && !activeView?.meta?.loadSubFrame" />
 
       <GeneralOpenLeftSidebarBtn v-if="isMobileMode" />
     </template>

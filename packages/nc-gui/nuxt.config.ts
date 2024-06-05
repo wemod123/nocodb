@@ -92,8 +92,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      ncBackendUrl: '',
-      ncDatasetApiBaseUrl: process.env.NC_DATASET_API_BASEURL || 'http://localhost:9000',
+      ncBackendUrl: ''
     },
   },
 

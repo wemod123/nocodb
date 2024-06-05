@@ -195,13 +195,14 @@
       </div>
     </div>
   </div>
-  <TabsSubFrame v-else-if="isGrid && !isPublic && !activeView?.is_default && activeView?.meta?.loadSubFrame === true && activeView?.meta?.subFramePath"
-                v-model:activeTab="activeTab" />
+  <TabsSubFrame v-else-if="isGrid && !isPublic && !activeView?.is_default && activeView?.meta?.loadSubFrame === true && (activeView?.meta?.subFramePath || activeView?.meta?.asAppId)"
+                :source="activeView?.meta?.subFramePath"
+                :as-app-id="activeView?.meta?.asAppId" />
   <div v-else
-       class="nc-container flex flex-col h-full"
+       class="nc-container flex flex-col"
        @drop="onDrop"
        @dragover.prevent>
-    <div style="height: calc(100% - var(--topbar-height))">
+    <div style="height: calc(100vh - var(--topbar-height))">
       <div v-if="openedViewsTab === 'view'"
            class="flex flex-col h-full flex-1 min-w-0">
         <LazySmartsheetToolbar v-if="!isForm" />

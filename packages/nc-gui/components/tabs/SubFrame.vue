@@ -1,18 +1,45 @@
 <script setup lang="ts">
   import { connectToChild } from 'penpal'
-  const { entryConfig } = useGlobal()
+
+  const props = defineProps(['source', 'asAppId'])
+  const { pF } = useGlobal()
 
   const previewToken = ref('')
   const usePreviewToken = ref(false)
-
   const frameContainer = ref();
-
+  const subFrameConfig = ref();
   const isError = ref(false);
 
-  const runEmbed = () => {
-    if (!(entryConfig?.value?.subFrameToken || previewToken.value)) return;
+  const isValidPreviewToken = (token: string) => {
+    try {
+      return JSON.parse(token)
+    } catch (e) {
+      return null
+    }
+  }
 
-    embedContent(entryConfig?.value?.subFrameToken || previewToken.value)
+  const runEmbed = () => {
+    try {
+      subFrameConfig.value = props.asAppId && pF.value?.getSubFrameConfig(
+        props.asAppId
+      )
+
+      if (!(
+        subFrameConfig.value ||
+        previewToken.value ||
+        !isValidPreviewToken(previewToken.value)
+      )) return;
+
+
+      const options = {
+        source: props.source,
+        ...(subFrameConfig.value || isValidPreviewToken(previewToken.value) || {})
+      }
+
+      embedContent(options)
+    } catch {
+      console.error('Invalid subframe options')
+    }
   }
 
   const embedContent = (options: any) => {
@@ -20,7 +47,7 @@
       frameContainer.value.innerHTML = ''
 
       const iframe = document.createElement('iframe');
-      iframe.src = options.frameSrc
+      iframe.src = options.frameSrc || options.source
       iframe.setAttribute("allow", "clipboard-read; clipboard-write");
       if (
         document.readyState === 'complete' ||
@@ -65,10 +92,10 @@
   })
 </script>
 
-
 <template>
-  <div v-if="entryConfig?.subFrameToken || (previewToken && usePreviewToken)"
-       class="w-full h-full relatvie">
+  <div v-show="subFrameConfig || (previewToken && usePreviewToken)"
+       class="w-full relative overflow-hidden"
+       style="height:calc(100vh - 51px)">
     <div ref="frameContainer"
          class="z-0 overflow-hidden frame-container">
       <div v-if="isError"
@@ -86,7 +113,7 @@
     </div>
   </div>
 
-  <div v-else
+  <div v-if="!(subFrameConfig || (previewToken && usePreviewToken))"
        class="p-10">
     <div class="text-lg font-semibold mb-4">Sub Frame Token For Preview</div>
     <a-textarea v-model:value="previewToken"

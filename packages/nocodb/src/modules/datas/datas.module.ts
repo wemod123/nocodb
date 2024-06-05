@@ -2,12 +2,14 @@ import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import multer from 'multer';
 import { NC_ATTACHMENT_FIELD_SIZE } from '~/constants';
+import { DatasetController } from '~/controllers/_dataset.controller';
 import { DataTableController } from '~/controllers/data-table.controller';
 import { DataTableService } from '~/services/data-table.service';
 import { DataAliasController } from '~/controllers/data-alias.controller';
 import { PublicDatasExportController } from '~/controllers/public-datas-export.controller';
 import { PublicDatasController } from '~/controllers/public-datas.controller';
 import { DatasService } from '~/services/datas.service';
+import { DatasetService } from '~/services/_dataset.service';
 import { DatasController } from '~/controllers/datas.controller';
 import { BulkDataAliasController } from '~/controllers/bulk-data-alias.controller';
 import { DataAliasExportController } from '~/controllers/data-alias-export.controller';
@@ -31,6 +33,7 @@ export const dataModuleMetadata = {
   controllers: [
     ...(process.env.NC_WORKER_CONTAINER !== 'true'
       ? [
+          DatasetController,
           DataTableController,
           DatasController,
           BulkDataAliasController,
@@ -44,6 +47,7 @@ export const dataModuleMetadata = {
       : []),
   ],
   providers: [
+    DatasetService,
     DataTableService,
     DatasService,
     BulkDataAliasService,

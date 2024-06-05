@@ -141,13 +141,14 @@
   }
 
   const actionMenuDisabled = computed(() => {
-    return !!(isSuper.value === true
-      ? false
-      : (
-        isMobileMode ||
-        activeView.value?.type === ViewTypes.FORM ||
-        !!entryConfig.value?.entryToken
-      ))
+    return !!(activeView.value?.meta?.loadSubFrame === true && activeView.value?.meta?.subFramePath) ||
+      !!(isSuper.value === true
+        ? false
+        : (
+          isMobileMode ||
+          activeView.value?.type === ViewTypes.FORM ||
+          !!entryConfig.value?.entryToken
+        ))
   })
 </script>
 
@@ -207,5 +208,6 @@
     </template>
   </NcDropdown>
 
-  <LazySmartsheetToolbarReload v-if="openedViewsTab === 'view' && !isMobileMode && !isRenaming && (activeView?.type !== ViewTypes.FORM)" />
+  <LazySmartsheetToolbarReload 
+                               v-if="openedViewsTab === 'view' && !isMobileMode && !isRenaming && (activeView?.type !== ViewTypes.FORM) && !actionMenuDisabled" />
 </template>

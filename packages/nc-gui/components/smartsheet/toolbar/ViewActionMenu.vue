@@ -3,7 +3,7 @@
   import { ViewTypes } from 'nocodb-sdk'
   import { LockType } from '~/lib'
 
-  import { useDialog } from '#imports'
+  import { useDialog, MetaInj, ReloadViewDataHookInj } from '#imports'
   import DlgQuickImport from '~/components/dlg/QuickImport.vue'
 
   import UploadIcon from '~icons/nc-icons/upload'
@@ -14,6 +14,8 @@
     table: TableType
     inSidebar?: boolean
   }>()
+
+  const reloadHook = inject(ReloadViewDataHookInj)!
 
   const emits = defineEmits(['rename', 'closeModal', 'delete'])
 
@@ -44,6 +46,8 @@
 
   const currentBaseId = computed(() => table.value?.source_id)
 
+  const meta = inject(MetaInj, ref());
+
   function openQuickImportDialog(type: string) {
     if (lockType.value === LockType.Locked) return
 
@@ -58,6 +62,7 @@
       'onUpdate:modelValue': closeDialog,
       sourceId: currentBaseId.value,
       importDataOnly: true,
+      table: meta.value
     })
 
     function closeDialog() {
@@ -66,6 +71,8 @@
 
       // debounce destroying the component, so the modal transition can finish
       close(50)
+
+      reloadHook?.trigger();
     }
   }
 
