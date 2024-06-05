@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { connectToChild } from 'penpal'
 
-  const props = defineProps(['source', 'asAppId'])
+  const props = defineProps(['source', 'asPageId'])
   const { pF } = useGlobal()
 
   const previewToken = ref('')
@@ -18,11 +18,13 @@
     }
   }
 
-  const runEmbed = () => {
+  const runEmbed = async () => {
     try {
-      subFrameConfig.value = props.asAppId && pF.value?.getSubFrameConfig(
-        props.asAppId
-      )
+      const getPfConfig = pF.value &&
+        props.asPageId &&
+        (await pF.value.getSubFrameConfig(props.asPageId));
+
+      subFrameConfig.value = getPfConfig && JSON.parse(getPfConfig);
 
       if (!(
         subFrameConfig.value ||

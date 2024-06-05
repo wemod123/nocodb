@@ -195,9 +195,9 @@
       </div>
     </div>
   </div>
-  <TabsSubFrame v-else-if="isGrid && !isPublic && !activeView?.is_default && activeView?.meta?.loadSubFrame === true && (activeView?.meta?.subFramePath || activeView?.meta?.asAppId)"
+  <TabsSubFrame v-else-if="isGrid && !isPublic && !activeView?.is_default && activeView?.meta?.loadSubFrame === true && (activeView?.meta?.subFramePath || activeView?.meta?.asPageId)"
                 :source="activeView?.meta?.subFramePath"
-                :as-app-id="activeView?.meta?.asAppId" />
+                :as-page-id="activeView?.meta?.asPageId" />
   <div v-else
        class="nc-container flex flex-col"
        @drop="onDrop"

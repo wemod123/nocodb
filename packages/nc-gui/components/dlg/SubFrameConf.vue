@@ -19,7 +19,7 @@
 
   const set_loadSubFrame = ref(activeView?.value?.meta?.loadSubFrame || false)
   const set_subFramePath = ref(activeView?.value?.meta?.subFramePath || '')
-  const set_asAppId = ref(activeView?.value?.meta?.asAppId || '')
+  const set_asPageId = ref(activeView?.value?.meta?.asPageId || '')
 
   const saveViewMeta = async () => {
     loading.value = true;
@@ -30,11 +30,11 @@
         ...meta,
         loadSubFrame: set_loadSubFrame.value,
         subFramePath: set_subFramePath.value,
-        asAppId: set_asAppId.value
+        asPageId: set_asPageId.value
       } : {
         loadSubFrame: set_loadSubFrame.value,
         subFramePath: set_subFramePath.value,
-        asAppId: set_asAppId.value
+        asPageId: set_asPageId.value
       };
 
     activeView.value.meta = updateMeta;
@@ -77,7 +77,15 @@
     if (typeof dataset.value !== 'object') return [];
     if (Object.keys(dataset.value).length === 0) return [];
 
-    const jsonString = JSON.stringify(dataset.value, null, 2);
+    const showData = dataset.value.dataset_last_refreshed ?
+      {
+        status: dataset.value.last_status,
+        message: dataset.value.message,
+        rows: dataset.value.dataset_stats.records,
+        refreshed: new Date(dataset.value.dataset_last_refreshed).toLocaleString(),
+      } : dataset.value;
+
+    const jsonString = JSON.stringify(showData, null, 2);
     return jsonString.split('\n').map((line) => {
       const [key, ...value] = line.split(':');
       return [key, value.join(':')]
@@ -108,9 +116,9 @@
             <a-input v-model:value="set_subFramePath" />
           </div>
           <div class="flex flex-col gap-y-2 pt-6">
-            <div class="text-sm text-gray-500 font-bold">AS APP ID</div>
-            <div class="text-xs text-gray-400 -mt-1">If target is as app</div>
-            <a-input v-model:value="set_asAppId" />
+            <div class="text-sm text-gray-500 font-bold">AS App Page ID</div>
+            <div class="text-xs text-gray-400 -mt-1">If target is AS app, copy the pageId(without prefix) to here</div>
+            <a-input v-model:value="set_asPageId" />
           </div>
         </div>
       </div>
