@@ -74,6 +74,7 @@ const permissionScopes = {
     'mmList',
     'hmList',
     'commentRow',
+    'commentUpdate',
     'baseCost',
     'tableList',
     'viewList',
@@ -192,6 +193,7 @@ const rolePermissions:
       commentList: true,
       commentsCount: true,
       commentRow: true,
+      commentUpdate: true,
     },
   },
   [ProjectRoles.EDITOR]: {

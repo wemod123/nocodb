@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -67,6 +68,18 @@ export class AuditsController {
       auditId,
       userEmail: req.user?.email,
       body: body,
+    });
+  }
+
+  @Delete([
+    '/api/v1/db/meta/audits/:auditId/comment',
+    '/api/v2/meta/audits/:auditId/comment',
+  ])
+  @Acl('commentUpdate')
+  async commentDelete(@Param('auditId') auditId: string, @Req() req: Request) {
+    return await this.auditsService.commentDelete({
+      auditId,
+      userEmail: req.user?.email,
     });
   }
 

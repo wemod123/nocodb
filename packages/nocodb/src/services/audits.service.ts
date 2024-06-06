@@ -103,6 +103,18 @@ export class AuditsService {
     return await Audit.commentUpdate(param.auditId, param.body);
   }
 
+  async commentDelete(param: { auditId: string; userEmail: string }) {
+    const log = await Audit.get(param.auditId);
+    if (log.op_type !== AuditOperationTypes.COMMENT) {
+      NcError.forbidden('Only comments can be updated');
+    }
+
+    if (log.user !== param.userEmail) {
+      NcError.unauthorized('Unauthorized access');
+    }
+    return await Audit.commentDelete(param.auditId);
+  }
+
   async baseAuditList(param: { query: any; sourceId: any }) {
     return await Audit.baseAuditList(param.sourceId, param.query);
   }

@@ -541,6 +541,9 @@
     }
   },
   "labels": {
+    "inputComment": "输入评论...",
+    "inputToolTip1": "Shift+Enter 换行, Enter 保存",
+    "inputToolTip": "Shift+Enter 换行, Enter 发送",
     "optionsNotSet": "没有设置选项",
     "tableViewName": "视图名称",
     "tableEntity": "实体表",
@@ -992,7 +995,8 @@
       "openInOpenStreetMap": "OSM"
     },
     "toggleMobileMode": "切换移动模式",
-    "startCommenting": "开始评论"
+    "startCommenting": "开始评论",
+    "addComment": "添加评论"
   },
   "tooltip": {
     "reachedSourceLimit": "Limited to only one data source for the moment",

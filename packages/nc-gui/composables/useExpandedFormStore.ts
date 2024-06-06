@@ -340,6 +340,14 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState((m
     return await $api.utils.commentUpdate(auditId, audit)
   }
 
+  const deleteComment = async (auditId: string) => {
+    await $fetch(`/api/v1/db/meta/audits/${auditId}/comment`, {
+      baseURL: $api.instance.defaults.baseURL,
+      method: 'DELETE',
+      headers: { 'xc-auth': $state.token.value as string }
+    }) as string;
+  }
+
   return {
     ...rowStore,
     commentsOnly,
@@ -360,6 +368,7 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState((m
     primaryKey,
     saveRowAndStay,
     updateComment,
+    deleteComment,
     clearColumns,
   }
 }, 'expanded-form-store')

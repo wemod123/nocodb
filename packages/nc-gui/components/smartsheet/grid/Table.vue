@@ -1545,8 +1545,7 @@ const checkMouseMove = (evt: MouseEvent)=>{
 
                           <span
                             v-if="row.rowMeta?.commentCount && expandForm"
-                            v-e="['c:expanded-form:open']"
-                            class="py-1 px-3 rounded-full text-xs cursor-pointer select-none transform hover:(scale-110)"
+                            class="py-0.5 px-2 rounded-r-[6px] rounded-tl-lg text-xs cursor-pointer select-none transform hover:(scale-110)"
                             :style="{ backgroundColor: enumColor.light[row.rowMeta.commentCount % enumColor.light.length] }"
                             @click="expandAndLooseFocus(row, state)"
                           >

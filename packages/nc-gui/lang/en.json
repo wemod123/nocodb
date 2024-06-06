@@ -539,6 +539,9 @@
     }
   },
   "labels": {
+    "inputComment": "Input Comment...",
+    "inputToolTip1": "[Shift+Enter] for a new line, [Enter] to save",
+    "inputToolTip": "[Shift+Enter] for a new line, [Enter] to send",
     "optionsNotSet": "Options not set",
     "tableViewName": "View name",
     "tableEntity": "Table entity",
@@ -990,7 +993,8 @@
       "openInOpenStreetMap": "OSM"
     },
     "toggleMobileMode": "Toggle Mobile Mode",
-    "startCommenting": "Start commenting!"
+    "startCommenting": "Start commenting!",
+    "addComment": "Add Comment"
   },
   "tooltip": {
     "reachedSourceLimit": "Limited to only one data source for the moment",

@@ -205,6 +205,10 @@ export default class Audit implements AuditType {
     });
   }
 
+  static async commentDelete(auditId: string, ncMeta = Noco.ncMeta) {
+    return await ncMeta.metaDelete(null, null, MetaTable.AUDIT, auditId);
+  }
+
   static async commentUpdate(
     auditId: string,
     audit: Partial<AuditType>,

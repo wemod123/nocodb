@@ -12,6 +12,8 @@ export const useBases = defineStore('basesStore', () => {
   const bases = ref<Map<string, NcProject>>(new Map())
   const baseUsers = ref<User[]>([])
 
+  const loading = ref(false)
+
   const basesList = computed<NcProject[]>(() => Array.from(bases.value.values()).sort((a, b) => a.updated_at - b.updated_at))
 
   const router = useRouter()
@@ -59,7 +61,10 @@ export const useBases = defineStore('basesStore', () => {
     page?: number
     searchText?: string | undefined
   }) {
+    if (loading.value) return;
+
     if (baseId || activeProjectId.value) {
+      loading.value = true
       const response: any = await api.auth.baseUserList(baseId || activeProjectId.value, {
         query: {
           limit: limit || 200,
@@ -67,6 +72,7 @@ export const useBases = defineStore('basesStore', () => {
           query: searchText,
         },
       } as RequestParams)
+      loading.value = false;
 
       const totalRows = response.users.pageInfo.totalRows ?? 0
 
