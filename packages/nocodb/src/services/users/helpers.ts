@@ -8,6 +8,17 @@ export function signRobotApiToken(id: string, config: NcConfig) {
   return jwt.sign({ id }, config.auth.jwt.secret);
 }
 
+export function signApiServiceToken(config: NcConfig) {
+  return jwt.sign(
+    {
+      uid: process.env.NC_API_SERVICES_UID,
+      tid: process.env.NC_API_SERVICES_TID,
+    },
+    config.auth.jwt.secret,
+    { expiresIn: '48h' },
+  );
+}
+
 export function genJwt(user: User, config: NcConfig) {
   const serviceRED = process.env.NC_SERVICE_ROBOT_EMAIL_DOMAIN;
   const serviceRJE = process.env.NC_SERVICE_ROBOT_JWT_EXPIRE;

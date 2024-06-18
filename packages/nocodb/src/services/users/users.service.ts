@@ -6,6 +6,7 @@ import isEmail from 'validator/lib/isEmail';
 import { T } from 'nc-help';
 import * as ejs from 'ejs';
 import bcrypt from 'bcryptjs';
+import { signRobotApiToken, signApiServiceToken } from './helpers';
 import type {
   PasswordChangeReqType,
   PasswordForgotReqType,
@@ -27,7 +28,6 @@ import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
 import { NcError } from '~/helpers/catchError';
 import { BasesService } from '~/services/bases.service';
 import { extractProps } from '~/helpers/extractProps';
-import { signRobotApiToken } from './helpers';
 
 @Injectable()
 export class UsersService {
@@ -592,5 +592,21 @@ export class UsersService {
     });
 
     return base;
+  }
+
+  getApiServiceToken(asToken: any) {
+    try {
+      if (
+        asToken &&
+        asToken.length > 32 &&
+        process.env.NC_API_SERVICES_TOKENS?.split(',').includes(asToken)
+      ) {
+        return { as_token: signApiServiceToken(Noco.getConfig()) };
+      } else {
+        return {};
+      }
+    } catch {
+      return {};
+    }
   }
 }

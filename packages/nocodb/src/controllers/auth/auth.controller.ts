@@ -94,6 +94,13 @@ export class AuthController {
     res.json(await this.usersService.login(req.user, req));
   }
 
+  @Get(['/api/v1/auth/api-services/sign-token'])
+  @UseGuards(PublicApiLimiterGuard)
+  @HttpCode(200)
+  async getApiServiceToken(@Req() req: Request, @Res() res: Response) {
+    res.json(this.usersService.getApiServiceToken(req.headers['xc-as-token']));
+  }
+
   @UseGuards(GlobalGuard)
   @Post('/api/v1/auth/user/signout')
   @HttpCode(200)
