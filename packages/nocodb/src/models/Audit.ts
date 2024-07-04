@@ -209,6 +209,18 @@ export default class Audit implements AuditType {
     return await ncMeta.metaDelete(null, null, MetaTable.AUDIT, auditId);
   }
 
+  static async expireAudits() {
+    const retaintionDays = Number(process.env.AUDITS_RETENTION_DAYS || 720);
+    const cutoffDate = new Date(
+      Date.now() - retaintionDays * 24 * 60 * 60 * 1000,
+    ).toISOString();
+    return await Noco.ncMeta
+      .knex(MetaTable.AUDIT)
+      .where('created_at', '<', cutoffDate)
+      .whereNot('op_type', 'COMMENT')
+      .del();
+  }
+
   static async commentUpdate(
     auditId: string,
     audit: Partial<AuditType>,

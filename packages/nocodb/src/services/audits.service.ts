@@ -115,6 +115,10 @@ export class AuditsService {
     return await Audit.commentDelete(param.auditId);
   }
 
+  async expireAudits() {
+    return await Audit.expireAudits();
+  }
+
   async baseAuditList(param: { query: any; sourceId: any }) {
     return await Audit.baseAuditList(param.sourceId, param.query);
   }

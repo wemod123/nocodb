@@ -83,6 +83,12 @@ export class AuditsController {
     });
   }
 
+  @Patch(['/api/v2/meta/audits/tasks/expires/comment'])
+  @Acl('auditRowUpdate')
+  async expireAudits() {
+    return await this.auditsService.expireAudits();
+  }
+
   @Get([
     '/api/v1/db/meta/projects/:baseId/audits/',
     '/api/v2/meta/bases/:baseId/audits/',
