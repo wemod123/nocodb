@@ -7,7 +7,7 @@ COPY ./nc-lib-gui ./nc-lib-gui
 COPY ./nocodb-sdk ./nocodb-sdk
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
-RUN pnpm install --prod --shamefully-hoist
+RUN pnpm install --prod --shamefully-hoist --frozen-lockfile
 
 COPY ./docker/main.js ./main.js
 COPY ./src/public/ ./public
