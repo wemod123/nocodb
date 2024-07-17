@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
-import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+// import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 import type { editor as MonacoEditor } from 'monaco-editor'
 import { deepCompare, isDrawerOrModalExist, onMounted, ref, watch } from '#imports'
 
@@ -50,8 +50,8 @@ self.MonacoEnvironment = {
     switch (label) {
       case 'json':
         return new JsonWorker()
-      case 'typescript':
-        return new TypescriptWorker()
+      // case 'typescript':
+      //   return new TypescriptWorker()
       default:
         return new EditorWorker()
     }
