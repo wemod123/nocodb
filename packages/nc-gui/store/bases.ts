@@ -14,11 +14,25 @@ export const useBases = defineStore('basesStore', () => {
 
   const loading = ref(false)
 
-  const basesList = computed<NcProject[]>(() => Array.from(bases.value.values()).sort((a, b) => {
-    return a.order && b.order 
-      ? a.order - b.order
-      : a.updated_at - b.updated_at
-  }))
+  const basesList = computed<NcProject[]>(
+    () => Array.from(bases.value.values()).sort((a, b) => {
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order;
+      } else if (a.order !== undefined) {
+        return 1; // a comes after b
+      } else if (b.order !== undefined) {
+        return -1; // b comes after a
+      } else if (a.updated_at !== undefined && b.updated_at !== undefined) {
+        return a.updated_at - b.updated_at;
+      } else if (a.updated_at !== undefined) {
+        return 1; // a comes after b
+      } else if (b.updated_at !== undefined) {
+        return -1; // b comes after a
+      } else {
+        return 0; // a and b are considered equal
+      }
+    })
+  )
 
   const router = useRouter()
   const route = router.currentRoute
