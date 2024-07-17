@@ -35,15 +35,12 @@ jobs:
           pnpm install --ignore-scripts --no-frozen-lockfile --ignore-workspace 
           pnpm run build
 
-      - name: Install Nuxt
-        run: |
-          pnpm install nuxt@3.8.2
-
       - name: Build GUI
         working-directory: packages/nc-gui
         run: |
           export NODE_OPTIONS="--max_old_space_size=16384"
           pnpm install --ignore-scripts --no-frozen-lockfile
+          pnpm install nuxt@3.8.2 -g
           pnpm run build:copy
 
       - name: Build nocodb
