@@ -98,6 +98,12 @@ export default defineNuxtConfig({
 
   build: {},
 
+  // nitro: {
+  //   prerender: {
+  //     routes: ["/"],
+  //   },
+  // },
+
   vite: {
     worker: {
       format: 'es',
@@ -171,8 +177,8 @@ export default defineNuxtConfig({
     ],
     define: {
       'process.env.DEBUG': 'false',
-      'process.nextTick': () => { },
-      'process.env.ANT_MESSAGE_DURATION': process.env.ANT_MESSAGE_DURATION,
+      'process.nextTick': '() => {}',
+      'process.env.ANT_MESSAGE_DURATION': JSON.stringify(process.env.ANT_MESSAGE_DURATION),
     },
     server: {
       watch: {
