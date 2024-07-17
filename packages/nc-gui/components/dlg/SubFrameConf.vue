@@ -47,50 +47,6 @@
 
     close();
   }
-
-  const dataset = ref();
-  const getDatasetStatus = async () => {
-    dataset.value = await $fetch(`/api/v2/datasets/${activeView.value?.fk_model_id}/meta`, {
-      baseURL: $api.instance.defaults.baseURL,
-      method: 'GET',
-      headers: { 'xc-auth': $state.token.value as string }
-    }) as string;
-  }
-
-  const refreshDataset = async () => {
-    refreshing.value = true;
-    dataset.value = await $fetch(`/api/v2/datasets/${activeView.value?.fk_model_id}/refresh`, {
-      baseURL: $api.instance.defaults.baseURL,
-      method: 'PATCH',
-      headers: { 'xc-auth': $state.token.value as string }
-    });
-    refreshing.value = false;
-  }
-
-  onMounted(() => {
-    nextTick(async () => {
-      await getDatasetStatus();
-    })
-  })
-
-  const dataSetRender = computed(() => {
-    if (typeof dataset.value !== 'object') return [];
-    if (Object.keys(dataset.value).length === 0) return [];
-
-    const showData = dataset.value.dataset_last_refreshed ?
-      {
-        status: dataset.value.last_status,
-        message: dataset.value.message,
-        rows: dataset.value.dataset_stats.records,
-        refreshed: new Date(dataset.value.dataset_last_refreshed).toLocaleString(),
-      } : dataset.value;
-
-    const jsonString = JSON.stringify(showData, null, 2);
-    return jsonString.split('\n').map((line) => {
-      const [key, ...value] = line.split(':');
-      return [key, value.join(':')]
-    });
-  })
 </script>
 
 <template>
@@ -119,35 +75,6 @@
             <div class="text-sm text-gray-500 font-bold">AS App Page ID</div>
             <div class="text-xs text-gray-400 -mt-1">If target is AS app, copy the pageId(without prefix) to here</div>
             <a-input v-model:value="set_asPageId" />
-          </div>
-        </div>
-      </div>
-      <div class="rounded-lg bg-slate-100 pl-4 pr-2 py-2">
-        <div class="flex items-center">
-          <span class="font-bold flex-1">
-            Dataset Status
-          </span>
-          <NcButton size="xs"
-                    type="secondary"
-                    :disabled="refreshing || dataset?.refreshing === true"
-                    :loading="refreshing || dataset?.refreshing === true"
-                    @click="refreshDataset">
-            <component v-if="!(refreshing || dataset?.refreshing === true)"
-                       :is="iconMap.reload"
-                       class="mr-2" />
-            Refresh Dataset
-          </NcButton>
-        </div>
-        <div class="max-w-[600px] py-4 min-h-40 max-h-60 overflow-y-auto">
-          <div v-if="!dataSetRender || dataSetRender.length === 0">
-            Dataset is not ready for table [{{ activeView._ptn }}], click refresh dataset to initilize dataset, the
-            initializtion may take a while.
-          </div>
-          <div v-for="(line, i) in dataSetRender.slice(1, dataSetRender.length - 1)"
-               class="text-xs"
-               style="font-family: monospace;">
-            <span class="text-gray-500 bg-slate-200 rounded px-1">{{ line[0].replace(/"/g, '') }}</span>:
-            <span>{{ line[1] }}</span>
           </div>
         </div>
       </div>

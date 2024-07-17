@@ -14,7 +14,11 @@ export const useBases = defineStore('basesStore', () => {
 
   const loading = ref(false)
 
-  const basesList = computed<NcProject[]>(() => Array.from(bases.value.values()).sort((a, b) => a.updated_at - b.updated_at))
+  const basesList = computed<NcProject[]>(() => Array.from(bases.value.values()).sort((a, b) => {
+    return a.order && b.order 
+      ? a.order - b.order
+      : a.updated_at - b.updated_at
+  }))
 
   const router = useRouter()
   const route = router.currentRoute

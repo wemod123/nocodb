@@ -7,7 +7,7 @@ export const useShare = defineStore('share', () => {
   const { base } = toRefs(useBase())
 
   const isProjectPublic = computed(() => {
-    if (typeof base.value?.meta === 'string') {
+    if (typeof base.value?.meta === 'string' && base.value?.meta.length > 2) {
       const meta = JSON.parse(base.value?.meta)
       return meta.isPublic
     }

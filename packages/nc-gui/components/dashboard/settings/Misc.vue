@@ -5,6 +5,16 @@ import { ProjectIdInj, storeToRefs, useBase, useGlobal, watch } from '#imports'
 
 const { includeM2M, showNull } = useGlobal()
 
+const toJson = (value: any)=>{
+  try{
+    return value !== null && typeof value === 'object'
+     ? value
+     : JSON.parse(value)
+  }catch(e){
+    return {}
+  }
+}
+
 const baseStore = useBase()
 const basesStore = useBases()
 const { loadTables, hasEmptyOrNullFilters } = baseStore
@@ -47,12 +57,47 @@ async function showNullAndEmptyInFilterOnChange(evt: CheckboxChangeEvent) {
     meta: JSON.stringify(newProjectMeta),
   })
 }
+
+const baseDesc = computed({
+  get: () => base.value?.description,
+  set: (val) => {
+    base.value.description = val
+  }
+})
+
+const baseTitle = computed({
+  get: () => base.value?.title,
+  set: (val) => {
+    base.value.title = val
+  }
+})
+
+async function updateProps(key: string) {
+  if(key === 'description'){
+    // const meta = toJson(base.value.meta);
+    await basesStore.updateProject(baseId.value!, {
+      description: baseDesc.value
+    })
+  }else{
+   await basesStore.updateProject(baseId.value!, {
+     title: baseTitle.value
+   })
+  }
+}
 </script>
 
 <template>
   <div class="flex flex-row w-full">
     <div class="flex flex-col w-full">
-      <div class="flex flex-row items-center w-full mb-4 gap-2">
+      <div class="bg-slate-100 rounded-lg">
+        <div class="w-full p-4 gap-2">
+          <h3 class="font-semibold">Display Name</h3>
+          <a-input v-model:value="baseDesc" @blur="updateProps('description')" />
+          <h3 class="font-semibold mt-3">Tenant ID</h3>
+          <a-input v-model:value="baseTitle" @blur="updateProps('title')"/>
+        </div>
+      </div>
+      <div class="flex flex-row items-center w-full my-4 gap-2">
         <!-- Show M2M Tables -->
         <a-checkbox v-model:checked="includeM2M" v-e="['c:themes:show-m2m-tables']" class="nc-settings-meta-misc">
           {{ $t('msg.info.showM2mTables') }} <br />

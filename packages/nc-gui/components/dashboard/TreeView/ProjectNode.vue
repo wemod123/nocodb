@@ -426,7 +426,7 @@ const copyId = (id: string = '') => {
             </div>
           </div>
 
-          <input
+          <!-- <input
             v-if="editMode"
             ref="input"
             v-model="tempTitle"
@@ -436,15 +436,15 @@ const copyId = (id: string = '') => {
             @keyup.enter="updateProjectTitle"
             @keyup.esc="updateProjectTitle"
             @blur="updateProjectTitle"
-          />
+          /> -->
           <span
-            v-else
-            class="nc-sidebar-node-title text-xs capitalize text-ellipsis overflow-hidden select-none"
+            class="nc-sidebar-node-title text-xs text-ellipsis overflow-hidden select-none"
+            :title="base.title"
             :style="{ wordBreak: 'keep-all', whiteSpace: 'nowrap', display: 'inline' }"
             :class="{ 'text-black font-semibold': activeProjectId === base.id && baseViewOpen }"
             @click="onProjectClick(base)"
           >
-            {{ base.title }}
+            {{base.description}} [{{ base.title }}]
           </span>
           <div :class="{ 'flex flex-grow h-full': !editMode }" @click="onProjectClick(base)"></div>
 
@@ -480,9 +480,9 @@ const copyId = (id: string = '') => {
                     </div>
                   </NcMenuItem>
 
-                  <a-divider class="!my-1" />
+                  <!-- <a-divider class="!my-1" /> -->
 
-                  <NcMenuItem v-if="isUIAllowed('baseRename')" data-testid="nc-sidebar-project-rename" @click="enableEditMode">
+                  <!-- <NcMenuItem v-if="isUIAllowed('baseRename')" data-testid="nc-sidebar-project-rename" @click="enableEditMode">
                     <div v-e="['c:base:rename']" class="flex gap-2 items-center">
                       <GeneralIcon icon="edit" class="group-hover:text-black" />
                       {{ $t('general.rename') }}
@@ -498,12 +498,12 @@ const copyId = (id: string = '') => {
                       <GeneralIcon icon="duplicate" class="text-gray-700" />
                       {{ $t('general.duplicate') }}
                     </div>
-                  </NcMenuItem>
+                  </NcMenuItem> -->
 
                   <NcDivider v-if="['baseDuplicate', 'baseRename'].some((permission) => isUIAllowed(permission))" />
 
                   <!-- Copy Project Info -->
-                  <NcMenuItem
+                  <!-- <NcMenuItem
                     v-if="!isEeUI"
                     key="copy"
                     data-testid="nc-sidebar-base-copy-base-info"
@@ -513,7 +513,7 @@ const copyId = (id: string = '') => {
                       <GeneralIcon icon="copy" class="group-hover:text-black" />
                       {{ $t('activity.account.projInfo') }}
                     </div>
-                  </NcMenuItem>
+                  </NcMenuItem> -->
 
                   <!-- ERD View -->
                   <NcMenuItem key="erd" data-testid="nc-sidebar-base-relations" @click="openErdView(base?.sources?.[0]!)">
@@ -524,7 +524,7 @@ const copyId = (id: string = '') => {
                   </NcMenuItem>
 
                   <!-- Swagger: Rest APIs -->
-                  <NcMenuItem
+                  <!-- <NcMenuItem
                     v-if="isUIAllowed('apiDocs')"
                     key="api"
                     data-testid="nc-sidebar-base-rest-apis"
@@ -539,13 +539,13 @@ const copyId = (id: string = '') => {
                       <GeneralIcon icon="snippet" class="group-hover:text-black !max-w-3.9" />
                       {{ $t('activity.account.swagger') }}
                     </div>
-                  </NcMenuItem>
+                  </NcMenuItem> -->
                 </template>
 
-                <template v-if="base.sources && base.sources[0] && showBaseOption">
+                <!-- <template v-if="base.sources && base.sources[0] && showBaseOption">
                   <NcDivider />
                   <DashboardTreeViewBaseOptions v-model:base="base" :source="base.sources[0]" />
-                </template>
+                </template> -->
 
                 <NcDivider v-if="['baseMiscSettings', 'baseDelete'].some((permission) => isUIAllowed(permission))" />
 

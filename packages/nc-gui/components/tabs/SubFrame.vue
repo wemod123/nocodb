@@ -2,8 +2,8 @@
   import { connectToChild } from 'penpal'
 
   const props = defineProps(['source', 'asPageId'])
-  const { pF } = useGlobal()
-
+  const { pF, user } = useGlobal()
+ 
   const previewToken = ref('')
   const usePreviewToken = ref(false)
   const frameContainer = ref();
@@ -24,7 +24,7 @@
     try {
       const getPfConfig = pF.value &&
         props.asPageId &&
-        (await pF.value.getSubFrameConfig(props.asPageId));
+        (await pF.value?.getSubFrameConfig(props.asPageId, user.value));
 
       subFrameConfig.value = getPfConfig && JSON.parse(getPfConfig);
 

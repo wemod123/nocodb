@@ -34,7 +34,7 @@ export class BasesService {
     protected readonly appHooksService: AppHooksService,
     protected metaService: MetaService,
     protected tablesService: TablesService,
-  ) { }
+  ) {}
 
   async baseList(param: {
     user: { id: string; roles?: string | Record<string, boolean> };
@@ -78,6 +78,7 @@ export class BasesService {
       'meta',
       'color',
       'status',
+      'description',
     ]);
     await this.validateProjectTitle(data, base);
 
@@ -194,7 +195,7 @@ export class BasesService {
       NcError.badRequest('Base title exceeds 50 characters');
     }
 
-    await this.baseTitleIsAvailable(baseBody?.title)
+    await this.baseTitleIsAvailable(baseBody?.title);
 
     baseBody.title = DOMPurify.sanitize(baseBody.title);
     baseBody.slug = baseBody.title;
