@@ -177,7 +177,7 @@ export default defineNuxtConfig({
     ],
     define: {
       'process.env.DEBUG': 'false',
-      'process.nextTick': '() => {}',
+      'process.nextTick': () => {},
       'process.env.ANT_MESSAGE_DURATION': JSON.stringify(process.env.ANT_MESSAGE_DURATION),
     },
     server: {
