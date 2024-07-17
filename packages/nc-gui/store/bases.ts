@@ -23,7 +23,7 @@ export const useBases = defineStore('basesStore', () => {
       } else if (b.order !== undefined) {
         return -1; // b comes after a
       } else if (a.updated_at !== undefined && b.updated_at !== undefined) {
-        return a.updated_at - b.updated_at;
+        return new Date(a.updated_at) - new Date(b.updated_at);
       } else if (a.updated_at !== undefined) {
         return 1; // a comes after b
       } else if (b.updated_at !== undefined) {
