@@ -1,4 +1,4 @@
-FROM node:18-alpine as build
+FROM node:18.14.0-alpine as build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN pnpm install --prod --shamefully-hoist
 COPY ./docker/main.js ./main.js
 COPY ./src/public/ ./public
 
-FROM node:18-alpine
+FROM node:18.14.0-alpine
 
 WORKDIR /app
 COPY --from=build /app .
